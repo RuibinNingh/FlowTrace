@@ -7,6 +7,7 @@
 | 了解流迹目标、后台面板与完整实施顺序 | [完整开发计划](plans/flowtrace/plan.md) |
 | 接续流迹开发计划 | 先读 [当前进度](plans/flowtrace/progress.md)，再按任务进入计划分册 |
 | 当前Alpha范围、额度控制与逐包交付 | [Alpha里程碑](plans/flowtrace/alpha-milestones.md)；每包完成后等待用户决定下一包 |
+| 已冻结的Windows/Web/APK及配套后端 | [M1候选清单](plans/flowtrace/alpha-candidates.md)，包含实际产物、hash与验证边界 |
 | 最终Windows/Web/APK交付与本机持久测试部署 | [最终交付分册](plans/flowtrace/delivery-local-test.md) |
 | Windows本机服务的准备、启停、私有配置与精确静态入口 | [本机部署模块](modules/local-test-deployment.md)、[部署工具](../deployment/local-test/windows/README.md) |
 | 了解工作区、现有材料与运行能力 | [工作区说明](modules/workspace.md) |

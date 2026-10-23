@@ -16,6 +16,8 @@
 
 ## 已验与待验
 
+2026-10-24 M1选择已有普通a3d9作为Alpha候选，保留新c5e8。两目录均经生产verified_web核39资源与manifest/worker共41文件及绑定全hash；a3d9冻结至outputs/releases/alpha/m1-20261024/Web，53,365,981B，未重建或制作ZIP。已有普通Chrome地址/冷启离线证据复用，不重跑相同旅程；其144个lib与Windows旧普通候选一致，不能据新schema5回归扩大能力。新wheel展开目录的ASGI静态index/JS/WASM及隔离头通过，非新浏览器/DB联调，见[候选清单](../plans/flowtrace/alpha-candidates.md)。
+
 2026-10-23新普通schema5候选`web-stage-20261023-c5e8`构建59.5秒，seal39资源、release `e4d63f16e2ad6471fe3afb8b8f4b974d43cf93828e464172a09268f7650e821c`；main SHA256 `3431f09c812458c899d3ca259b6cddbee1186d37d030de9e4cd227bf1fee3101`。184项构建输入前后摘要同`aab12edc50d7243fb4103bb589ffbc5aa71873aae44a45f0d2cde7dfe57d2301`，普通lib/main.dart、显式本机测试profile且无QA参数。对应客户端全量1009/6默认live skip和分析通过，真实新Chrome stage旅程尚待，不借用下面旧壳/普通业务分项作此新候选验收。
 
 2026-10-23首装降级提示原先会遮挡普通首页设置鼠标目标，已新增启动后的“收起提示”，启动前安全检查保持可见；窄屏限宽，收起不改变真实离线状态。新真实合成Chrome14、封装10、worker生命周期5通过，含390宽/键盘收起/正常鼠标导航。普通main新候选`web-p6-feedback-20261023-a3d9`构建56.2秒、39资源，release`9838ce467fd306bc8fca3a8b7d2d54be5422f6f81d09d8bfdcc210aee6ad9e9c`，main与6f72同SHA；167源快照`053950eabd85106a39789cff2922d98a23ba06afb1a3708e361e4be299613a22`前后一致，未覆盖旧产物。

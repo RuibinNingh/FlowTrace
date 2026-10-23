@@ -18,6 +18,8 @@
 
 ## 当前证据
 
+2026-10-24 M1复用下面普通fda06dae/local-test候选：ZIP 29,202,962B/SHA17a7f6d9…88a63，26个文件CRC/安全集合/逐hash及既有bundle全部一致，CRT三DLL当前签名Valid，应用NotSigned。冻结副本在outputs/releases/alpha/m1-20261024，详见[候选清单](../plans/flowtrace/alpha-candidates.md)。167输入与Web a3d9的144个lib/资源/pub完全一致，仅Web壳不同；旧原生DB header schema3。本包未重建/原生UI操作，不借用当前schema5/group验证；实际组合联机与持久保持留M2。
+
 WindowsRuntime6项、MSVC `/W4 /WX`宿主4项、打包恶意ZIP6组、离线快照恢复最新10组通过；中间junction漏查实际失败后已修，原SQLite SHA保持。QA release101→102真实原生升级保留9007199254740868精确余额、3条outbox/1份冻结正文、完整草稿、原件/设置与合成凭据，第二writer73，所属测试进程已关闭。SQLite探针实际BUSY/FULL不等于填满宿主磁盘；进程关闭重开不等于整机重启。
 
 后补独立CRT v3包包含已安装VS官方x64三DLL及NOTICE，Microsoft签名Valid/14.50.35719.0与逐文件hash/解压通过，包SHA d4b8bb567a3ec498156656fb713deec6a0e279463ba7258d72209b323194a602；旧101/102包未改。该新包未再运行已清理凭据的QA入口，不宣称干净无VS机器或普通main通过。

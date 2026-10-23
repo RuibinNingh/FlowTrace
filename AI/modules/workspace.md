@@ -9,6 +9,8 @@
 
 ## 当前行为
 
+2026-10-24 M1已完成：[普通候选清单](../plans/flowtrace/alpha-candidates.md)冻结Windows ZIP、Web a3d9目录、Android普通debug APK及唯一补建的后端wheel到outputs/releases/alpha/m1-20261024。Windows/Web业务源一致，APK较早；保留schema3旧客户端，不借当前schema5回归。文件完整性与wheel6项入口检查通过，未实际三端/DB联调或持久部署，下一包M2等待用户决定。
+
 2026-10-24起按用户新要求执行[额度受控Alpha](../plans/flowtrace/alpha-milestones.md)：先保存本地Git恢复点，当前0个活跃子代理；暂停非交付必需的新功能。Windows/Web/APK与独立本地测试服务优先，每包返回结果/额度后等待用户决定。M0只保存与交接，不重新构建、回归或安装服务。
 
 2026-10-23最新：普通Windows/Web/APK及本机持久测试部署已纳入[交付分册](../plans/flowtrace/delivery-local-test.md)，尚未最终打包/部署。[本机部署工具](local-test-deployment.md)只做实现与合成/短程验证，未Install/真实Start/任务注册。18087/18088后台临时QA已关闭并保库，后续恢复页面另显式启动自有宿主；root地址/离线专项的18190静态宿主验证后精确关闭。PG55432为原工作区测试集群；最终服务独立数据、端口并脱离Codex/PTY持续运行。
@@ -61,6 +63,8 @@ git check-ignore -v -- work/qianji-research/session-completion.json work/tools/j
 检查文件清单与本任务预期一致，资料目录和本机配置被忽略；另外核对 Markdown 链接可解析、实际文档无未替换占位符、任务记录具备有效日期和完整五节。模板内的占位符应保留。
 
 ## 当前缺口
+
+M1当前接收边界：Windows未签名且完整原生UI因此前锁屏未验；APK为Android Debug签名/ARM64，虽有普通入口及历史安装证据，功能不冒称与Windows/Web一致。Web41文件冻结，尚未制作ZIP。新后端wheel已含head0016/本地部署入口，220源码与222 RECORD/6项ASGI入口通过，但独立依赖安装、真实数据库、三端登录/精确记账同步/重开保持未验，须M2/M3补必要验证。当前没有新固定在线服务地址；M1不触ADB或原生安全界面。原group40001仍保留，选定旧客户端不消费新group的判断来自来源/字面量证据，不能代替运行联调。
 
 2026-10-24 Alpha交接：以下仅登记状态，本包不扩展修复。group创建在并发UPDATE sync_clients时曾发生PG40001/503；d1ba金融undo成功但客户端刷新未完成，原失败和只读后验保留，有界重试生产修复尚未落地。M1应判断选定候选是否受此同步/启动问题阻断，若必须修复再按两轮上限单包处理，不能再发原undo。新增receipt_history源码/测试未跑、未接普通入口，冻结为后续功能；专用隔离取消HTTP最后35通过，但新确认页Chrome尚未执行。周期/分期/储蓄、完整回款UI/typed复合、OCR/AI、清理retry/reconcile/purge及全平台边缘旅程均延后，已知严重账务/安全问题不因Alpha放行。
 

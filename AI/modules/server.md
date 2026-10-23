@@ -8,6 +8,8 @@
 
 ## 当前入口
 
+2026-10-24 M1仅补建现有源码的独立wheel（旧7包最高0006、均无本地部署入口）。新425738B/SHA47bad6e7…d3ba8，来源0926681，含0016与local_test_service；220源码成员逐字节一致、222 RECORD及Python编译通过。实际从wheel展开目录import，以开发venv依赖做6项ASGI live/static/admin-login/404检查通过；无真实DB/独立依赖安装/持久启动，不能称服务部署。冻结位置及客户端旧版边界见[候选清单](../plans/flowtrace/alpha-candidates.md)，M2/M3逐包验。
+
 当前唯一head为`0016_backup_quarantine`：全新b75d库两次升降后原子登记，升级仍52表/metadata=[]、原9trigger/6function及identity/config保持。DDL只扩kind CHECK，遇隔离任务降级拒绝且不删任务；runtime现接隔离执行，facade21/后台-Worker11分次通过。完整jobs新005e库68通过/1图片默认skip、另新2a1图片1/1；旧恢复替身漏before_read的6失败修fixture后绿，未改宽生产。0015清单、0014源释放和0013保护保持，requirements168及非空恢复1为此前证据。旧QA不迁。
 
 备份当前reader已持源共享lease、创建排他lease，可信新包任务证明与真实job/owner绑定hold接入入队/重试/Worker完成事务；相关124/124与实际pg_dump/Worker登记2/2为分次验证。旧包不自动登记，释放后不复活原hold；保护服务/零删除预览139通过。隔离执行/普通后台已接，Windows扩展路径修复实际红绿17、PG/HTTP27、路径别名24分次通过；同深度独立2890 Chrome入队5/完成3与真实CLI Worker通过。641c无receipt partial保留，旧包未移动，无purge。专用未领取取消PG25通过，root页面已接、HTTP/Chrome继续。

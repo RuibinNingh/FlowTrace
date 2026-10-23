@@ -9,6 +9,8 @@
 
 ## 当前行为
 
+2026-10-24 M1冻结[Alpha候选](../plans/flowtrace/alpha-candidates.md)：Windows/Web复用相同业务来源的旧schema3普通包，Android为较早schema3普通debug APK，不新编三端，也不声称三端功能完全一致。APK实际0.1.0+1/com.flowtrace.flowtrace.dev、ARM64/min24/target36，Android Debug签名及v2验证通过，与保留普通包/历史安装/stamp同hash，当前未ADB。下面schema5/1009等为各自源码快照证据，不能自动归给这些候选；新后端组合联调留M2。
+
 2026-10-23大文件真实TCP新增1/1（19秒）：生产AppController/StageStore/Commands、SQLite、Identity/附件上传与普通main/Worker，204条/101支出、614400B两片与两publication chunk，分片和apply成功回复各丢一次后两次离线磁盘重开，同正文/同批找回并fresh group一次安装。支出12625、余额9007199254728368及77B图hash准确，预览无金融写/no push/原outbox草稿保持；退出后PG active session0，owned API-worker已关闭。此目标仅把Windows目录通道指向fixture沙箱，非原生runner目录lease/secure vault/普通UI/容量性能验收；同批续接清源undo和Chrome另验。回执`outputs/validation/P5/stage-http/c4624915cf5c4d3ea0b729498cb6ccfe/`。
 
 当前schema5完整客户端**1009通过/6专用live默认跳过（59秒）**，完整静态分析No issues（8.1秒）；日志`client-full-schema5-stage1.log`与`client-analyze-schema5-stage1.log`。普通大文件页接完整资源草稿、图片校验/真实上传、作业摘要、明确preview/apply/undo/续接及源释放。相关122/122（10秒）包含五条页面旅程与实际SQLite删除回滚；Dart图片映射另经Python生产planner反核4/4。这些不代替真实TCP/Chrome金融旅程。schema5原件/恢复29、能力44、相位42、续接39是此前分次快照，下面908属于schema4历史；当前新普通Web构建中，尚非最终交付。存储边界见[客户端同步](client-sync.md)，页面见[专项](../../tests/e2e/client-web/STAGE-IMPORT.md)。
