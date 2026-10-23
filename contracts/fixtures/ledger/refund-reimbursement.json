@@ -1,0 +1,2178 @@
+{
+  "contract_version": "1.1",
+  "date": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "evidence_level": "N",
+  "capability": "receipt-tracking-v1",
+  "implementation_status": "fixed_design_expectations_not_execution_receipt",
+  "verification_scope": "static_contract_arithmetic_and_conditional_real_models_not_business_execution",
+  "legacy_scenarios_sha256": {
+    "L02_refund_reimbursement_cross_period": "41e12cd63c68af9e680235aa164c1e948ad3f11bc81e4ea496977b4dae99daaa",
+    "L04_fx_refund_and_valuation": "089575da627b6e244368f7db8369441aab995fa33409ac1e2bca1063c862b519"
+  },
+  "base_expense_payload": {
+    "bill_type": "expense",
+    "money": {
+      "currency": "CNY",
+      "currency_scale": 2,
+      "amount_minor": "10000"
+    },
+    "book_id": "00000000-0000-4000-8000-000000000001",
+    "account_id": "00000000-0000-4000-8000-000000000002",
+    "business_date": "2026-10-21",
+    "business_timezone": "Asia/Shanghai",
+    "occurred_at": "2026-10-21T04:05:06.123456Z",
+    "category_id": null,
+    "tag_ids": [],
+    "attachment_ids": [],
+    "source": "manual",
+    "flags": {
+      "exclude_from_statistics": false,
+      "exclude_from_budget": false
+    },
+    "note": "synthetic-receipt-contract",
+    "reporting": null,
+    "allocations": [],
+    "income_component_minor": "0"
+  },
+  "frozen_legacy_pages": {
+    "snapshot": {
+      "data": {
+        "snapshot_id": "00000000-0000-4000-8000-000000000005",
+        "items": [
+          {
+            "scope_id": "00000000-0000-4000-8000-000000000001",
+            "scope_revision": "7",
+            "event_index": 0,
+            "entity_type": "bill",
+            "entity_id": "00000000-0000-4000-8000-000000000004",
+            "revision": "7",
+            "deleted": false,
+            "data": {
+              "projection_kind": "bill_public",
+              "payload": {
+                "bill_type": "expense",
+                "money": {
+                  "currency": "CNY",
+                  "currency_scale": 2,
+                  "amount_minor": "10000"
+                },
+                "book_id": "00000000-0000-4000-8000-000000000001",
+                "account_id": "00000000-0000-4000-8000-000000000002",
+                "business_date": "2026-10-21",
+                "business_timezone": "Asia/Shanghai",
+                "occurred_at": "2026-10-21T04:05:06.123456Z",
+                "category_id": null,
+                "tag_ids": [],
+                "attachment_ids": [],
+                "source": "manual",
+                "flags": {
+                  "exclude_from_statistics": false,
+                  "exclude_from_budget": false
+                },
+                "note": "synthetic-receipt-contract",
+                "reporting": null,
+                "allocations": [],
+                "income_component_minor": "0",
+                "from_account_id": null,
+                "to_account_id": null,
+                "target_money": null,
+                "transfer_fx": null,
+                "target_balance_minor": null,
+                "gross_amount_minor": null,
+                "discount_minor": null,
+                "fee": null
+              },
+              "hidden_account_fields": [],
+              "hidden_allocation_count": 0,
+              "paid_by_user_ids": [],
+              "nonfinancial_editable_fields": [
+                "note",
+                "category_id",
+                "tag_ids",
+                "attachment_ids",
+                "flags"
+              ],
+              "remaining_allocatable_minor": "5000"
+            }
+          }
+        ],
+        "next_page_token": null,
+        "page_sha256": "d1d4ae598cfdcd635018a1349e35f4f451d8d5c34a3ba9fbdfd34f713fa86b40",
+        "page_index": 0
+      },
+      "canonical_utf8": "{\"items\":[{\"data\":{\"hidden_account_fields\":[],\"hidden_allocation_count\":0,\"nonfinancial_editable_fields\":[\"note\",\"category_id\",\"tag_ids\",\"attachment_ids\",\"flags\"],\"paid_by_user_ids\":[],\"payload\":{\"account_id\":\"00000000-0000-4000-8000-000000000002\",\"allocations\":[],\"attachment_ids\":[],\"bill_type\":\"expense\",\"book_id\":\"00000000-0000-4000-8000-000000000001\",\"business_date\":\"2026-10-21\",\"business_timezone\":\"Asia/Shanghai\",\"category_id\":null,\"discount_minor\":null,\"fee\":null,\"flags\":{\"exclude_from_budget\":false,\"exclude_from_statistics\":false},\"from_account_id\":null,\"gross_amount_minor\":null,\"income_component_minor\":\"0\",\"money\":{\"amount_minor\":\"10000\",\"currency\":\"CNY\",\"currency_scale\":2},\"note\":\"synthetic-receipt-contract\",\"occurred_at\":\"2026-10-21T04:05:06.123456Z\",\"reporting\":null,\"source\":\"manual\",\"tag_ids\":[],\"target_balance_minor\":null,\"target_money\":null,\"to_account_id\":null,\"transfer_fx\":null},\"projection_kind\":\"bill_public\",\"remaining_allocatable_minor\":\"5000\"},\"deleted\":false,\"entity_id\":\"00000000-0000-4000-8000-000000000004\",\"entity_type\":\"bill\",\"event_index\":0,\"revision\":\"7\",\"scope_id\":\"00000000-0000-4000-8000-000000000001\",\"scope_revision\":\"7\"}],\"next_page_token\":null,\"page_index\":0,\"page_sha256\":\"d1d4ae598cfdcd635018a1349e35f4f451d8d5c34a3ba9fbdfd34f713fa86b40\",\"snapshot_id\":\"00000000-0000-4000-8000-000000000005\"}",
+      "sha256": "4d001f9545b011cd4f96c8004450a43d228f772dbff4e972d04e05a9032c936c"
+    },
+    "pull": {
+      "data": {
+        "sync_epoch": "00000000-0000-4000-8000-000000000006",
+        "commits": [
+          {
+            "commit_id": "00000000-0000-4000-8000-000000000007",
+            "events": [
+              {
+                "scope_id": "00000000-0000-4000-8000-000000000001",
+                "scope_revision": "7",
+                "event_index": 0,
+                "entity_type": "bill",
+                "entity_id": "00000000-0000-4000-8000-000000000004",
+                "revision": "7",
+                "deleted": false,
+                "data": {
+                  "projection_kind": "bill_public",
+                  "payload": {
+                    "bill_type": "expense",
+                    "money": {
+                      "currency": "CNY",
+                      "currency_scale": 2,
+                      "amount_minor": "10000"
+                    },
+                    "book_id": "00000000-0000-4000-8000-000000000001",
+                    "account_id": "00000000-0000-4000-8000-000000000002",
+                    "business_date": "2026-10-21",
+                    "business_timezone": "Asia/Shanghai",
+                    "occurred_at": "2026-10-21T04:05:06.123456Z",
+                    "category_id": null,
+                    "tag_ids": [],
+                    "attachment_ids": [],
+                    "source": "manual",
+                    "flags": {
+                      "exclude_from_statistics": false,
+                      "exclude_from_budget": false
+                    },
+                    "note": "synthetic-receipt-contract",
+                    "reporting": null,
+                    "allocations": [],
+                    "income_component_minor": "0",
+                    "from_account_id": null,
+                    "to_account_id": null,
+                    "target_money": null,
+                    "transfer_fx": null,
+                    "target_balance_minor": null,
+                    "gross_amount_minor": null,
+                    "discount_minor": null,
+                    "fee": null
+                  },
+                  "hidden_account_fields": [],
+                  "hidden_allocation_count": 0,
+                  "paid_by_user_ids": [],
+                  "nonfinancial_editable_fields": [
+                    "note",
+                    "category_id",
+                    "tag_ids",
+                    "attachment_ids",
+                    "flags"
+                  ],
+                  "remaining_allocatable_minor": "5000"
+                }
+              }
+            ]
+          }
+        ],
+        "next_page_token": null,
+        "checkpoint": {
+          "00000000-0000-4000-8000-000000000001": "7"
+        }
+      },
+      "canonical_utf8": "{\"checkpoint\":{\"00000000-0000-4000-8000-000000000001\":\"7\"},\"commits\":[{\"commit_id\":\"00000000-0000-4000-8000-000000000007\",\"events\":[{\"data\":{\"hidden_account_fields\":[],\"hidden_allocation_count\":0,\"nonfinancial_editable_fields\":[\"note\",\"category_id\",\"tag_ids\",\"attachment_ids\",\"flags\"],\"paid_by_user_ids\":[],\"payload\":{\"account_id\":\"00000000-0000-4000-8000-000000000002\",\"allocations\":[],\"attachment_ids\":[],\"bill_type\":\"expense\",\"book_id\":\"00000000-0000-4000-8000-000000000001\",\"business_date\":\"2026-10-21\",\"business_timezone\":\"Asia/Shanghai\",\"category_id\":null,\"discount_minor\":null,\"fee\":null,\"flags\":{\"exclude_from_budget\":false,\"exclude_from_statistics\":false},\"from_account_id\":null,\"gross_amount_minor\":null,\"income_component_minor\":\"0\",\"money\":{\"amount_minor\":\"10000\",\"currency\":\"CNY\",\"currency_scale\":2},\"note\":\"synthetic-receipt-contract\",\"occurred_at\":\"2026-10-21T04:05:06.123456Z\",\"reporting\":null,\"source\":\"manual\",\"tag_ids\":[],\"target_balance_minor\":null,\"target_money\":null,\"to_account_id\":null,\"transfer_fx\":null},\"projection_kind\":\"bill_public\",\"remaining_allocatable_minor\":\"5000\"},\"deleted\":false,\"entity_id\":\"00000000-0000-4000-8000-000000000004\",\"entity_type\":\"bill\",\"event_index\":0,\"revision\":\"7\",\"scope_id\":\"00000000-0000-4000-8000-000000000001\",\"scope_revision\":\"7\"}]}],\"next_page_token\":null,\"sync_epoch\":\"00000000-0000-4000-8000-000000000006\"}",
+      "sha256": "f46b9bd2c496b9aa8bbfe502f7c786e3833d7a4e67d077e2fee1e5f8c6cebd3b"
+    }
+  },
+  "tracking_vectors": [
+    {
+      "id": "expense_legacy_absent",
+      "payload": {
+        "bill_type": "expense",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0"
+      },
+      "accepted": true
+    },
+    {
+      "id": "expense_true",
+      "payload": {
+        "bill_type": "expense",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "expense_false",
+      "payload": {
+        "bill_type": "expense",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": false
+      },
+      "accepted": true
+    },
+    {
+      "id": "expense_null",
+      "payload": {
+        "bill_type": "expense",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": null
+      },
+      "accepted": false
+    },
+    {
+      "id": "expense_integer_zero",
+      "payload": {
+        "bill_type": "expense",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": 0
+      },
+      "accepted": false
+    },
+    {
+      "id": "expense_integer_one",
+      "payload": {
+        "bill_type": "expense",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": 1
+      },
+      "accepted": false
+    },
+    {
+      "id": "expense_string",
+      "payload": {
+        "bill_type": "expense",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": "true"
+      },
+      "accepted": false
+    },
+    {
+      "id": "expense_array",
+      "payload": {
+        "bill_type": "expense",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": []
+      },
+      "accepted": false
+    },
+    {
+      "id": "expense_object",
+      "payload": {
+        "bill_type": "expense",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": {}
+      },
+      "accepted": false
+    },
+    {
+      "id": "income_legacy_absent",
+      "payload": {
+        "bill_type": "income",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0"
+      },
+      "accepted": true
+    },
+    {
+      "id": "income_true",
+      "payload": {
+        "bill_type": "income",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": true
+      },
+      "accepted": false
+    },
+    {
+      "id": "income_false",
+      "payload": {
+        "bill_type": "income",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": false
+      },
+      "accepted": false
+    },
+    {
+      "id": "income_null",
+      "payload": {
+        "bill_type": "income",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "reimbursement_tracking": null
+      },
+      "accepted": false
+    },
+    {
+      "id": "transfer_false",
+      "payload": {
+        "bill_type": "transfer",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [],
+        "income_component_minor": "0",
+        "from_account_id": "00000000-0000-4000-8000-000000000002",
+        "to_account_id": "00000000-0000-4000-8000-000000000003",
+        "reimbursement_tracking": false
+      },
+      "accepted": false
+    },
+    {
+      "id": "refund_false",
+      "payload": {
+        "bill_type": "refund",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [
+          {
+            "source_bill_id": "00000000-0000-4000-8000-000000000004",
+            "source_amount_minor": "10000",
+            "receipt_amount_minor": "10000",
+            "rate": null
+          }
+        ],
+        "income_component_minor": "0",
+        "reimbursement_tracking": false
+      },
+      "accepted": false
+    },
+    {
+      "id": "reimbursement_false",
+      "payload": {
+        "bill_type": "reimbursement",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "book_id": "00000000-0000-4000-8000-000000000001",
+        "account_id": "00000000-0000-4000-8000-000000000002",
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T04:05:06.123456Z",
+        "category_id": null,
+        "tag_ids": [],
+        "attachment_ids": [],
+        "source": "manual",
+        "flags": {
+          "exclude_from_statistics": false,
+          "exclude_from_budget": false
+        },
+        "note": "synthetic-receipt-contract",
+        "reporting": null,
+        "allocations": [
+          {
+            "source_bill_id": "00000000-0000-4000-8000-000000000004",
+            "source_amount_minor": "10000",
+            "receipt_amount_minor": "10000",
+            "rate": null
+          }
+        ],
+        "income_component_minor": "0",
+        "reimbursement_tracking": false
+      },
+      "accepted": false
+    }
+  ],
+  "preservation_vectors": [
+    {
+      "id": "legacy_absence_stays_absent",
+      "before": {},
+      "incoming": {},
+      "expected": {}
+    },
+    {
+      "id": "true_omitted_stays_true",
+      "before": {
+        "reimbursement_tracking": true
+      },
+      "incoming": {},
+      "expected": {
+        "reimbursement_tracking": true
+      }
+    },
+    {
+      "id": "false_omitted_stays_false",
+      "before": {
+        "reimbursement_tracking": false
+      },
+      "incoming": {},
+      "expected": {
+        "reimbursement_tracking": false
+      }
+    },
+    {
+      "id": "explicit_false_cancels_only_tracking",
+      "before": {
+        "reimbursement_tracking": true
+      },
+      "incoming": {
+        "reimbursement_tracking": false
+      },
+      "expected": {
+        "reimbursement_tracking": false
+      }
+    },
+    {
+      "id": "explicit_true_enables",
+      "before": {},
+      "incoming": {
+        "reimbursement_tracking": true
+      },
+      "expected": {
+        "reimbursement_tracking": true
+      }
+    },
+    {
+      "id": "legal_type_change_does_not_inherit",
+      "before": {
+        "reimbursement_tracking": true
+      },
+      "incoming": {},
+      "after_bill_type": "income",
+      "expected": {}
+    }
+  ],
+  "source_summary_vectors": [
+    {
+      "id": "unallocated_open",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "10000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "0",
+        "reimbursement_source_minor": "0",
+        "remaining_source_minor": "10000",
+        "settlement_reason": "open"
+      },
+      "accepted": true
+    },
+    {
+      "id": "partly_settled",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "3000",
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "open"
+      },
+      "accepted": true
+    },
+    {
+      "id": "all_refunded",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "0",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "10000",
+        "reimbursement_source_minor": "0",
+        "remaining_source_minor": "0",
+        "settlement_reason": "refunded"
+      },
+      "accepted": true
+    },
+    {
+      "id": "all_reimbursed",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "0",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "0",
+        "reimbursement_source_minor": "10000",
+        "remaining_source_minor": "0",
+        "settlement_reason": "reimbursed"
+      },
+      "accepted": true
+    },
+    {
+      "id": "mixed_settled",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "0",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "3000",
+        "reimbursement_source_minor": "7000",
+        "remaining_source_minor": "0",
+        "settlement_reason": "mixed"
+      },
+      "accepted": true
+    },
+    {
+      "id": "noncanonical_leading_zero",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "03000",
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "open"
+      },
+      "accepted": false
+    },
+    {
+      "id": "noncanonical_plus",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "+3000",
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "open"
+      },
+      "accepted": false
+    },
+    {
+      "id": "negative",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "-3000",
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "open"
+      },
+      "accepted": false
+    },
+    {
+      "id": "numeric_amount",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": 3000,
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "open"
+      },
+      "accepted": false
+    },
+    {
+      "id": "over_int64",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "9223372036854775808",
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "open"
+      },
+      "accepted": false
+    },
+    {
+      "id": "does_not_conserve",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "3001",
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "open"
+      },
+      "accepted": false
+    },
+    {
+      "id": "remaining_disagrees",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "4999",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "3000",
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "open"
+      },
+      "accepted": false
+    },
+    {
+      "id": "reason_disagrees",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "3000",
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "refunded"
+      },
+      "accepted": false
+    },
+    {
+      "id": "foreign_identifier_forbidden",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "3000",
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "open",
+        "receipt_ids": [
+          "hidden-foreign-receipt"
+        ]
+      },
+      "accepted": false
+    },
+    {
+      "id": "nonexpense_summary_forbidden",
+      "bill_type": "income",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": {
+        "refund_source_minor": "3000",
+        "reimbursement_source_minor": "2000",
+        "remaining_source_minor": "5000",
+        "settlement_reason": "open"
+      },
+      "accepted": false
+    },
+    {
+      "id": "null_summary_forbidden",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "source_summary": null,
+      "accepted": false
+    },
+    {
+      "id": "legacy_summary_absent_means_unknown",
+      "bill_type": "expense",
+      "paid_minor": "10000",
+      "remaining_allocatable_minor": "5000",
+      "source_revision": "7",
+      "accepted": true,
+      "knowledge": {
+        "refund_source_minor": "unknown",
+        "reimbursement_source_minor": "unknown"
+      }
+    }
+  ],
+  "linked_source_vectors": [
+    {
+      "id": "amount_increase_not_ordinary",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "changes": {
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "12000"
+        }
+      },
+      "accepted": false,
+      "error_code": "bill.has_allocations"
+    },
+    {
+      "id": "amount_decrease_above_allocated_not_ordinary",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "changes": {
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "9000"
+        }
+      },
+      "accepted": false,
+      "error_code": "bill.has_allocations"
+    },
+    {
+      "id": "amount_decrease_below_allocated",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "changes": {
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "4999"
+        }
+      },
+      "accepted": false,
+      "error_code": "bill.has_allocations"
+    },
+    {
+      "id": "currency_change_not_ordinary",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "changes": {
+        "money": {
+          "currency": "USD",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        }
+      },
+      "accepted": false,
+      "error_code": "bill.has_allocations"
+    },
+    {
+      "id": "type_change_not_ordinary",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "changes": {
+        "bill_type": "income"
+      },
+      "accepted": false,
+      "error_code": "bill.has_allocations"
+    },
+    {
+      "id": "delete_not_ordinary",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "changes": {
+        "action": "delete"
+      },
+      "accepted": false,
+      "error_code": "bill.has_allocations"
+    },
+    {
+      "id": "equal_money_with_note_allowed",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "changes": {
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "note": "changed-note"
+      },
+      "accepted": true,
+      "error_code": null
+    },
+    {
+      "id": "account_change_has_no_extra_link_lock",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "changes": {
+        "account_id": "second_bank"
+      },
+      "accepted": true,
+      "error_code": null
+    },
+    {
+      "id": "date_change_has_no_extra_link_lock",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "changes": {
+        "business_date": "2026-11-01",
+        "occurred_at": null
+      },
+      "accepted": true,
+      "error_code": null
+    },
+    {
+      "id": "tracking_change_has_no_extra_link_lock",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "changes": {
+        "reimbursement_tracking": false
+      },
+      "accepted": true,
+      "error_code": null
+    },
+    {
+      "id": "fully_settled_equal_money_with_note_allowed",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "5000",
+      "reimbursement_source_minor": "5000",
+      "changes": {
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "10000"
+        },
+        "note": "fully-settled-synthetic-note"
+      },
+      "accepted": true,
+      "error_code": null
+    },
+    {
+      "id": "fully_settled_increase_not_ordinary",
+      "before_paid_minor": "10000",
+      "refund_source_minor": "5000",
+      "reimbursement_source_minor": "5000",
+      "changes": {
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "12000"
+        },
+        "note": "fully-settled-synthetic-note"
+      },
+      "accepted": false,
+      "error_code": "bill.has_allocations"
+    }
+  ],
+  "account_date_vectors": [
+    {
+      "id": "move_only_source_posting",
+      "source_paid_minor": "10000",
+      "receipt_cash_minor": "5000",
+      "opening_minor": {
+        "bank": "100000",
+        "second_bank": "200000"
+      },
+      "before_balances_minor": {
+        "bank": "95000",
+        "second_bank": "200000"
+      },
+      "after_balances_minor": {
+        "bank": "105000",
+        "second_bank": "190000"
+      },
+      "receipt_account_before": "bank",
+      "receipt_account_after": "bank",
+      "net_assets_minor": "295000"
+    },
+    {
+      "id": "move_only_source_period",
+      "paid_minor": "10000",
+      "refund_source_minor": "3000",
+      "reimbursement_source_minor": "2000",
+      "before_date": "2026-10-21",
+      "after_date": "2026-11-01",
+      "receipt_dates_before": [
+        "2026-11-02",
+        "2026-11-04"
+      ],
+      "receipt_dates_after": [
+        "2026-11-02",
+        "2026-11-04"
+      ],
+      "before_period_expense_minor": {
+        "october": "5000",
+        "november": "0"
+      },
+      "after_period_expense_minor": {
+        "october": "0",
+        "november": "5000"
+      }
+    }
+  ],
+  "lifecycle": {
+    "id": "RR01_multiple_refunds_reimbursements",
+    "setup": {
+      "currency": "CNY",
+      "currency_scale": 2,
+      "opening_minor": "100000",
+      "source_paid_minor": "10000",
+      "source_date": "2026-10-21",
+      "budget_limit_minor": "10000",
+      "aliases_are_not_api_identifiers": true,
+      "periods": {
+        "october": {
+          "start_date": "2026-10-01",
+          "end_date_exclusive": "2026-11-01"
+        },
+        "november": {
+          "start_date": "2026-11-01",
+          "end_date_exclusive": "2026-12-01"
+        }
+      }
+    },
+    "steps": [
+      {
+        "step_id": "create_source",
+        "command": {
+          "action": "create_expense",
+          "id": "source",
+          "amount_minor": "10000",
+          "business_date": "2026-10-21"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "90000"
+            },
+            "source_revision": "1",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": false
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "10000",
+                "budget_eligible_minor": "10000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "10000",
+              "remaining_minor": "0"
+            },
+            "net_assets_minor": "90000",
+            "remaining_allocatable_minor": "10000",
+            "source_summary": {
+              "refund_source_minor": "0",
+              "reimbursement_source_minor": "0",
+              "remaining_source_minor": "10000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "enable_tracking",
+        "command": {
+          "action": "update_source",
+          "reimbursement_tracking": true
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "90000"
+            },
+            "source_revision": "2",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "10000",
+                "budget_eligible_minor": "10000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "10000",
+              "remaining_minor": "0"
+            },
+            "net_assets_minor": "90000",
+            "remaining_allocatable_minor": "10000",
+            "source_summary": {
+              "refund_source_minor": "0",
+              "reimbursement_source_minor": "0",
+              "remaining_source_minor": "10000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "refund_one",
+        "command": {
+          "action": "create_receipt",
+          "id": "refund_one",
+          "bill_type": "refund",
+          "amount_minor": "3000",
+          "source_amount_minor": "3000",
+          "business_date": "2026-11-02"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "93000"
+            },
+            "source_revision": "3",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "7000",
+                "budget_eligible_minor": "7000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "7000",
+              "remaining_minor": "3000"
+            },
+            "net_assets_minor": "93000",
+            "remaining_allocatable_minor": "7000",
+            "source_summary": {
+              "refund_source_minor": "3000",
+              "reimbursement_source_minor": "0",
+              "remaining_source_minor": "7000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "refund_two",
+        "command": {
+          "action": "create_receipt",
+          "id": "refund_two",
+          "bill_type": "refund",
+          "amount_minor": "2000",
+          "source_amount_minor": "2000",
+          "business_date": "2026-11-03"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "95000"
+            },
+            "source_revision": "4",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "5000",
+                "budget_eligible_minor": "5000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "5000",
+              "remaining_minor": "5000"
+            },
+            "net_assets_minor": "95000",
+            "remaining_allocatable_minor": "5000",
+            "source_summary": {
+              "refund_source_minor": "5000",
+              "reimbursement_source_minor": "0",
+              "remaining_source_minor": "5000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "reimbursement_one",
+        "command": {
+          "action": "create_receipt",
+          "id": "reimbursement_one",
+          "bill_type": "reimbursement",
+          "amount_minor": "2000",
+          "source_amount_minor": "2000",
+          "business_date": "2026-11-04"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "97000"
+            },
+            "source_revision": "5",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "3000",
+                "budget_eligible_minor": "3000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "3000",
+              "remaining_minor": "7000"
+            },
+            "net_assets_minor": "97000",
+            "remaining_allocatable_minor": "3000",
+            "source_summary": {
+              "refund_source_minor": "5000",
+              "reimbursement_source_minor": "2000",
+              "remaining_source_minor": "3000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "ordinary_increase_rejected",
+        "command": {
+          "action": "update_source",
+          "amount_minor": "12000"
+        },
+        "expected": {
+          "result": "rejected",
+          "error_code": "bill.has_allocations",
+          "state": {
+            "account_balances_minor": {
+              "bank": "97000"
+            },
+            "source_revision": "5",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "3000",
+                "budget_eligible_minor": "3000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "3000",
+              "remaining_minor": "7000"
+            },
+            "net_assets_minor": "97000",
+            "remaining_allocatable_minor": "3000",
+            "source_summary": {
+              "refund_source_minor": "5000",
+              "reimbursement_source_minor": "2000",
+              "remaining_source_minor": "3000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "equal_money_note_allowed",
+        "command": {
+          "action": "update_source",
+          "amount_minor": "10000",
+          "note": "same-money-new-note"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "97000"
+            },
+            "source_revision": "6",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "3000",
+                "budget_eligible_minor": "3000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "3000",
+              "remaining_minor": "7000"
+            },
+            "net_assets_minor": "97000",
+            "remaining_allocatable_minor": "3000",
+            "source_summary": {
+              "refund_source_minor": "5000",
+              "reimbursement_source_minor": "2000",
+              "remaining_source_minor": "3000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "cancel_tracking_keeps_receipts",
+        "command": {
+          "action": "update_source",
+          "reimbursement_tracking": false
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "97000"
+            },
+            "source_revision": "7",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": false
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "3000",
+                "budget_eligible_minor": "3000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "3000",
+              "remaining_minor": "7000"
+            },
+            "net_assets_minor": "97000",
+            "remaining_allocatable_minor": "3000",
+            "source_summary": {
+              "refund_source_minor": "5000",
+              "reimbursement_source_minor": "2000",
+              "remaining_source_minor": "3000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "reenable_tracking",
+        "command": {
+          "action": "update_source",
+          "reimbursement_tracking": true
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "97000"
+            },
+            "source_revision": "8",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "3000",
+                "budget_eligible_minor": "3000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "3000",
+              "remaining_minor": "7000"
+            },
+            "net_assets_minor": "97000",
+            "remaining_allocatable_minor": "3000",
+            "source_summary": {
+              "refund_source_minor": "5000",
+              "reimbursement_source_minor": "2000",
+              "remaining_source_minor": "3000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "reimbursement_two",
+        "command": {
+          "action": "create_receipt",
+          "id": "reimbursement_two",
+          "bill_type": "reimbursement",
+          "amount_minor": "3000",
+          "source_amount_minor": "3000",
+          "business_date": "2026-11-05",
+          "operation_id": "stable-reimbursement-two"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "100000"
+            },
+            "source_revision": "9",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "0",
+              "remaining_minor": "10000"
+            },
+            "net_assets_minor": "100000",
+            "remaining_allocatable_minor": "0",
+            "source_summary": {
+              "refund_source_minor": "5000",
+              "reimbursement_source_minor": "5000",
+              "remaining_source_minor": "0",
+              "settlement_reason": "mixed"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "same_operation_replay",
+        "command": {
+          "action": "replay",
+          "operation_id": "stable-reimbursement-two"
+        },
+        "expected": {
+          "result": "replayed",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "100000"
+            },
+            "source_revision": "9",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "0",
+              "remaining_minor": "10000"
+            },
+            "net_assets_minor": "100000",
+            "remaining_allocatable_minor": "0",
+            "source_summary": {
+              "refund_source_minor": "5000",
+              "reimbursement_source_minor": "5000",
+              "remaining_source_minor": "0",
+              "settlement_reason": "mixed"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "excess_reimbursement_rejected",
+        "command": {
+          "action": "create_receipt",
+          "id": "excess",
+          "bill_type": "reimbursement",
+          "amount_minor": "1",
+          "source_amount_minor": "1",
+          "business_date": "2026-11-06"
+        },
+        "expected": {
+          "result": "rejected",
+          "error_code": "allocation.exceeds_remaining",
+          "state": {
+            "account_balances_minor": {
+              "bank": "100000"
+            },
+            "source_revision": "9",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "0",
+              "remaining_minor": "10000"
+            },
+            "net_assets_minor": "100000",
+            "remaining_allocatable_minor": "0",
+            "source_summary": {
+              "refund_source_minor": "5000",
+              "reimbursement_source_minor": "5000",
+              "remaining_source_minor": "0",
+              "settlement_reason": "mixed"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "delete_refund_two",
+        "command": {
+          "action": "delete_receipt",
+          "id": "refund_two"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "98000"
+            },
+            "source_revision": "10",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "2000",
+                "budget_eligible_minor": "2000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "2000",
+              "remaining_minor": "8000"
+            },
+            "net_assets_minor": "98000",
+            "remaining_allocatable_minor": "2000",
+            "source_summary": {
+              "refund_source_minor": "3000",
+              "reimbursement_source_minor": "5000",
+              "remaining_source_minor": "2000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "delete_linked_source_rejected",
+        "command": {
+          "action": "delete_source"
+        },
+        "expected": {
+          "result": "rejected",
+          "error_code": "bill.has_allocations",
+          "state": {
+            "account_balances_minor": {
+              "bank": "98000"
+            },
+            "source_revision": "10",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "2000",
+                "budget_eligible_minor": "2000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "2000",
+              "remaining_minor": "8000"
+            },
+            "net_assets_minor": "98000",
+            "remaining_allocatable_minor": "2000",
+            "source_summary": {
+              "refund_source_minor": "3000",
+              "reimbursement_source_minor": "5000",
+              "remaining_source_minor": "2000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "delete_refund_one",
+        "command": {
+          "action": "delete_receipt",
+          "id": "refund_one"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "95000"
+            },
+            "source_revision": "11",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "5000",
+                "budget_eligible_minor": "5000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "5000",
+              "remaining_minor": "5000"
+            },
+            "net_assets_minor": "95000",
+            "remaining_allocatable_minor": "5000",
+            "source_summary": {
+              "refund_source_minor": "0",
+              "reimbursement_source_minor": "5000",
+              "remaining_source_minor": "5000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "delete_reimbursement_one",
+        "command": {
+          "action": "delete_receipt",
+          "id": "reimbursement_one"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "93000"
+            },
+            "source_revision": "12",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "7000",
+                "budget_eligible_minor": "7000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "7000",
+              "remaining_minor": "3000"
+            },
+            "net_assets_minor": "93000",
+            "remaining_allocatable_minor": "7000",
+            "source_summary": {
+              "refund_source_minor": "0",
+              "reimbursement_source_minor": "3000",
+              "remaining_source_minor": "7000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "delete_reimbursement_two",
+        "command": {
+          "action": "delete_receipt",
+          "id": "reimbursement_two"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "90000"
+            },
+            "source_revision": "13",
+            "source_deleted": false,
+            "source_tracking": {
+              "present": true,
+              "value": true
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "10000",
+                "budget_eligible_minor": "10000"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "10000",
+              "remaining_minor": "0"
+            },
+            "net_assets_minor": "90000",
+            "remaining_allocatable_minor": "10000",
+            "source_summary": {
+              "refund_source_minor": "0",
+              "reimbursement_source_minor": "0",
+              "remaining_source_minor": "10000",
+              "settlement_reason": "open"
+            }
+          }
+        }
+      },
+      {
+        "step_id": "delete_unlinked_source",
+        "command": {
+          "action": "delete_source"
+        },
+        "expected": {
+          "result": "applied",
+          "error_code": null,
+          "state": {
+            "account_balances_minor": {
+              "bank": "100000"
+            },
+            "source_revision": "14",
+            "source_deleted": true,
+            "source_tracking": {
+              "present": false
+            },
+            "periods": {
+              "october": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              },
+              "november": {
+                "income_minor": "0",
+                "expense_minor": "0",
+                "budget_eligible_minor": "0"
+              }
+            },
+            "budget": {
+              "limit_minor": "10000",
+              "spent_minor": "0",
+              "remaining_minor": "10000"
+            },
+            "net_assets_minor": "100000"
+          }
+        }
+      }
+    ]
+  },
+  "future_typed_revisions": [
+    {
+      "id": "explicit_source_increase_preserves_receipt_cash",
+      "capability": "receipt-restructure-v1",
+      "implementation_status": "not_implemented",
+      "action": "revise_source",
+      "before": {
+        "paid_minor": "10000",
+        "refund_source_minor": "3000",
+        "reimbursement_source_minor": "2000",
+        "account_balance_minor": "95000"
+      },
+      "request": {
+        "source_base_revision": "7",
+        "paid_minor": "12000",
+        "modified_entity_ids": [
+          "source"
+        ]
+      },
+      "expected": {
+        "paid_minor": "12000",
+        "remaining_source_minor": "7000",
+        "account_balance_minor": "93000",
+        "net_expense_minor": "7000",
+        "unchanged_receipt_cash_minor": "5000",
+        "unchanged_foreign_receipts_touched": false
+      }
+    }
+  ],
+  "wire_evidence_at_fixture_creation": "not_executed",
+  "wire_verification_matrix": [
+    {
+      "id": "W01_create_legacy",
+      "surface": "push_create_ack",
+      "input": "expense_tracking_absent",
+      "must_omit": [
+        "payload.reimbursement_tracking"
+      ],
+      "required_phase": "real_http"
+    },
+    {
+      "id": "W02_get_legacy",
+      "surface": "current_get",
+      "input": "old_expense_raw_without_tracking",
+      "must_omit": [
+        "event.data.payload.reimbursement_tracking",
+        "editable_payload.reimbursement_tracking"
+      ],
+      "required_phase": "real_http"
+    },
+    {
+      "id": "W03_pull_legacy",
+      "surface": "new_pull_page",
+      "input": "old_expense_raw_without_tracking",
+      "must_omit": [
+        "events[].data.payload.reimbursement_tracking"
+      ],
+      "required_phase": "real_http"
+    },
+    {
+      "id": "W04_snapshot_legacy",
+      "surface": "new_snapshot_page",
+      "input": "old_expense_raw_without_tracking",
+      "must_omit": [
+        "events[].data.payload.reimbursement_tracking"
+      ],
+      "required_phase": "real_http"
+    },
+    {
+      "id": "W05_nonexpense",
+      "surface": "create_get_pull_snapshot",
+      "input": "income_tracking_absent",
+      "must_omit": [
+        "payload.reimbursement_tracking",
+        "source_summary"
+      ],
+      "required_phase": "real_http"
+    },
+    {
+      "id": "W06_frozen_pages",
+      "surface": "old_materialized_pull_snapshot",
+      "input": "precapability_page_without_fields",
+      "assertions": [
+        "exact_original_utf8",
+        "same_sha256",
+        "no_null_or_false_injection",
+        "no_new_source_summary"
+      ],
+      "required_phase": "real_http"
+    },
+    {
+      "id": "W07_explicit_tracking",
+      "surface": "create_get_pull_snapshot",
+      "input": "explicit_true_and_false",
+      "assertions": [
+        "strict_boolean_preserved",
+        "no_null"
+      ],
+      "required_phase": "real_http"
+    },
+    {
+      "id": "W08_source_revision",
+      "surface": "receipt_create_update_delete_and_replay",
+      "assertions": [
+        "source_summary_same_commit_and_revision",
+        "hidden_receipt_ids_absent",
+        "replay_does_not_touch_source_again"
+      ],
+      "required_phase": "real_pg_http"
+    }
+  ]
+}

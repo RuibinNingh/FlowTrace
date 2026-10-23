@@ -1,0 +1,763 @@
+{
+  "schema_version": "flowtrace.scenarios.v1",
+  "created_on": "2026-10-21",
+  "timezone": "Asia/Shanghai",
+  "data_classification": "synthetic",
+  "api_payloads": false,
+  "note": "步骤为声明式业务动作，正式请求由真实OpenAPI/领域契约适配；未执行，不是应用通过回执。",
+  "contract_refs": [
+    "contracts/api.md",
+    "contracts/money-time.md",
+    "contracts/ledger-rules.md",
+    "contracts/permissions.md",
+    "contracts/sync-v1.md",
+    "contracts/attachments.md",
+    "contracts/jobs.md"
+  ],
+  "actors": [
+    "alice",
+    "bob",
+    "carol",
+    "operator",
+    "recovery"
+  ],
+  "journeys": [
+    {
+      "id": "J01",
+      "title": "首次使用与快速记账",
+      "feature_ids": [
+        "F01",
+        "F02",
+        "F10",
+        "F19",
+        "F20"
+      ],
+      "task_ids": [
+        "P2-01",
+        "P3-01",
+        "P3-04",
+        "P5-03"
+      ],
+      "acceptance_ids": [
+        "E07",
+        "E19"
+      ],
+      "preconditions": [
+        "专用测试服务/账号与空私人账本",
+        "不使用现有钱迹账号或真钱账本"
+      ],
+      "steps": [
+        {
+          "action": "配置测试服务器并兑换一次性邀请",
+          "route": "/setup/server"
+        },
+        {
+          "action": "不开资产录入支出，计算器输入10+2.30",
+          "route": "/books/:bookId/entry?type=expense",
+          "input": {
+            "expression": "10+2.30",
+            "currency": "CNY",
+            "currency_scale": 2
+          }
+        },
+        {
+          "action": "保存一次、点击再记、取消下一张草稿，然后启用资产记收入/转账"
+        },
+        {
+          "action": "切后台、结束FlowTrace测试进程并重启后查看流水/草稿"
+        }
+      ],
+      "expected": {
+        "amount_minor": "1230",
+        "first_save_bill_count": 1,
+        "unconfirmed_draft_is_bill": false,
+        "invariants": [
+          "保存/再记/取消符合UI契约",
+          "本地保存与服务端确认状态分别呈现",
+          "重启不丢已持久化的outbox"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J02",
+      "title": "单笔、筛选与批量维护",
+      "feature_ids": [
+        "F03",
+        "F04",
+        "F05",
+        "F06"
+      ],
+      "task_ids": [
+        "P3-01",
+        "P3-02"
+      ],
+      "acceptance_ids": [
+        "E01",
+        "E03",
+        "E19"
+      ],
+      "preconditions": [
+        "合成账单带分类/标签/图片",
+        "两测试用户有相互隔离资源"
+      ],
+      "steps": [
+        {
+          "action": "复制后修改源账金额/日期/账户，再删除复制账"
+        },
+        {
+          "action": "组合分类、标签、金额、来源、图片及统计标记筛选",
+          "route": "/search"
+        },
+        {
+          "action": "多选记录，批量修改分类和标记，其他字段保持不变；下载所选允许图片"
+        },
+        {
+          "action": "提交期间使其中记录发生修订或失权并查看失败项"
+        }
+      ],
+      "expected": {
+        "copy_has_new_uuid": true,
+        "unchanged_fields_preserved": true,
+        "invariants": [
+          "旧分录撤销与新分录应用同事务",
+          "结果ID集合与筛选一致",
+          "批量原子/逐项失败依合同显示，不误改未选记录"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J03",
+      "title": "资产、手续费、信用卡与债务",
+      "feature_ids": [
+        "F02",
+        "F11",
+        "F12"
+      ],
+      "task_ids": [
+        "P4-01"
+      ],
+      "acceptance_ids": [
+        "E07",
+        "E08",
+        "E09"
+      ],
+      "preconditions": [
+        "alice私人现金/银行账户与信用卡/债务测试账户"
+      ],
+      "steps": [
+        {
+          "action": "设期初现金1000.00、银行500.00",
+          "input": {
+            "currency": "CNY",
+            "currency_scale": 2,
+            "cash_minor": "100000",
+            "bank_minor": "50000"
+          }
+        },
+        {
+          "action": "现金转银行100.00，另记关联手续费1.00",
+          "input": {
+            "amount_minor": "10000",
+            "fee_minor": "100"
+          }
+        },
+        {
+          "action": "核对资金后记录信用卡消费/还款、借入/借出/归还、利息与余额调整"
+        },
+        {
+          "action": "用固定汇率做跨币种转账，改变当前汇率后查看历史单"
+        }
+      ],
+      "expected": {
+        "after_first_transfer": {
+          "cash_minor": "89900",
+          "bank_minor": "60000",
+          "total_funds_minor": "149900",
+          "expense_minor": "100"
+        },
+        "invariants": [
+          "本金转账/还款/借贷不计普通收支",
+          "费用只计一次",
+          "个人账户不随共享账本泄露",
+          "历史原币和汇率不因当前汇率改变"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J04",
+      "title": "退款与分次报销",
+      "feature_ids": [
+        "F03",
+        "F07",
+        "F09",
+        "F11",
+        "F12",
+        "F13"
+      ],
+      "task_ids": [
+        "P3-03",
+        "P4-02"
+      ],
+      "acceptance_ids": [
+        "E10",
+        "E11"
+      ],
+      "preconditions": [
+        "同币100元合成支出和有权使用的入账账户"
+      ],
+      "steps": [
+        {
+          "action": "创建100元支出，退款20元",
+          "input": {
+            "currency": "CNY",
+            "currency_scale": 2,
+            "expense_minor": "10000",
+            "refund_minor": "2000"
+          }
+        },
+        {
+          "action": "剩余可报销额内分别关联50元、30元到账",
+          "input": {
+            "reimbursement_parts_minor": [
+              "5000",
+              "3000"
+            ]
+          }
+        },
+        {
+          "action": "尝试超额关联、重发已成功请求，再撤销一条关联并重新检查"
+        },
+        {
+          "action": "覆盖跨月/跨币种分配、有关联时修改/删除原单"
+        }
+      ],
+      "expected": {
+        "after_full_receipts": {
+          "allocated_refund_minor": "2000",
+          "allocated_reimbursement_minor": "8000",
+          "remaining_source_minor": "0",
+          "net_expense_minor": "0"
+        },
+        "invariants": [
+          "R+E不超过源单，额外退款收入须显式分量确认",
+          "回款不再次全部记普通收入",
+          "跨期冲减归原单日期，现金流归到账日期",
+          "有关联原单破坏性修改返回明确限制"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J05",
+      "title": "报表、日历、预算与币种",
+      "feature_ids": [
+        "F01",
+        "F07",
+        "F08",
+        "F09",
+        "F12"
+      ],
+      "task_ids": [
+        "P3-03",
+        "P4-01"
+      ],
+      "acceptance_ids": [
+        "E07",
+        "E08",
+        "E10",
+        "E19"
+      ],
+      "preconditions": [
+        "money-time/ledger黄金样本",
+        "账本month_start_day=25"
+      ],
+      "steps": [
+        {
+          "action": "在2026-10-24、2026-10-25及闰日录入日期型/带偏移的合成账单"
+        },
+        {
+          "action": "切月/年、柱线图/全屏、分类明细、日历选日补记"
+        },
+        {
+          "action": "配置仅总预算、仅分类预算、总分类相等/不等三组合与沿用上期"
+        },
+        {
+          "action": "测试两个排除标记的四种组合、多币种缺失汇率和0分母"
+        }
+      ],
+      "expected": {
+        "period_mapping": {
+          "2026-10-24": "2026-09-25",
+          "2026-10-25": "2026-10-25"
+        },
+        "invariants": [
+          "分类明细合计等于总览",
+          "预算与统计标记独立，不改变账户分录",
+          "缺失汇率返回部分状态而非当零",
+          "没有数据不显示假均值，沿用预算不复制支出"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J06",
+      "title": "多用户、共享与撤权",
+      "feature_ids": [
+        "F10",
+        "F11",
+        "F20"
+      ],
+      "task_ids": [
+        "P2-01",
+        "P2-02",
+        "P3-01"
+      ],
+      "acceptance_ids": [
+        "E01",
+        "E02"
+      ],
+      "preconditions": [
+        "alice/bob/carol及私人/共享账本",
+        "owner/editor/viewer各角色"
+      ],
+      "steps": [
+        {
+          "action": "创建共享账本邀请bob，carol无成员身份，复制另一本设置"
+        },
+        {
+          "action": "bob分别以editor/viewer操作，共享单关联alice私人账户"
+        },
+        {
+          "action": "carol猜ID访问账单/统计/附件/导出；bob尝试修改alice私人财务字段"
+        },
+        {
+          "action": "bob离线修改，owner撤权，再让bob联网同步；禁用用户或会话再试在线请求"
+        }
+      ],
+      "expected": {
+        "setting_copy_bill_count": 0,
+        "invariants": [
+          "非成员所有访问面拒绝且无私人金额泄露",
+          "viewer不能写，editor不获得成员/所有权管理权",
+          "共享不暴露私人账户ID/余额",
+          "撤权后旧离线操作拒绝，未传意图保全为隔离草稿"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J07",
+      "title": "离线、冲突、游标与恢复",
+      "feature_ids": [
+        "F02",
+        "F03",
+        "F04",
+        "F18",
+        "F20",
+        "F21"
+      ],
+      "task_ids": [
+        "P2-02",
+        "P2-03",
+        "P3-04",
+        "P6-03",
+        "P7-03",
+        "P8-02"
+      ],
+      "acceptance_ids": [
+        "E03",
+        "E04",
+        "E05",
+        "E13",
+        "E14",
+        "E16",
+        "E17"
+      ],
+      "preconditions": [
+        "至少两测试客户端和故障可控隔离服务",
+        "真实PostgreSQL才执行提交顺序子用例"
+      ],
+      "steps": [
+        {
+          "action": "断网新增/改/删并终止测试进程重启，另一端并发改/删同单"
+        },
+        {
+          "action": "服务端成功后丢响应，重发同operation_id；换正文再次请求"
+        },
+        {
+          "action": "用屏障尝试先分配修订/晚提交，拉取期间并发写和分页重试"
+        },
+        {
+          "action": "墓碑过期后重建；另在旧备份恢复换epoch时保全完整本地快照，包含恢复点后已确认且已离开outbox的账单"
+        }
+      ],
+      "expected": {
+        "different_body_error": "idempotency_mismatch",
+        "invariants": [
+          "每operation最多一份正式业务结果",
+          "冲突保留基准/本地/服务器意图，不静默覆盖",
+          "scope锁保持提交有序，commit组不分页拆开",
+          "完整快照差异核对找回曾确认账单，不直接覆盖也不全部重放"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J08",
+      "title": "分期、周期与任务重跑",
+      "feature_ids": [
+        "F11",
+        "F14",
+        "F15",
+        "F20"
+      ],
+      "task_ids": [
+        "P4-03",
+        "P4-04"
+      ],
+      "acceptance_ids": [
+        "E06",
+        "E07",
+        "E11"
+      ],
+      "preconditions": [
+        "独立worker及真实隔离PostgreSQL",
+        "固定时区/工作日日历，未配置日历时应明确失败"
+      ],
+      "steps": [
+        {
+          "action": "建立本金100元、总费用1元、3期计划并预览",
+          "input": {
+            "principal_minor": "10000",
+            "fee_minor": "100",
+            "period_count": 3,
+            "currency": "CNY",
+            "currency_scale": 2
+          }
+        },
+        {
+          "action": "执行一期后重复提交/多worker抢占、旧租约迟交，再提前结清/终止后续"
+        },
+        {
+          "action": "周期从1月31日起、闰日、每N天、法定工作日及次数/截止日边界"
+        },
+        {
+          "action": "停worker多期再启动补跑，重复人工重试同一期"
+        }
+      ],
+      "expected": {
+        "principal_parts_minor": [
+          "3333",
+          "3333",
+          "3334"
+        ],
+        "fee_parts_minor": [
+          "33",
+          "33",
+          "34"
+        ],
+        "monthly_from_anchor": [
+          "2026-01-31",
+          "2026-02-28",
+          "2026-03-31"
+        ],
+        "missing_calendar_error": "schedule.calendar_unavailable",
+        "invariants": [
+          "发生键仅一正式账单，旧租约不能覆盖",
+          "分期模式明确，计划本金与每期不重复消费",
+          "保存后原计划锁定，修改通过终止新建",
+          "停止/提前结清不重写已发生账单"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J09",
+      "title": "七种存钱计划",
+      "feature_ids": [
+        "F11",
+        "F12",
+        "F16"
+      ],
+      "task_ids": [
+        "P4-05"
+      ],
+      "acceptance_ids": [
+        "E06",
+        "E19"
+      ],
+      "preconditions": [
+        "七模式参数表、私人/共享有权账户"
+      ],
+      "steps": [
+        {
+          "action": "逐一创建灵活、365、52周、逆向52周、定额、12存单、36存单小额计划",
+          "input": {
+            "mode_labels": [
+              "灵活",
+              "365",
+              "52周",
+              "52周逆向",
+              "定额",
+              "12存单",
+              "36存单"
+            ]
+          }
+        },
+        {
+          "action": "区分进度记录与关联转账，分别存入/修改/取消"
+        },
+        {
+          "action": "达到目标/截止/完成，调整排序并核对计划表和进度"
+        }
+      ],
+      "expected": {
+        "mode_count": 7,
+        "invariants": [
+          "创建/到期安排不自动移动资金",
+          "仅进度不改变资产，关联转账只发生一次",
+          "修改删除真实转账同步调整进度",
+          "模式及取消/完成语义保留原应用U边界"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J10",
+      "title": "无障碍、截图与候选确认",
+      "feature_ids": [
+        "F02",
+        "F17",
+        "F19",
+        "F21"
+      ],
+      "task_ids": [
+        "P5-01"
+      ],
+      "acceptance_ids": [
+        "E15"
+      ],
+      "preconditions": [
+        "合成支付页面/截图，未含真实支付",
+        "AI配置默认关闭"
+      ],
+      "steps": [
+        {
+          "action": "Android读取支持的合成支付页与系统分享截图；Web/Windows手工选择测试图片",
+          "input": {
+            "synthetic_text": [
+              "流迹测试商户",
+              "实付12.30",
+              "仅测试，不是真实支付"
+            ],
+            "currency": "CNY",
+            "currency_scale": 2
+          }
+        },
+        {
+          "action": "编辑识别候选，未确认前查询正式账单数量，再确认保存"
+        },
+        {
+          "action": "重复事件/截图、低置信、未知商户、无网、权限拒绝/撤销与AI未配置"
+        }
+      ],
+      "expected": {
+        "before_confirm_bill_count": 0,
+        "confirmed_amount_minor": "1230",
+        "ai_enabled_by_default": false,
+        "invariants": [
+          "候选经用户确认才成为正式账单",
+          "失败可回到可编辑草稿，手工记账可用",
+          "重复确认只一笔，诊断不存OCR原文/原图"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J11",
+      "title": "钱迹迁移、格式导出与含附件恢复",
+      "feature_ids": [
+        "F18",
+        "F20",
+        "F22"
+      ],
+      "task_ids": [
+        "P5-02",
+        "P5-04",
+        "P8-02"
+      ],
+      "acceptance_ids": [
+        "E12",
+        "E13",
+        "E14"
+      ],
+      "preconditions": [
+        "合成Excel/CSV及合法脱敏的钱迹样本",
+        "隔离备份恢复目标，不复用正在使用数据库/附件目录"
+      ],
+      "steps": [
+        {
+          "action": "预览字段映射、无效行、来源ID重复及合法同额两笔",
+          "input": {
+            "same_amount_distinct_source_ids": [
+              "synthetic-001",
+              "synthetic-002"
+            ],
+            "amount_minor": "1230",
+            "currency": "CNY",
+            "currency_scale": 2
+          }
+        },
+        {
+          "action": "确认导入、同源再导入、查看历史和失败明细、撤销批次存在后续编辑的分支"
+        },
+        {
+          "action": "按范围/排序导出XLSX/JSON与图片嵌入/链接"
+        },
+        {
+          "action": "一致备份数据库/设置/附件/版本/哈希，恢复新库新目录并核对登录权限/计划/账务"
+        }
+      ],
+      "expected": {
+        "preview_writes": false,
+        "valid_same_amount_row_count": 2,
+        "invariants": [
+          "同源重复不翻倍，合法同额账不误删",
+          "失败定位明确，撤销不覆盖后续合法编辑",
+          "恢复文件校验和/关联/余额一致",
+          "旧会话失效与epoch快照保护按同步合同"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    },
+    {
+      "id": "J12",
+      "title": "后台A01至A07与三端一致",
+      "feature_ids": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F07",
+        "F08",
+        "F09",
+        "F10",
+        "F11",
+        "F12",
+        "F13",
+        "F14",
+        "F15",
+        "F16",
+        "F17",
+        "F18",
+        "F19",
+        "F20",
+        "F21",
+        "F22"
+      ],
+      "task_ids": [
+        "P2-04",
+        "P5-04",
+        "P6-03",
+        "P7-03",
+        "P8-01"
+      ],
+      "acceptance_ids": [
+        "E01",
+        "E18",
+        "E19",
+        "E20"
+      ],
+      "preconditions": [
+        "operator service_admin/recovery recovery_admin分权",
+        "Android/Web/Windows与后台连接同一隔离服务"
+      ],
+      "steps": [
+        {
+          "action": "浏览器逐项走A01登录概况、A02邀请账号、A03角色与最后身份保护"
+        },
+        {
+          "action": "A04失败作业受控重试/停止，A05备份校验/高权限下载/隔离恢复预览与回执"
+        },
+        {
+          "action": "A06配额/附件/OCR可选AI配置检查，A07审计检索/脱敏导出；普通用户/错误CSRF/低权限尝试越权"
+        },
+        {
+          "action": "三端轮流记账/浏览/统计、冲突解决；模拟诊断空间满/必要审计写失败"
+        }
+      ],
+      "expected": {
+        "admin_ids": [
+          "A01",
+          "A02",
+          "A03",
+          "A04",
+          "A05",
+          "A06",
+          "A07"
+        ],
+        "invariants": [
+          "普通管理身份不读私人账/原图/原始备份",
+          "最后有效管理身份防误撤销",
+          "任务重试不重复，密钥不回显",
+          "三端业务结果一致，系统能力按适用性分别验证",
+          "诊断失败不改判已提交业务，必要审计失败原子回滚"
+        ]
+      },
+      "execution": {
+        "status": "not_run",
+        "evidence": [],
+        "reason": "P0声明式验收输入；待对应工程、隔离服务与平台环境就绪后执行"
+      }
+    }
+  ]
+}

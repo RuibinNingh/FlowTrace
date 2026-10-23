@@ -1,0 +1,146 @@
+{
+  "format": "flowtrace-stage-image-plan-golden-v1",
+  "evidence": "Actual open_stage_source -> operations_for -> target_ids -> plan_transfers; no database authorization claim; URL is never fetched",
+  "cases": [
+    {
+      "name": "native_source_image_to_upload_to_same_batch_source_book",
+      "format": "flowtrace_json",
+      "source_base64": "eyJhdHRhY2htZW50cyI6W3siYXR0YWNobWVudF9pZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwNiIsImhyZWYiOiIvYXBpL3YxL2F0dGFjaG1lbnRzLzAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwNi9jb250ZW50IiwibWVkaWFfdHlwZSI6ImltYWdlL3BuZyIsInNoYTI1NiI6Ijg2NDdkYjU5NmJmMjNkMmIwY2NhNGQ3YjgyNjcyNDYwNGJlNjZlMjJhODI4NWY1OGVkYTFiNjZhMmFiNWUwMzMiLCJzaXplX2J5dGVzIjo3N31dLCJkb2N1bWVudCI6eyJmb3JtYXQiOiJmbG93dHJhY2UtZGF0YS12MSIsInJvd3MiOlt7ImVudGl0eV90eXBlIjoiYmlsbCIsInBheWxvYWQiOnsiYWNjb3VudF9pZCI6bnVsbCwiYXR0YWNobWVudF9pZHMiOlsiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDA2Il0sImJpbGxfdHlwZSI6ImV4cGVuc2UiLCJib29rX2lkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDA4IiwiYnVzaW5lc3NfZGF0ZSI6IjIwMjYtMTAtMjAiLCJidXNpbmVzc190aW1lem9uZSI6IkFzaWEvU2hhbmdoYWkiLCJtb25leSI6eyJhbW91bnRfbWlub3IiOiIxMjUiLCJjdXJyZW5jeSI6IkNOWSIsImN1cnJlbmN5X3NjYWxlIjoyfSwic291cmNlIjoiaW1wb3J0In0sInNjb3BlX2lkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDA4Iiwic291cmNlX2lkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDA5In0seyJlbnRpdHlfdHlwZSI6ImJvb2siLCJwYXlsb2FkIjp7ImN1cnJlbmN5IjoiQ05ZIiwibW9udGhfc3RhcnRfZGF5IjoxNSwibmFtZSI6IuWOn+eUn+WQjOaJuei0puacrCDwn5iAIiwidGltZXpvbmUiOiJBc2lhL1NoYW5naGFpIn0sInNjb3BlX2lkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAxIiwic291cmNlX2lkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDA4In1dLCJzb3VyY2VfbmFtZXNwYWNlIjoi5Y6f55Sf5Zu+54mH55Sf5Lqn6buE6YeRIn0sImZvcm1hdCI6ImZsb3d0cmFjZS1leHBvcnQtdjEifQ==",
+      "source_sha256": "4bd665b81ce1286c78bc3b51345753f8d8338b066cedf960f06e627b58be4520",
+      "principal": {
+        "user_id": "00000000-0000-0000-0000-000000000001",
+        "session_id": "00000000-0000-0000-0000-000000000002",
+        "client_id": "00000000-0000-0000-0000-000000000003"
+      },
+      "batch_id": "00000000-0000-0000-0000-000000000005",
+      "sync_epoch": "00000000-0000-0000-0000-000000000004",
+      "selected": {
+        "base64": "iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAIAAAASFvFNAAAAFElEQVR4nGNsYGhgAAMmCMXAwAAAEjwBBMy9LY0AAAAASUVORK5CYII=",
+        "sha256": "8647db596bf23d2b0cca4d7b826724604be66e22a8285f58eda1b66a2ab5e033",
+        "size_bytes": 77,
+        "media_type": "image/png"
+      },
+      "base_mapping": {
+        "source_namespace": "file-import",
+        "template_mapping": null,
+        "scope_mapping": {},
+        "resource_mapping": {},
+        "attachment_transfers": {}
+      },
+      "requirement": {
+        "position": 1,
+        "kind": "image",
+        "source_kind": "identifier",
+        "source_key": "00000000-0000-0000-0000-000000000006",
+        "resource_type": null,
+        "first_line": 1,
+        "attachment_source": {
+          "source_id": "00000000-0000-0000-0000-000000000006",
+          "sha256": "8647db596bf23d2b0cca4d7b826724604be66e22a8285f58eda1b66a2ab5e033",
+          "size_bytes": 77,
+          "media_type": "image/png"
+        }
+      },
+      "uploaded_id": "00000000-0000-0000-0000-000000000007",
+      "target_book_id": "00000000-0000-0000-0000-000000000008",
+      "expected_mapping": {
+        "source_namespace": "file-import",
+        "template_mapping": null,
+        "scope_mapping": {},
+        "resource_mapping": {
+          "00000000-0000-0000-0000-000000000006": "00000000-0000-0000-0000-000000000007"
+        },
+        "attachment_transfers": {
+          "00000000-0000-0000-0000-000000000007": "00000000-0000-0000-0000-000000000008"
+        }
+      },
+      "expected_plan": {
+        "00000000-0000-0000-0000-000000000007": "ac59e9a7-8159-51d6-9609-7488f727a559"
+      },
+      "expected_bill_scope": "ac59e9a7-8159-51d6-9609-7488f727a559",
+      "expected_bill_attachment_ids": [
+        "00000000-0000-0000-0000-000000000007"
+      ],
+      "expected_target_ids": {
+        "00000000-0000-0000-0000-000000000009": "3f933b2b-4dfe-56fd-b44e-0bd9ce593a81",
+        "00000000-0000-0000-0000-000000000008": "ac59e9a7-8159-51d6-9609-7488f727a559"
+      }
+    },
+    {
+      "name": "qianji_image_name_to_upload_to_existing_scope",
+      "format": "qianji_csv",
+      "source_base64": "5pe26Ze0LOexu+Weiyzph5Hpop0s6LSm5Y2V5Zu+54mHDQoyMDI2LTEwLTIwIDEyOjM0LOaUr+WHuiwxLjI1LGh0dHBzOi8vaW52YWxpZC5leGFtcGxlL+acrOS6uuaJi+mAieWOn+Wbvi5wbmcNCg==",
+      "source_sha256": "912253194a5a9faca2d59b4d53a30f5165b90444a29305a22499693b2c8ba482",
+      "principal": {
+        "user_id": "00000000-0000-0000-0000-000000000001",
+        "session_id": "00000000-0000-0000-0000-000000000002",
+        "client_id": "00000000-0000-0000-0000-000000000003"
+      },
+      "batch_id": "00000000-0000-0000-0000-000000000005",
+      "sync_epoch": "00000000-0000-0000-0000-000000000004",
+      "selected": {
+        "base64": "iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAIAAAASFvFNAAAAFElEQVR4nGNsYGhgAAMmCMXAwAAAEjwBBMy9LY0AAAAASUVORK5CYII=",
+        "sha256": "8647db596bf23d2b0cca4d7b826724604be66e22a8285f58eda1b66a2ab5e033",
+        "size_bytes": 77,
+        "media_type": "image/png"
+      },
+      "base_mapping": {
+        "source_namespace": "file-import",
+        "template_mapping": {
+          "scope_id": "00000000-0000-0000-0000-000000000010",
+          "timezone": "Asia/Shanghai",
+          "currency": "CNY",
+          "currency_scale": 2,
+          "account_names": {},
+          "category_names": {},
+          "tag_names": {},
+          "image_urls": {}
+        },
+        "scope_mapping": {},
+        "resource_mapping": {},
+        "attachment_transfers": {}
+      },
+      "requirement": {
+        "position": 1,
+        "kind": "image",
+        "source_kind": "name",
+        "source_key": "https://invalid.example/本人手选原图.png",
+        "resource_type": null,
+        "first_line": 2,
+        "attachment_source": null
+      },
+      "uploaded_id": "00000000-0000-0000-0000-000000000007",
+      "target_book_id": "00000000-0000-0000-0000-000000000010",
+      "expected_mapping": {
+        "source_namespace": "file-import",
+        "template_mapping": {
+          "scope_id": "00000000-0000-0000-0000-000000000010",
+          "timezone": "Asia/Shanghai",
+          "currency": "CNY",
+          "currency_scale": 2,
+          "account_names": {},
+          "category_names": {},
+          "tag_names": {},
+          "image_urls": {
+            "https://invalid.example/本人手选原图.png": "00000000-0000-0000-0000-000000000007"
+          }
+        },
+        "scope_mapping": {},
+        "resource_mapping": {},
+        "attachment_transfers": {
+          "00000000-0000-0000-0000-000000000007": "00000000-0000-0000-0000-000000000010"
+        }
+      },
+      "expected_plan": {
+        "00000000-0000-0000-0000-000000000007": "00000000-0000-0000-0000-000000000010"
+      },
+      "expected_bill_scope": "00000000-0000-0000-0000-000000000010",
+      "expected_bill_attachment_ids": [
+        "00000000-0000-0000-0000-000000000007"
+      ],
+      "expected_target_ids": {
+        "e2010ddb-4c3f-5d40-8265-f5295e0198f2": "6322b532-f92c-5f03-87ac-9d3697ba2fcf"
+      }
+    }
+  ]
+}

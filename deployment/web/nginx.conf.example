@@ -1,0 +1,29 @@
+# 用户端静态站独立origin。后台/API使用另外的服务端origin与既有CORS策略。
+# TLS证书与server_name由部署者填入真实域名；本模板不发布公网服务。
+server {
+    listen 443 ssl;
+    server_name flowtrace.example.invalid;
+    root /srv/flowtrace/web/current;
+    index index.html;
+
+    ssl_certificate /etc/flowtrace/tls/fullchain.pem;
+    ssl_certificate_key /etc/flowtrace/tls/privkey.pem;
+    add_header Cross-Origin-Opener-Policy same-origin always;
+    add_header Cross-Origin-Embedder-Policy require-corp always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy no-referrer always;
+    # Filenames are stable within a release. HTTP caching must not hide an
+    # update from the worker; complete version pinning lives in CacheStorage.
+    add_header Cache-Control "no-store" always;
+    location = /flutter_service_worker.js {
+        default_type application/javascript;
+        try_files $uri =404;
+    }
+    location ~ ^/(api|admin|auth)(/|$) { return 404; }
+    # Missing script/wasm/font files MUST stay 404: serving index.html here
+    # would hide incomplete deploys and fail resource integrity verification.
+    location ~* \.(js|wasm|json|bin|otf|ttf|png|jpg|jpeg|webp|gif|svg|ico|txt|symbols)$ {
+        try_files $uri =404;
+    }
+    location / { try_files $uri $uri/ /index.html; }
+}

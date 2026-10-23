@@ -1,0 +1,101 @@
+{
+  "format": "flowtrace-stage-mapping-golden-v1",
+  "canonicalization": "UTF-8; keys sorted by Unicode scalar value; compact JSON; ensure_ascii=false; retain normalized defaults/null; SHA-256",
+  "cases": [
+    {
+      "name": "empty_defaults",
+      "input": {},
+      "normalized": {
+        "source_namespace": "file-import",
+        "template_mapping": null,
+        "scope_mapping": {},
+        "resource_mapping": {},
+        "attachment_transfers": {}
+      },
+      "canonical_json": "{\"attachment_transfers\":{},\"resource_mapping\":{},\"scope_mapping\":{},\"source_namespace\":\"file-import\",\"template_mapping\":null}",
+      "sha256": "a27704b5cfe66bdd9b13165a9a296204864917fb79a9a669f6320ac2db580bae"
+    },
+    {
+      "name": "qianji_unicode_template",
+      "input": {
+        "source_namespace": "钱迹 V10 😀",
+        "template_mapping": {
+          "scope_id": "00000000-0000-0000-0000-000000000001",
+          "timezone": "Asia/Shanghai",
+          "account_names": {
+            "现金": "00000000-0000-0000-0000-000000000002",
+            "😀共享卡": "00000000-0000-0000-0000-000000000003",
+            "图标卡": "00000000-0000-0000-0000-000000000004"
+          },
+          "category_names": {
+            "午餐/外卖": "00000000-0000-0000-0000-000000000005"
+          },
+          "tag_names": {
+            "工作#旅行": "00000000-0000-0000-0000-000000000006"
+          },
+          "image_urls": {
+            "http://invalid/仅原引用😀.png": "00000000-0000-0000-0000-000000000007"
+          }
+        }
+      },
+      "normalized": {
+        "source_namespace": "钱迹 V10 😀",
+        "template_mapping": {
+          "scope_id": "00000000-0000-0000-0000-000000000001",
+          "timezone": "Asia/Shanghai",
+          "currency": "CNY",
+          "currency_scale": 2,
+          "account_names": {
+            "现金": "00000000-0000-0000-0000-000000000002",
+            "😀共享卡": "00000000-0000-0000-0000-000000000003",
+            "图标卡": "00000000-0000-0000-0000-000000000004"
+          },
+          "category_names": {
+            "午餐/外卖": "00000000-0000-0000-0000-000000000005"
+          },
+          "tag_names": {
+            "工作#旅行": "00000000-0000-0000-0000-000000000006"
+          },
+          "image_urls": {
+            "http://invalid/仅原引用😀.png": "00000000-0000-0000-0000-000000000007"
+          }
+        },
+        "scope_mapping": {},
+        "resource_mapping": {},
+        "attachment_transfers": {}
+      },
+      "canonical_json": "{\"attachment_transfers\":{},\"resource_mapping\":{},\"scope_mapping\":{},\"source_namespace\":\"钱迹 V10 😀\",\"template_mapping\":{\"account_names\":{\"现金\":\"00000000-0000-0000-0000-000000000002\",\"图标卡\":\"00000000-0000-0000-0000-000000000004\",\"😀共享卡\":\"00000000-0000-0000-0000-000000000003\"},\"category_names\":{\"午餐/外卖\":\"00000000-0000-0000-0000-000000000005\"},\"currency\":\"CNY\",\"currency_scale\":2,\"image_urls\":{\"http://invalid/仅原引用😀.png\":\"00000000-0000-0000-0000-000000000007\"},\"scope_id\":\"00000000-0000-0000-0000-000000000001\",\"tag_names\":{\"工作#旅行\":\"00000000-0000-0000-0000-000000000006\"},\"timezone\":\"Asia/Shanghai\"}}",
+      "sha256": "11be4a08af32f9675cff516cd1b3df57a9c6f475965e215bc69621379b948807"
+    },
+    {
+      "name": "native_identifier_resources",
+      "input": {
+        "source_namespace": "原生 \"导入\"\n数据",
+        "scope_mapping": {
+          "00000000-0000-0000-0000-000000000011": "00000000-0000-0000-0000-000000000021"
+        },
+        "resource_mapping": {
+          "00000000-0000-0000-0000-000000000012": "00000000-0000-0000-0000-000000000022"
+        },
+        "attachment_transfers": {
+          "00000000-0000-0000-0000-000000000022": "00000000-0000-0000-0000-000000000021"
+        }
+      },
+      "normalized": {
+        "source_namespace": "原生 \"导入\"\n数据",
+        "template_mapping": null,
+        "scope_mapping": {
+          "00000000-0000-0000-0000-000000000011": "00000000-0000-0000-0000-000000000021"
+        },
+        "resource_mapping": {
+          "00000000-0000-0000-0000-000000000012": "00000000-0000-0000-0000-000000000022"
+        },
+        "attachment_transfers": {
+          "00000000-0000-0000-0000-000000000022": "00000000-0000-0000-0000-000000000021"
+        }
+      },
+      "canonical_json": "{\"attachment_transfers\":{\"00000000-0000-0000-0000-000000000022\":\"00000000-0000-0000-0000-000000000021\"},\"resource_mapping\":{\"00000000-0000-0000-0000-000000000012\":\"00000000-0000-0000-0000-000000000022\"},\"scope_mapping\":{\"00000000-0000-0000-0000-000000000011\":\"00000000-0000-0000-0000-000000000021\"},\"source_namespace\":\"原生 \\\"导入\\\"\\n数据\",\"template_mapping\":null}",
+      "sha256": "fdb9774942dfc9e9ad678d27926c2776b3fa9f3c9637cf8006dc26235a0cc309"
+    }
+  ]
+}

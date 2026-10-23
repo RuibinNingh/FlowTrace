@@ -1,0 +1,3466 @@
+{
+  "contract_version": "1.0",
+  "scenario_count": 8,
+  "scenarios": [
+    {
+      "contract_version": "1.0",
+      "scenario_id": "L01_basic_flags_edit_delete",
+      "evidence_level": "N",
+      "design_decisions": [
+        "independent-statistics-budget-flags",
+        "transfer-fee-once"
+      ],
+      "setup": {
+        "principal": "alice",
+        "book_id": "personal",
+        "report_currency": "CNY",
+        "report_scale": 2,
+        "accounts": [
+          {
+            "id": "bank",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "cash",
+            "owner_user_id": "alice",
+            "opening_minor": "100000",
+            "include_in_net_assets": true
+          },
+          {
+            "id": "cash",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "cash",
+            "owner_user_id": "alice",
+            "opening_minor": "10000",
+            "include_in_net_assets": true
+          },
+          {
+            "id": "credit",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "credit_card",
+            "owner_user_id": "alice",
+            "opening_minor": "-5000",
+            "include_in_net_assets": true
+          }
+        ],
+        "period_queries": [
+          {
+            "period_id": "all",
+            "start_date": "2026-01-01",
+            "end_date_exclusive": "2027-01-01"
+          }
+        ],
+        "budgets": []
+      },
+      "steps": [
+        {
+          "step_id": "income",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "salary",
+              "book_id": "personal",
+              "bill_type": "income",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "10000"
+              },
+              "account_id": "bank",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "salary",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "110000",
+                "cash": "10000",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "0",
+                  "net_minor": "10000",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "120000",
+                "liabilities_minor": "5000",
+                "net_minor": "115000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "expense",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "food_1",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "1230"
+              },
+              "account_id": "bank",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "108770",
+                "cash": "10000",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "1230",
+                  "net_minor": "8770",
+                  "budget_eligible_minor": "1230",
+                  "category_expense_minor": {
+                    "food": "1230"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1230"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "118770",
+                "liabilities_minor": "5000",
+                "net_minor": "113770"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "exclude_statistics",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "travel",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "2000"
+              },
+              "account_id": "cash",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "travel",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": true,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "108770",
+                "cash": "8000",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "1230",
+                  "net_minor": "8770",
+                  "budget_eligible_minor": "3230",
+                  "category_expense_minor": {
+                    "food": "1230"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1230",
+                    "travel": "2000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "116770",
+                "liabilities_minor": "5000",
+                "net_minor": "111770"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "exclude_budget",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "food_2",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "1000"
+              },
+              "account_id": "cash",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": true
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "108770",
+                "cash": "7000",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "2230",
+                  "net_minor": "7770",
+                  "budget_eligible_minor": "3230",
+                  "category_expense_minor": {
+                    "food": "2230"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1230",
+                    "travel": "2000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "115770",
+                "liabilities_minor": "5000",
+                "net_minor": "110770"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "exclude_both",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "hidden",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "500"
+              },
+              "account_id": "cash",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": true,
+                "exclude_from_budget": true
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "108770",
+                "cash": "6500",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "2230",
+                  "net_minor": "7770",
+                  "budget_eligible_minor": "3230",
+                  "category_expense_minor": {
+                    "food": "2230"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1230",
+                    "travel": "2000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "115270",
+                "liabilities_minor": "5000",
+                "net_minor": "110270"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "transfer_fee",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "move",
+              "book_id": "personal",
+              "bill_type": "transfer",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "5000"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "from_account_id": "bank",
+              "to_account_id": "cash",
+              "fee": {
+                "money": {
+                  "currency": "CNY",
+                  "currency_scale": 2,
+                  "amount_minor": "100"
+                },
+                "account_id": "bank",
+                "category_id": "fees"
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "103670",
+                "cash": "11500",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "2330",
+                  "net_minor": "7670",
+                  "budget_eligible_minor": "3330",
+                  "category_expense_minor": {
+                    "food": "2230",
+                    "fees": "100"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1230",
+                    "travel": "2000",
+                    "fees": "100"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "115170",
+                "liabilities_minor": "5000",
+                "net_minor": "110170"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "edit_amount",
+          "command": {
+            "action": "update_bill",
+            "bill_id": "food_1",
+            "changes": {
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "1500"
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "103400",
+                "cash": "11500",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "2600",
+                  "net_minor": "7400",
+                  "budget_eligible_minor": "3600",
+                  "category_expense_minor": {
+                    "food": "2500",
+                    "fees": "100"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1500",
+                    "travel": "2000",
+                    "fees": "100"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "114900",
+                "liabilities_minor": "5000",
+                "net_minor": "109900"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "delete_expense",
+          "command": {
+            "action": "delete_bill",
+            "bill_id": "food_2"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "103400",
+                "cash": "12500",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "1600",
+                  "net_minor": "8400",
+                  "budget_eligible_minor": "3600",
+                  "category_expense_minor": {
+                    "food": "1500",
+                    "fees": "100"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1500",
+                    "travel": "2000",
+                    "fees": "100"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "115900",
+                "liabilities_minor": "5000",
+                "net_minor": "110900"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "delete_transfer_and_fee",
+          "command": {
+            "action": "delete_bill",
+            "bill_id": "move"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "108500",
+                "cash": "7500",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "1500",
+                  "net_minor": "8500",
+                  "budget_eligible_minor": "3500",
+                  "category_expense_minor": {
+                    "food": "1500"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1500",
+                    "travel": "2000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "116000",
+                "liabilities_minor": "5000",
+                "net_minor": "111000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "no_asset_expense",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "unlinked",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "50"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "108500",
+                "cash": "7500",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "1550",
+                  "net_minor": "8450",
+                  "budget_eligible_minor": "3550",
+                  "category_expense_minor": {
+                    "food": "1550"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1550",
+                    "travel": "2000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "116000",
+                "liabilities_minor": "5000",
+                "net_minor": "111000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "discount_once",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "discounted",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "100"
+              },
+              "gross_amount_minor": "120",
+              "discount_minor": "20",
+              "account_id": "bank",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "108400",
+                "cash": "7500",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "1650",
+                  "net_minor": "8350",
+                  "budget_eligible_minor": "3650",
+                  "category_expense_minor": {
+                    "food": "1650"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1650",
+                    "travel": "2000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "115900",
+                "liabilities_minor": "5000",
+                "net_minor": "110900"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "discount_rejected",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "bad_discount",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "100"
+              },
+              "gross_amount_minor": "120",
+              "discount_minor": "121",
+              "account_id": "bank",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "rejected",
+            "error_code": "bill.discount_invalid",
+            "state": {
+              "account_balances_minor": {
+                "bank": "108400",
+                "cash": "7500",
+                "credit": "-5000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "10000",
+                  "expense_minor": "1650",
+                  "net_minor": "8350",
+                  "budget_eligible_minor": "3650",
+                  "category_expense_minor": {
+                    "food": "1650"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "1650",
+                    "travel": "2000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "115900",
+                "liabilities_minor": "5000",
+                "net_minor": "110900"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "scenario_id": "L02_refund_reimbursement_cross_period",
+      "evidence_level": "N",
+      "design_decisions": [
+        "refund-reimbursement-reduce-original-period",
+        "explicit-excess-income",
+        "allocations-conserve-source"
+      ],
+      "setup": {
+        "principal": "alice",
+        "book_id": "personal",
+        "report_currency": "CNY",
+        "report_scale": 2,
+        "accounts": [
+          {
+            "id": "bank",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "cash",
+            "owner_user_id": "alice",
+            "opening_minor": "100000",
+            "include_in_net_assets": true
+          }
+        ],
+        "period_queries": [
+          {
+            "period_id": "oct",
+            "start_date": "2026-10-01",
+            "end_date_exclusive": "2026-11-01"
+          },
+          {
+            "period_id": "nov",
+            "start_date": "2026-11-01",
+            "end_date_exclusive": "2026-12-01"
+          }
+        ],
+        "budgets": []
+      },
+      "steps": [
+        {
+          "step_id": "original",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "original",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "10000"
+              },
+              "account_id": "bank",
+              "business_date": "2026-10-31",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "90000"
+              },
+              "periods": {
+                "oct": {
+                  "income_minor": "0",
+                  "expense_minor": "10000",
+                  "net_minor": "-10000",
+                  "budget_eligible_minor": "10000",
+                  "category_expense_minor": {
+                    "food": "10000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000"
+                  }
+                },
+                "nov": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "90000",
+                "liabilities_minor": "0",
+                "net_minor": "90000"
+              },
+              "remaining_allocatable_minor": {
+                "original": "10000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "partial_refund",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "r1",
+              "book_id": "personal",
+              "bill_type": "refund",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "2000"
+              },
+              "account_id": "bank",
+              "business_date": "2026-11-03",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "allocations": [
+                {
+                  "source_bill_id": "original",
+                  "source_amount_minor": "2000",
+                  "receipt_amount_minor": "2000"
+                }
+              ],
+              "income_component_minor": "0"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "92000"
+              },
+              "periods": {
+                "oct": {
+                  "income_minor": "0",
+                  "expense_minor": "8000",
+                  "net_minor": "-8000",
+                  "budget_eligible_minor": "8000",
+                  "category_expense_minor": {
+                    "food": "8000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "8000"
+                  }
+                },
+                "nov": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "92000",
+                "liabilities_minor": "0",
+                "net_minor": "92000"
+              },
+              "remaining_allocatable_minor": {
+                "original": "8000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "partial_reimbursement",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "e1",
+              "book_id": "personal",
+              "bill_type": "reimbursement",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "3000"
+              },
+              "account_id": "bank",
+              "business_date": "2026-11-03",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "allocations": [
+                {
+                  "source_bill_id": "original",
+                  "source_amount_minor": "3000",
+                  "receipt_amount_minor": "3000"
+                }
+              ],
+              "income_component_minor": "0"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "95000"
+              },
+              "periods": {
+                "oct": {
+                  "income_minor": "0",
+                  "expense_minor": "5000",
+                  "net_minor": "-5000",
+                  "budget_eligible_minor": "5000",
+                  "category_expense_minor": {
+                    "food": "5000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "5000"
+                  }
+                },
+                "nov": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "95000",
+                "liabilities_minor": "0",
+                "net_minor": "95000"
+              },
+              "remaining_allocatable_minor": {
+                "original": "5000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "final_reimbursement",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "e2",
+              "book_id": "personal",
+              "bill_type": "reimbursement",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "5000"
+              },
+              "account_id": "bank",
+              "business_date": "2026-11-03",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "allocations": [
+                {
+                  "source_bill_id": "original",
+                  "source_amount_minor": "5000",
+                  "receipt_amount_minor": "5000"
+                }
+              ],
+              "income_component_minor": "0"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "100000"
+              },
+              "periods": {
+                "oct": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                },
+                "nov": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "100000",
+                "liabilities_minor": "0",
+                "net_minor": "100000"
+              },
+              "remaining_allocatable_minor": {
+                "original": "0"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "over_reimbursement_rejected",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "e3",
+              "book_id": "personal",
+              "bill_type": "reimbursement",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "1"
+              },
+              "account_id": "bank",
+              "business_date": "2026-11-03",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "allocations": [
+                {
+                  "source_bill_id": "original",
+                  "source_amount_minor": "1",
+                  "receipt_amount_minor": "1"
+                }
+              ],
+              "income_component_minor": "0"
+            }
+          },
+          "expected": {
+            "result": "rejected",
+            "state": {
+              "account_balances_minor": {
+                "bank": "100000"
+              },
+              "periods": {
+                "oct": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                },
+                "nov": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "100000",
+                "liabilities_minor": "0",
+                "net_minor": "100000"
+              },
+              "remaining_allocatable_minor": {
+                "original": "0"
+              }
+            },
+            "error_code": "allocation.exceeds_remaining"
+          }
+        },
+        {
+          "step_id": "excess_refund_income",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "excess",
+              "book_id": "personal",
+              "bill_type": "refund",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "1000"
+              },
+              "account_id": "bank",
+              "business_date": "2026-11-03",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "allocations": [],
+              "income_component_minor": "1000"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "101000"
+              },
+              "periods": {
+                "oct": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                },
+                "nov": {
+                  "income_minor": "1000",
+                  "expense_minor": "0",
+                  "net_minor": "1000",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "101000",
+                "liabilities_minor": "0",
+                "net_minor": "101000"
+              },
+              "remaining_allocatable_minor": {
+                "original": "0"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "delete_reimbursement",
+          "command": {
+            "action": "delete_bill",
+            "bill_id": "e1"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "98000"
+              },
+              "periods": {
+                "oct": {
+                  "income_minor": "0",
+                  "expense_minor": "3000",
+                  "net_minor": "-3000",
+                  "budget_eligible_minor": "3000",
+                  "category_expense_minor": {
+                    "food": "3000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "3000"
+                  }
+                },
+                "nov": {
+                  "income_minor": "1000",
+                  "expense_minor": "0",
+                  "net_minor": "1000",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "98000",
+                "liabilities_minor": "0",
+                "net_minor": "98000"
+              },
+              "remaining_allocatable_minor": {
+                "original": "3000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "delete_original_rejected",
+          "command": {
+            "action": "delete_bill",
+            "bill_id": "original"
+          },
+          "expected": {
+            "result": "rejected",
+            "state": {
+              "account_balances_minor": {
+                "bank": "98000"
+              },
+              "periods": {
+                "oct": {
+                  "income_minor": "0",
+                  "expense_minor": "3000",
+                  "net_minor": "-3000",
+                  "budget_eligible_minor": "3000",
+                  "category_expense_minor": {
+                    "food": "3000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "3000"
+                  }
+                },
+                "nov": {
+                  "income_minor": "1000",
+                  "expense_minor": "0",
+                  "net_minor": "1000",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "98000",
+                "liabilities_minor": "0",
+                "net_minor": "98000"
+              },
+              "remaining_allocatable_minor": {
+                "original": "3000"
+              }
+            },
+            "error_code": "bill.has_allocations"
+          }
+        },
+        {
+          "step_id": "delete_refund",
+          "command": {
+            "action": "delete_bill",
+            "bill_id": "r1"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "96000"
+              },
+              "periods": {
+                "oct": {
+                  "income_minor": "0",
+                  "expense_minor": "5000",
+                  "net_minor": "-5000",
+                  "budget_eligible_minor": "5000",
+                  "category_expense_minor": {
+                    "food": "5000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "5000"
+                  }
+                },
+                "nov": {
+                  "income_minor": "1000",
+                  "expense_minor": "0",
+                  "net_minor": "1000",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "96000",
+                "liabilities_minor": "0",
+                "net_minor": "96000"
+              },
+              "remaining_allocatable_minor": {
+                "original": "5000"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "scenario_id": "L03_credit_debt_interest_adjustment",
+      "evidence_level": "N",
+      "design_decisions": [
+        "principal-is-not-income-expense",
+        "signed-liability-balances"
+      ],
+      "setup": {
+        "principal": "alice",
+        "book_id": "personal",
+        "report_currency": "CNY",
+        "report_scale": 2,
+        "accounts": [
+          {
+            "id": "bank",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "cash",
+            "owner_user_id": "alice",
+            "opening_minor": "100000",
+            "include_in_net_assets": true
+          },
+          {
+            "id": "credit",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "credit_card",
+            "owner_user_id": "alice",
+            "opening_minor": "-20000",
+            "include_in_net_assets": true
+          },
+          {
+            "id": "receivable",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "loan_receivable",
+            "owner_user_id": "alice",
+            "opening_minor": "0",
+            "include_in_net_assets": true
+          },
+          {
+            "id": "payable",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "loan_payable",
+            "owner_user_id": "alice",
+            "opening_minor": "0",
+            "include_in_net_assets": true
+          }
+        ],
+        "period_queries": [
+          {
+            "period_id": "all",
+            "start_date": "2026-01-01",
+            "end_date_exclusive": "2027-01-01"
+          }
+        ],
+        "budgets": []
+      },
+      "steps": [
+        {
+          "step_id": "credit_purchase",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "purchase",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "10000"
+              },
+              "account_id": "credit",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "100000",
+                "credit": "-30000",
+                "receivable": "0",
+                "payable": "0"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10000",
+                  "net_minor": "-10000",
+                  "budget_eligible_minor": "10000",
+                  "category_expense_minor": {
+                    "food": "10000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "100000",
+                "liabilities_minor": "30000",
+                "net_minor": "70000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "credit_repayment",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "paycard",
+              "book_id": "personal",
+              "bill_type": "credit_repayment",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "15000"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "from_account_id": "bank",
+              "to_account_id": "credit"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "85000",
+                "credit": "-15000",
+                "receivable": "0",
+                "payable": "0"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10000",
+                  "net_minor": "-10000",
+                  "budget_eligible_minor": "10000",
+                  "category_expense_minor": {
+                    "food": "10000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "85000",
+                "liabilities_minor": "15000",
+                "net_minor": "70000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "borrow",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "borrow",
+              "book_id": "personal",
+              "bill_type": "loan_borrow",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "20000"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "from_account_id": "payable",
+              "to_account_id": "bank"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "105000",
+                "credit": "-15000",
+                "receivable": "0",
+                "payable": "-20000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10000",
+                  "net_minor": "-10000",
+                  "budget_eligible_minor": "10000",
+                  "category_expense_minor": {
+                    "food": "10000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "105000",
+                "liabilities_minor": "35000",
+                "net_minor": "70000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "lend",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "lend",
+              "book_id": "personal",
+              "bill_type": "loan_lend",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "10000"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "from_account_id": "bank",
+              "to_account_id": "receivable"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "95000",
+                "credit": "-15000",
+                "receivable": "10000",
+                "payable": "-20000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10000",
+                  "net_minor": "-10000",
+                  "budget_eligible_minor": "10000",
+                  "category_expense_minor": {
+                    "food": "10000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "105000",
+                "liabilities_minor": "35000",
+                "net_minor": "70000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "collect",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "collect",
+              "book_id": "personal",
+              "bill_type": "loan_collect",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "4000"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "from_account_id": "receivable",
+              "to_account_id": "bank"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "99000",
+                "credit": "-15000",
+                "receivable": "6000",
+                "payable": "-20000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10000",
+                  "net_minor": "-10000",
+                  "budget_eligible_minor": "10000",
+                  "category_expense_minor": {
+                    "food": "10000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "105000",
+                "liabilities_minor": "35000",
+                "net_minor": "70000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "repay_loan",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "repay",
+              "book_id": "personal",
+              "bill_type": "loan_repay",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "5000"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "from_account_id": "bank",
+              "to_account_id": "payable"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "94000",
+                "credit": "-15000",
+                "receivable": "6000",
+                "payable": "-15000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10000",
+                  "net_minor": "-10000",
+                  "budget_eligible_minor": "10000",
+                  "category_expense_minor": {
+                    "food": "10000"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "100000",
+                "liabilities_minor": "30000",
+                "net_minor": "70000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "interest_expense",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "interest_out",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "500"
+              },
+              "account_id": "bank",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "interest",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "93500",
+                "credit": "-15000",
+                "receivable": "6000",
+                "payable": "-15000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10500",
+                  "net_minor": "-10500",
+                  "budget_eligible_minor": "10500",
+                  "category_expense_minor": {
+                    "food": "10000",
+                    "interest": "500"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000",
+                    "interest": "500"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "99500",
+                "liabilities_minor": "30000",
+                "net_minor": "69500"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "interest_income",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "interest_in",
+              "book_id": "personal",
+              "bill_type": "income",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "200"
+              },
+              "account_id": "bank",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "interest",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "93700",
+                "credit": "-15000",
+                "receivable": "6000",
+                "payable": "-15000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "200",
+                  "expense_minor": "10500",
+                  "net_minor": "-10300",
+                  "budget_eligible_minor": "10500",
+                  "category_expense_minor": {
+                    "food": "10000",
+                    "interest": "500"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000",
+                    "interest": "500"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "99700",
+                "liabilities_minor": "30000",
+                "net_minor": "69700"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "adjust_balance",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "adjust",
+              "book_id": "personal",
+              "bill_type": "balance_adjustment",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "300"
+              },
+              "account_id": "bank",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": true,
+                "exclude_from_budget": true
+              },
+              "target_balance_minor": "94000"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "94000",
+                "credit": "-15000",
+                "receivable": "6000",
+                "payable": "-15000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "200",
+                  "expense_minor": "10500",
+                  "net_minor": "-10300",
+                  "budget_eligible_minor": "10500",
+                  "category_expense_minor": {
+                    "food": "10000",
+                    "interest": "500"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000",
+                    "interest": "500"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "100000",
+                "liabilities_minor": "30000",
+                "net_minor": "70000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "ordinary_transfer_debt_rejected",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "bad_debt_move",
+              "book_id": "personal",
+              "bill_type": "transfer",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "10"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "from_account_id": "bank",
+              "to_account_id": "payable"
+            }
+          },
+          "expected": {
+            "result": "rejected",
+            "state": {
+              "account_balances_minor": {
+                "bank": "94000",
+                "credit": "-15000",
+                "receivable": "6000",
+                "payable": "-15000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "200",
+                  "expense_minor": "10500",
+                  "net_minor": "-10300",
+                  "budget_eligible_minor": "10500",
+                  "category_expense_minor": {
+                    "food": "10000",
+                    "interest": "500"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10000",
+                    "interest": "500"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "100000",
+                "liabilities_minor": "30000",
+                "net_minor": "70000"
+              }
+            },
+            "error_code": "transfer.debt_account_forbidden"
+          }
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "scenario_id": "L04_fx_refund_and_valuation",
+      "evidence_level": "N",
+      "design_decisions": [
+        "historical-rate-frozen",
+        "refund-cumulative-rounding",
+        "valuation-separate-from-income"
+      ],
+      "setup": {
+        "principal": "alice",
+        "book_id": "personal",
+        "report_currency": "CNY",
+        "report_scale": 2,
+        "accounts": [
+          {
+            "id": "bank",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "cash",
+            "owner_user_id": "alice",
+            "opening_minor": "100000",
+            "include_in_net_assets": true
+          },
+          {
+            "id": "usd",
+            "currency": "USD",
+            "currency_scale": 2,
+            "kind": "cash",
+            "owner_user_id": "alice",
+            "opening_minor": "10000",
+            "include_in_net_assets": true
+          }
+        ],
+        "period_queries": [
+          {
+            "period_id": "all",
+            "start_date": "2026-01-01",
+            "end_date_exclusive": "2027-01-01"
+          }
+        ],
+        "budgets": [],
+        "valuation_rates": {
+          "CNY": "1",
+          "USD": "7.1"
+        }
+      },
+      "steps": [
+        {
+          "step_id": "usd_expense",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "usd_food",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "USD",
+                "currency_scale": 2,
+                "amount_minor": "1001"
+              },
+              "account_id": "usd",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "reporting": {
+                "rate": "7.2",
+                "rate_date": "2026-10-21",
+                "rate_source": "manual",
+                "report_amount_minor": "7207"
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "100000",
+                "usd": "8999"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "7207",
+                  "net_minor": "-7207",
+                  "budget_eligible_minor": "7207",
+                  "category_expense_minor": {
+                    "food": "7207"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "7207"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "163893",
+                "liabilities_minor": "0",
+                "net_minor": "163893"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "fx_transfer_fee",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "fx_move",
+              "book_id": "personal",
+              "bill_type": "transfer",
+              "money": {
+                "currency": "USD",
+                "currency_scale": 2,
+                "amount_minor": "1000"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "from_account_id": "usd",
+              "to_account_id": "bank",
+              "target_money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "7100"
+              },
+              "fee": {
+                "money": {
+                  "currency": "CNY",
+                  "currency_scale": 2,
+                  "amount_minor": "10"
+                },
+                "account_id": "bank",
+                "category_id": "fees"
+              },
+              "reporting": {
+                "rate": "7.1",
+                "rate_date": "2026-10-21",
+                "rate_source": "manual",
+                "report_amount_minor": "7100"
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "107090",
+                "usd": "7999"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "7217",
+                  "net_minor": "-7217",
+                  "budget_eligible_minor": "7217",
+                  "category_expense_minor": {
+                    "food": "7207",
+                    "fees": "10"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "7207",
+                    "fees": "10"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "163883",
+                "liabilities_minor": "0",
+                "net_minor": "163883"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "partial_cross_currency_refund",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "fx_refund1",
+              "book_id": "personal",
+              "bill_type": "refund",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "2880"
+              },
+              "account_id": "bank",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "allocations": [
+                {
+                  "source_bill_id": "usd_food",
+                  "source_amount_minor": "400",
+                  "receipt_amount_minor": "2880",
+                  "rate": "7.2"
+                }
+              ],
+              "income_component_minor": "0"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "109970",
+                "usd": "7999"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "4337",
+                  "net_minor": "-4337",
+                  "budget_eligible_minor": "4337",
+                  "category_expense_minor": {
+                    "food": "4327",
+                    "fees": "10"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "4327",
+                    "fees": "10"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "166763",
+                "liabilities_minor": "0",
+                "net_minor": "166763"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "final_cross_currency_refund",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "fx_refund2",
+              "book_id": "personal",
+              "bill_type": "refund",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "4327"
+              },
+              "account_id": "bank",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              },
+              "allocations": [
+                {
+                  "source_bill_id": "usd_food",
+                  "source_amount_minor": "601",
+                  "receipt_amount_minor": "4327",
+                  "rate": "7.199667221297836938"
+                }
+              ],
+              "income_component_minor": "0"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "114297",
+                "usd": "7999"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10",
+                  "net_minor": "-10",
+                  "budget_eligible_minor": "10",
+                  "category_expense_minor": {
+                    "fees": "10"
+                  },
+                  "budget_category_expense_minor": {
+                    "fees": "10"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "171090",
+                "liabilities_minor": "0",
+                "net_minor": "171090"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "change_current_valuation_only",
+          "command": {
+            "action": "set_valuation_rate",
+            "currency": "USD",
+            "rate": "7.5"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "114297",
+                "usd": "7999"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10",
+                  "net_minor": "-10",
+                  "budget_eligible_minor": "10",
+                  "category_expense_minor": {
+                    "fees": "10"
+                  },
+                  "budget_category_expense_minor": {
+                    "fees": "10"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "174290",
+                "liabilities_minor": "0",
+                "net_minor": "174290"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "missing_fx_rejected",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "fx_missing",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "USD",
+                "currency_scale": 2,
+                "amount_minor": "100"
+              },
+              "account_id": "usd",
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "rejected",
+            "state": {
+              "account_balances_minor": {
+                "bank": "114297",
+                "usd": "7999"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10",
+                  "net_minor": "-10",
+                  "budget_eligible_minor": "10",
+                  "category_expense_minor": {
+                    "fees": "10"
+                  },
+                  "budget_category_expense_minor": {
+                    "fees": "10"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "174290",
+                "liabilities_minor": "0",
+                "net_minor": "174290"
+              }
+            },
+            "error_code": "fx.rate_required"
+          }
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "scenario_id": "L05_installment_rounding_and_early_settlement",
+      "evidence_level": "N",
+      "design_decisions": [
+        "expense-schedule-no-upfront-duplicate",
+        "last-period-remainder",
+        "occurrence-idempotence"
+      ],
+      "setup": {
+        "principal": "alice",
+        "book_id": "personal",
+        "report_currency": "CNY",
+        "report_scale": 2,
+        "accounts": [
+          {
+            "id": "bank",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "cash",
+            "owner_user_id": "alice",
+            "opening_minor": "20000",
+            "include_in_net_assets": true
+          }
+        ],
+        "period_queries": [
+          {
+            "period_id": "all",
+            "start_date": "2026-01-01",
+            "end_date_exclusive": "2027-01-01"
+          }
+        ],
+        "budgets": []
+      },
+      "steps": [
+        {
+          "step_id": "create_plan",
+          "command": {
+            "action": "create_installment_plan",
+            "plan_id": "p1",
+            "mode": "expense_schedule",
+            "money": {
+              "currency": "CNY",
+              "currency_scale": 2,
+              "amount_minor": "10000"
+            },
+            "total_fee_minor": "1",
+            "count": 3,
+            "account_id": "bank",
+            "category_id": "food",
+            "start_date": "2026-10-01"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "20000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "20000",
+                "liabilities_minor": "0",
+                "net_minor": "20000"
+              },
+              "plans": {
+                "p1": {
+                  "remaining_principal_minor": "10000",
+                  "status": "active"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "first",
+          "command": {
+            "action": "execute_occurrence",
+            "plan_id": "p1",
+            "occurrence_index": 1
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "16667"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "3333",
+                  "net_minor": "-3333",
+                  "budget_eligible_minor": "3333",
+                  "category_expense_minor": {
+                    "food": "3333"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "3333"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "16667",
+                "liabilities_minor": "0",
+                "net_minor": "16667"
+              },
+              "plans": {
+                "p1": {
+                  "remaining_principal_minor": "6667",
+                  "status": "active"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "retry_first",
+          "command": {
+            "action": "execute_occurrence",
+            "plan_id": "p1",
+            "occurrence_index": 1
+          },
+          "expected": {
+            "result": "replayed",
+            "state": {
+              "account_balances_minor": {
+                "bank": "16667"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "3333",
+                  "net_minor": "-3333",
+                  "budget_eligible_minor": "3333",
+                  "category_expense_minor": {
+                    "food": "3333"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "3333"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "16667",
+                "liabilities_minor": "0",
+                "net_minor": "16667"
+              },
+              "plans": {
+                "p1": {
+                  "remaining_principal_minor": "6667",
+                  "status": "active"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "second",
+          "command": {
+            "action": "execute_occurrence",
+            "plan_id": "p1",
+            "occurrence_index": 2
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "13334"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "6666",
+                  "net_minor": "-6666",
+                  "budget_eligible_minor": "6666",
+                  "category_expense_minor": {
+                    "food": "6666"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "6666"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "13334",
+                "liabilities_minor": "0",
+                "net_minor": "13334"
+              },
+              "plans": {
+                "p1": {
+                  "remaining_principal_minor": "3334",
+                  "status": "active"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "settle",
+          "command": {
+            "action": "settle_installment",
+            "plan_id": "p1",
+            "settlement_date": "2026-11-15",
+            "remaining_principal_minor": "3334",
+            "actual_fee_minor": "1"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "9999"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10001",
+                  "net_minor": "-10001",
+                  "budget_eligible_minor": "10001",
+                  "category_expense_minor": {
+                    "food": "10001"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10001"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "9999",
+                "liabilities_minor": "0",
+                "net_minor": "9999"
+              },
+              "plans": {
+                "p1": {
+                  "remaining_principal_minor": "0",
+                  "status": "settled"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "cancelled_third",
+          "command": {
+            "action": "execute_occurrence",
+            "plan_id": "p1",
+            "occurrence_index": 3
+          },
+          "expected": {
+            "result": "rejected",
+            "state": {
+              "account_balances_minor": {
+                "bank": "9999"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "10001",
+                  "net_minor": "-10001",
+                  "budget_eligible_minor": "10001",
+                  "category_expense_minor": {
+                    "food": "10001"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "10001"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "9999",
+                "liabilities_minor": "0",
+                "net_minor": "9999"
+              },
+              "plans": {
+                "p1": {
+                  "remaining_principal_minor": "0",
+                  "status": "settled"
+                }
+              }
+            },
+            "error_code": "schedule.cancelled_occurrence"
+          }
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "scenario_id": "L06_recurring_month_end",
+      "evidence_level": "N",
+      "design_decisions": [
+        "anchor-date-month-end-clamp",
+        "one-authoritative-generator"
+      ],
+      "setup": {
+        "principal": "alice",
+        "book_id": "personal",
+        "report_currency": "CNY",
+        "report_scale": 2,
+        "accounts": [
+          {
+            "id": "bank",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "cash",
+            "owner_user_id": "alice",
+            "opening_minor": "1000",
+            "include_in_net_assets": true
+          }
+        ],
+        "period_queries": [
+          {
+            "period_id": "all",
+            "start_date": "2026-01-01",
+            "end_date_exclusive": "2027-01-01"
+          }
+        ],
+        "budgets": []
+      },
+      "steps": [
+        {
+          "step_id": "rule",
+          "command": {
+            "action": "create_recurring_rule",
+            "rule_id": "rr1",
+            "frequency": "monthly",
+            "anchor_date": "2026-01-31",
+            "count": 3,
+            "bill_template": {
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "100"
+              },
+              "account_id": "bank",
+              "category_id": "food"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "1000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "1000",
+                "liabilities_minor": "0",
+                "net_minor": "1000"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "jan",
+          "command": {
+            "action": "execute_recurring",
+            "rule_id": "rr1",
+            "occurrence_date": "2026-01-31"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "900"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "100",
+                  "net_minor": "-100",
+                  "budget_eligible_minor": "100",
+                  "category_expense_minor": {
+                    "food": "100"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "100"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "900",
+                "liabilities_minor": "0",
+                "net_minor": "900"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "feb",
+          "command": {
+            "action": "execute_recurring",
+            "rule_id": "rr1",
+            "occurrence_date": "2026-02-28"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "800"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "200",
+                  "net_minor": "-200",
+                  "budget_eligible_minor": "200",
+                  "category_expense_minor": {
+                    "food": "200"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "200"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "800",
+                "liabilities_minor": "0",
+                "net_minor": "800"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "retry_feb",
+          "command": {
+            "action": "execute_recurring",
+            "rule_id": "rr1",
+            "occurrence_date": "2026-02-28"
+          },
+          "expected": {
+            "result": "replayed",
+            "state": {
+              "account_balances_minor": {
+                "bank": "800"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "200",
+                  "net_minor": "-200",
+                  "budget_eligible_minor": "200",
+                  "category_expense_minor": {
+                    "food": "200"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "200"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "800",
+                "liabilities_minor": "0",
+                "net_minor": "800"
+              }
+            }
+          }
+        },
+        {
+          "step_id": "mar",
+          "command": {
+            "action": "execute_recurring",
+            "rule_id": "rr1",
+            "occurrence_date": "2026-03-31"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "700"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "300",
+                  "net_minor": "-300",
+                  "budget_eligible_minor": "300",
+                  "category_expense_minor": {
+                    "food": "300"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "300"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "700",
+                "liabilities_minor": "0",
+                "net_minor": "700"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "scenario_id": "L07_savings_progress_and_transfer",
+      "evidence_level": "N",
+      "design_decisions": [
+        "progress-is-not-expense",
+        "linked-transfer-once"
+      ],
+      "setup": {
+        "principal": "alice",
+        "book_id": "personal",
+        "report_currency": "CNY",
+        "report_scale": 2,
+        "accounts": [
+          {
+            "id": "bank",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "cash",
+            "owner_user_id": "alice",
+            "opening_minor": "10000",
+            "include_in_net_assets": true
+          },
+          {
+            "id": "saving",
+            "currency": "CNY",
+            "currency_scale": 2,
+            "kind": "cash",
+            "owner_user_id": "alice",
+            "opening_minor": "0",
+            "include_in_net_assets": true
+          }
+        ],
+        "period_queries": [
+          {
+            "period_id": "all",
+            "start_date": "2026-01-01",
+            "end_date_exclusive": "2027-01-01"
+          }
+        ],
+        "budgets": []
+      },
+      "steps": [
+        {
+          "step_id": "create",
+          "command": {
+            "action": "create_saving_plan",
+            "plan_id": "save1",
+            "mode": "flexible",
+            "money": {
+              "currency": "CNY",
+              "currency_scale": 2,
+              "amount_minor": "5000"
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "10000",
+                "saving": "0"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "10000",
+                "liabilities_minor": "0",
+                "net_minor": "10000"
+              },
+              "savings": {
+                "save1": {
+                  "progress_minor": "0",
+                  "target_minor": "5000"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "progress_only",
+          "command": {
+            "action": "record_saving",
+            "record_id": "sr1",
+            "plan_id": "save1",
+            "money": {
+              "currency": "CNY",
+              "currency_scale": 2,
+              "amount_minor": "1000"
+            },
+            "mode": "progress_only",
+            "business_date": "2026-10-21"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "10000",
+                "saving": "0"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "10000",
+                "liabilities_minor": "0",
+                "net_minor": "10000"
+              },
+              "savings": {
+                "save1": {
+                  "progress_minor": "1000",
+                  "target_minor": "5000"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "linked_transfer",
+          "command": {
+            "action": "record_saving",
+            "record_id": "sr2",
+            "plan_id": "save1",
+            "money": {
+              "currency": "CNY",
+              "currency_scale": 2,
+              "amount_minor": "2000"
+            },
+            "mode": "linked_transfer",
+            "bill_id": "saving_transfer",
+            "from_account_id": "bank",
+            "to_account_id": "saving",
+            "business_date": "2026-10-21"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "8000",
+                "saving": "2000"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "10000",
+                "liabilities_minor": "0",
+                "net_minor": "10000"
+              },
+              "savings": {
+                "save1": {
+                  "progress_minor": "3000",
+                  "target_minor": "5000"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "delete_linked",
+          "command": {
+            "action": "delete_bill",
+            "bill_id": "saving_transfer"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "10000",
+                "saving": "0"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "10000",
+                "liabilities_minor": "0",
+                "net_minor": "10000"
+              },
+              "savings": {
+                "save1": {
+                  "progress_minor": "1000",
+                  "target_minor": "5000"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "delete_progress",
+          "command": {
+            "action": "delete_saving_record",
+            "record_id": "sr1"
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {
+                "bank": "10000",
+                "saving": "0"
+              },
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "0",
+                  "net_minor": "0",
+                  "budget_eligible_minor": "0",
+                  "category_expense_minor": {},
+                  "budget_category_expense_minor": {}
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "10000",
+                "liabilities_minor": "0",
+                "net_minor": "10000"
+              },
+              "savings": {
+                "save1": {
+                  "progress_minor": "0",
+                  "target_minor": "5000"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "scenario_id": "L08_three_budget_modes",
+      "evidence_level": "N",
+      "design_decisions": [
+        "guide-three-budget-modes",
+        "flowtrace-reject-total-below-category-sum"
+      ],
+      "setup": {
+        "principal": "alice",
+        "book_id": "personal",
+        "report_currency": "CNY",
+        "report_scale": 2,
+        "accounts": [],
+        "period_queries": [
+          {
+            "period_id": "all",
+            "start_date": "2026-01-01",
+            "end_date_exclusive": "2027-01-01"
+          }
+        ],
+        "budgets": [
+          {
+            "id": "total_only",
+            "total_limit_minor": "1000",
+            "categories": {}
+          },
+          {
+            "id": "category_only",
+            "total_limit_minor": null,
+            "categories": {
+              "food": "300"
+            }
+          },
+          {
+            "id": "mixed_greater",
+            "total_limit_minor": "600",
+            "categories": {
+              "food": "300"
+            }
+          },
+          {
+            "id": "mixed_equal",
+            "total_limit_minor": "300",
+            "categories": {
+              "food": "300"
+            }
+          }
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "food",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "bfood",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "100"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "food",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {},
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "100",
+                  "net_minor": "-100",
+                  "budget_eligible_minor": "100",
+                  "category_expense_minor": {
+                    "food": "100"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "100"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "0",
+                "liabilities_minor": "0",
+                "net_minor": "0"
+              },
+              "budgets": {
+                "total_only": {
+                  "limit_minor": "1000",
+                  "spent_minor": "100",
+                  "remaining_minor": "900"
+                },
+                "category_only": {
+                  "limit_minor": "300",
+                  "spent_minor": "100",
+                  "remaining_minor": "200"
+                },
+                "mixed_greater": {
+                  "limit_minor": "600",
+                  "spent_minor": "100",
+                  "remaining_minor": "500"
+                },
+                "mixed_equal": {
+                  "limit_minor": "300",
+                  "spent_minor": "100",
+                  "remaining_minor": "200"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "travel",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "btravel",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "200"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "travel",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {},
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "300",
+                  "net_minor": "-300",
+                  "budget_eligible_minor": "300",
+                  "category_expense_minor": {
+                    "food": "100",
+                    "travel": "200"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "100",
+                    "travel": "200"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "0",
+                "liabilities_minor": "0",
+                "net_minor": "0"
+              },
+              "budgets": {
+                "total_only": {
+                  "limit_minor": "1000",
+                  "spent_minor": "300",
+                  "remaining_minor": "700"
+                },
+                "category_only": {
+                  "limit_minor": "300",
+                  "spent_minor": "100",
+                  "remaining_minor": "200"
+                },
+                "mixed_greater": {
+                  "limit_minor": "600",
+                  "spent_minor": "300",
+                  "remaining_minor": "300"
+                },
+                "mixed_equal": {
+                  "limit_minor": "300",
+                  "spent_minor": "100",
+                  "remaining_minor": "200"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "gift",
+          "command": {
+            "action": "create_bill",
+            "bill": {
+              "id": "bgift",
+              "book_id": "personal",
+              "bill_type": "expense",
+              "money": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "300"
+              },
+              "account_id": null,
+              "business_date": "2026-10-21",
+              "business_timezone": "Asia/Shanghai",
+              "category_id": "gift",
+              "source": "manual",
+              "flags": {
+                "exclude_from_statistics": false,
+                "exclude_from_budget": false
+              }
+            }
+          },
+          "expected": {
+            "result": "applied",
+            "state": {
+              "account_balances_minor": {},
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "600",
+                  "net_minor": "-600",
+                  "budget_eligible_minor": "600",
+                  "category_expense_minor": {
+                    "food": "100",
+                    "travel": "200",
+                    "gift": "300"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "100",
+                    "travel": "200",
+                    "gift": "300"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "0",
+                "liabilities_minor": "0",
+                "net_minor": "0"
+              },
+              "budgets": {
+                "total_only": {
+                  "limit_minor": "1000",
+                  "spent_minor": "600",
+                  "remaining_minor": "400"
+                },
+                "category_only": {
+                  "limit_minor": "300",
+                  "spent_minor": "100",
+                  "remaining_minor": "200"
+                },
+                "mixed_greater": {
+                  "limit_minor": "600",
+                  "spent_minor": "600",
+                  "remaining_minor": "0"
+                },
+                "mixed_equal": {
+                  "limit_minor": "300",
+                  "spent_minor": "100",
+                  "remaining_minor": "200"
+                }
+              }
+            }
+          }
+        },
+        {
+          "step_id": "bad_config",
+          "command": {
+            "action": "set_budget",
+            "budget_id": "mixed_greater",
+            "total_limit_minor": "200",
+            "categories": {
+              "food": "300"
+            }
+          },
+          "expected": {
+            "result": "rejected",
+            "state": {
+              "account_balances_minor": {},
+              "periods": {
+                "all": {
+                  "income_minor": "0",
+                  "expense_minor": "600",
+                  "net_minor": "-600",
+                  "budget_eligible_minor": "600",
+                  "category_expense_minor": {
+                    "food": "100",
+                    "travel": "200",
+                    "gift": "300"
+                  },
+                  "budget_category_expense_minor": {
+                    "food": "100",
+                    "travel": "200",
+                    "gift": "300"
+                  }
+                }
+              },
+              "assets": {
+                "currency": "CNY",
+                "assets_minor": "0",
+                "liabilities_minor": "0",
+                "net_minor": "0"
+              },
+              "budgets": {
+                "total_only": {
+                  "limit_minor": "1000",
+                  "spent_minor": "600",
+                  "remaining_minor": "400"
+                },
+                "category_only": {
+                  "limit_minor": "300",
+                  "spent_minor": "100",
+                  "remaining_minor": "200"
+                },
+                "mixed_greater": {
+                  "limit_minor": "600",
+                  "spent_minor": "600",
+                  "remaining_minor": "0"
+                },
+                "mixed_equal": {
+                  "limit_minor": "300",
+                  "spent_minor": "100",
+                  "remaining_minor": "200"
+                }
+              }
+            },
+            "error_code": "budget.total_below_categories"
+          }
+        }
+      ]
+    }
+  ]
+}

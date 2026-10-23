@@ -1,0 +1,29 @@
+{
+  "status": "synthetic_contract_fixture",
+  "hash_input": {
+    "protocol_version": 1,
+    "sync_epoch": "00000000-0000-4000-8000-000000000002",
+    "operation": {
+      "operation_id": "00000000-0000-4000-8000-000000000003",
+      "scope_id": "00000000-0000-4000-8000-000000000004",
+      "entity_type": "bill",
+      "entity_id": "00000000-0000-4000-8000-000000000005",
+      "action": "create",
+      "base_revision": "0",
+      "depends_on": null,
+      "payload": {
+        "bill_type": "expense",
+        "money": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "1230"
+        },
+        "business_date": "2026-10-21",
+        "business_timezone": "Asia/Shanghai",
+        "occurred_at": "2026-10-21T12:00:00+08:00"
+      }
+    }
+  },
+  "canonical_utf8": "{\"operation\":{\"action\":\"create\",\"base_revision\":\"0\",\"depends_on\":null,\"entity_id\":\"00000000-0000-4000-8000-000000000005\",\"entity_type\":\"bill\",\"operation_id\":\"00000000-0000-4000-8000-000000000003\",\"payload\":{\"bill_type\":\"expense\",\"business_date\":\"2026-10-21\",\"business_timezone\":\"Asia/Shanghai\",\"money\":{\"amount_minor\":\"1230\",\"currency\":\"CNY\",\"currency_scale\":2},\"occurred_at\":\"2026-10-21T12:00:00+08:00\"},\"scope_id\":\"00000000-0000-4000-8000-000000000004\"},\"protocol_version\":1,\"sync_epoch\":\"00000000-0000-4000-8000-000000000002\"}",
+  "sha256": "15a1a4468b60ece6d7ac256ff47cd1750f42d78a777721d7c63fccd7e9d05002"
+}

@@ -1,0 +1,10 @@
+<header><div class="eyebrow">CONNECTION CHECKS</div><h1>服务连接检查</h1><p class="muted">只检查由部署环境登记的固定服务。页面不接收地址、路径或请求头。连接可达不表示 OCR 或 AI 业务功能已接入。</p></header>
+<div class="actions"><a class="button secondary" href="/admin/configuration">返回当前配置</a></div>
+{% if error %}<div class="notice error" role="alert">{{ error }}</div>{% endif %}
+{% if provider_result %}<section class="notice" role="status"><strong>{{ provider_result.provider_id }} · {{ provider_result.code }}</strong><span>核对配置版本 {{ provider_result.version }}，耗时 {{ provider_result.duration_ms }} ms。仅显示固定结果码，不提供连接地址、密钥或响应正文。</span></section>{% endif %}
+{% for item in provider_catalog %}<section class="surface"><h2>{{ item.provider_id }}</h2><p class="muted">{{ '已由部署登记' if item.registered else '部署尚未登记' }}。{{ '密钥资料不可用' if secret_states['ocr_api_key' if item.provider_id=='ocr_primary' else 'ai_api_key']=='unavailable' else '当前密钥状态请在服务配置页核对' }}。</p>
+<form method="post" action="/admin/configuration/providers/{{ item.provider_id }}/check" class="credential-form">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="expected_version" value="{{ config.version }}">
+<label>当前管理密码<input type="password" name="current_password" minlength="12" maxlength="256" autocomplete="current-password" required></label>
+<label class="checkbox"><input type="checkbox" name="confirm_provider" value="{{ item.provider_id }}" required>确认检查 {{ item.provider_id }}，基于配置版本 {{ config.version }}</label>
+<button class="primary">检查 {{ item.provider_id }}</button></form></section>{% endfor %}

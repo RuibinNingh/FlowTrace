@@ -1,0 +1,18 @@
+[
+  {
+    "file": "sqlite3.wasm",
+    "source": "https://github.com/simolus3/sqlite3.dart/releases/download/sqlite3-3.5.2/sqlite3.wasm",
+    "sha256": "13d3f11d05b39ba0618a7115fb41640a5d48b6300f5d3f325f554b42bd6688a4",
+    "bytes": 748686,
+    "checked_on": "2026-10-21",
+    "publisher_hash_verified": true
+  },
+  {
+    "file": "drift_worker.js",
+    "source": "https://github.com/simolus3/drift/releases/download/drift-2.34.4/drift_worker.js",
+    "sha256": "104bc207d4a3a0b70fc249fcd91d72b558cf7a8677fe49b41cafffe22a5144f4",
+    "bytes": 355222,
+    "checked_on": "2026-10-21",
+    "publisher_hash_verified": false
+  }
+]

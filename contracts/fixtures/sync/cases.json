@@ -1,0 +1,165 @@
+{
+  "contract_version": 1,
+  "evidence_level": "N",
+  "status": "specified_not_executed",
+  "cases": [
+    {
+      "id": "SYN01",
+      "name": "lost_response_retry",
+      "steps": [
+        "push create commits; discard response",
+        "retry identical operation_id and body"
+      ],
+      "expected": {
+        "bill_count": 1,
+        "same_receipt": true
+      }
+    },
+    {
+      "id": "SYN02",
+      "name": "same_id_different_body",
+      "steps": [
+        "push create commits",
+        "retry same id with amount_minor 1240"
+      ],
+      "expected": {
+        "code": "idempotency_mismatch",
+        "http_status": 409,
+        "bill_count": 1
+      }
+    },
+    {
+      "id": "SYN03",
+      "name": "edit_edit",
+      "steps": [
+        "device A and B read revision 1",
+        "A updates base_revision 1 => revision 2",
+        "B updates base_revision 1"
+      ],
+      "expected": {
+        "code": "revision_conflict",
+        "server_revision": "2",
+        "local_draft_preserved": true
+      }
+    },
+    {
+      "id": "SYN04",
+      "name": "edit_delete",
+      "steps": [
+        "A deletes revision 1",
+        "B edits base_revision 1"
+      ],
+      "expected": {
+        "code": "revision_conflict",
+        "resurrection": false
+      }
+    },
+    {
+      "id": "SYN05",
+      "name": "commit_order",
+      "steps": [
+        "A locks scope; allocates 41, not committed",
+        "B requests scope lock and waits",
+        "pull sees committed highwater 40",
+        "A commits then B allocates/commits 42",
+        "pull after 40"
+      ],
+      "expected": {
+        "revisions": [
+          "41",
+          "42"
+        ],
+        "missing": []
+      }
+    },
+    {
+      "id": "SYN06",
+      "name": "scope_revoked",
+      "steps": [
+        "owner revokes editor under scope lock",
+        "editor pushes offline intent or reads old page"
+      ],
+      "expected": {
+        "code": "forbidden",
+        "private_body_disclosed": false,
+        "writes": 0
+      }
+    },
+    {
+      "id": "SYN07",
+      "name": "expired_cursor",
+      "steps": [
+        "client last sync outside retention",
+        "retain outbox/conflicts/pending attachment",
+        "request snapshot and rebuild"
+      ],
+      "expected": {
+        "code": "resync_required",
+        "drafts_preserved": true
+      }
+    },
+    {
+      "id": "SYN08",
+      "name": "backup_epoch_change",
+      "steps": [
+        "client has confirmed bill after backup; no outbox item",
+        "server restores older backup and rotates epoch",
+        "client retains full local snapshot before resync"
+      ],
+      "expected": {
+        "code": "epoch_changed",
+        "confirmed_local_bill_preserved": true,
+        "automatic_replay": false
+      }
+    },
+    {
+      "id": "SYN09",
+      "name": "own_pending_edits",
+      "steps": [
+        "save create op1 locally",
+        "op1 sent then local edit op2",
+        "op1 response arrives"
+      ],
+      "expected": {
+        "latest_local_edit_preserved": true,
+        "op2_base_from_op1": true,
+        "op1_body_mutated": false
+      }
+    },
+    {
+      "id": "SYN10",
+      "name": "cross_scope_commit",
+      "steps": [
+        "atomic transfer affects visible scopes A and B",
+        "pull page threshold intersects commit"
+      ],
+      "expected": {
+        "commit_split": false,
+        "partial_transfer_visible": false
+      }
+    },
+    {
+      "id": "SYN11",
+      "name": "dependent_failure",
+      "steps": [
+        "op1 create rejected",
+        "op2 depends_on op1"
+      ],
+      "expected": {
+        "op2_code": "dependency_failed",
+        "writes": 0
+      }
+    },
+    {
+      "id": "SYN12",
+      "name": "foreign_entity",
+      "steps": [
+        "user A requests private user B entity or attachment by guessed UUID"
+      ],
+      "expected": {
+        "http_status": 404,
+        "private_body_disclosed": false
+      }
+    }
+  ]
+}

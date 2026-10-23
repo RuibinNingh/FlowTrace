@@ -1,0 +1,18 @@
+Microsoft Visual C++ Runtime (application-local, x64)
+Copyright Microsoft Corporation. All rights reserved.
+
+The unmodified msvcp140.dll, vcruntime140.dll and vcruntime140_1.dll in
+this package originate from the installed Visual Studio VC/Redist directory.
+Their exact versions and SHA256 digests are recorded in release-manifest.json.
+They are Microsoft components, not FlowTrace code.
+
+Redistribution is subject to the applicable Microsoft Visual Studio license
+terms and Distributable Code list for the builder's licensed edition:
+https://learn.microsoft.com/en-us/visualstudio/releases/2026/redistribution
+https://visualstudio.microsoft.com/license-terms/
+
+Flutter's application-local Windows deployment instructions:
+https://docs.flutter.dev/platform-integration/windows/building#building-your-own-zip-file-for-windows
+
+No runtime installer or system modification is performed by FlowTrace's ZIP
+packaging or extraction scripts. The runtime DLLs are kept unmodified.

@@ -1,0 +1,2165 @@
+{
+  "schema_version": 1,
+  "states": [
+    {
+      "id": "S01",
+      "title": "首页",
+      "capture_key": "134-phone-home",
+      "feature_ids": [
+        "F01"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "月度汇总、预算、近期趋势、按日流水和新增入口",
+      "entry_recipe": "启动原应用并回到账单首页",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/134-phone-home.png",
+          "sha256": "9881c9cf5246144ce478a76c47e4065622922e1c29034bcc7f22ea587201ae4d",
+          "bytes": 385929,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/134-phone-home.xml",
+          "sha256": "9a68b0e0eb6c4b4693121dda50163df777653e3fa4afe9b05716593e1d4225d4",
+          "bytes": 37511,
+          "root_tag": "hierarchy",
+          "node_count": 96
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S02",
+      "title": "左侧导航",
+      "capture_key": "08-drawer",
+      "feature_ids": [
+        "F01"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "账本、预算、报销、搜索、任务、存钱计划和设置",
+      "entry_recipe": "首页打开左侧导航",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/08-drawer.png",
+          "sha256": "4f2a79e284bb4a4f2aa9b0c13a3bb486dc528e0367a49867cef9943dde0801b3",
+          "bytes": 191816,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/08-drawer.xml",
+          "sha256": "13d212b5ee498074120947e0fc9806c96c9be829ec3c605c797aa11bd34b1789",
+          "bytes": 9906,
+          "root_tag": "hierarchy",
+          "node_count": 26
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S03",
+      "title": "月份与范围选择",
+      "capture_key": "45-date-range-picker",
+      "feature_ids": [
+        "F01"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "显示方式、月份起始日、年份和月份选择",
+      "entry_recipe": "点击首页年月/范围选择",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/45-date-range-picker.png",
+          "sha256": "f350fa059a62073452fea41f5951627d53f86a57c0d3ba48953f367828bd2b9d",
+          "bytes": 354604,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/45-date-range-picker.xml",
+          "sha256": "369d8eddf095c0e2c514d9a70c12edcbc5cde73c94354a006109b76991da8b36",
+          "bytes": 14541,
+          "root_tag": "hierarchy",
+          "node_count": 40
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S04",
+      "title": "日历视图与首次提示",
+      "capture_key": "43-calendar-clean",
+      "feature_ids": [
+        "F08"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "月历、收支模式、当日流水；截图仍显示首次使用的滑动提示",
+      "entry_recipe": "首页切入日历视图",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "首次滑动提示尚未关闭"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/43-calendar-clean.png",
+          "sha256": "00b5f35632c566c7fb9310c61f2e25ea018e428b54807ca30b07af848b3d0ef6",
+          "bytes": 77928,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/43-calendar-clean.xml",
+          "sha256": "4db42839ac46515235bc94486d226c5a043955128e4c2352d1b5bd89d52db0a4",
+          "bytes": 21334,
+          "root_tag": "hierarchy",
+          "node_count": 57
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S05",
+      "title": "支出记账",
+      "capture_key": "03-expense-editor",
+      "feature_ids": [
+        "F02"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "资产管理关闭时的两个页签与五列分类网格",
+      "entry_recipe": "首页新增账单，资产功能关闭",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "资产管理开关关闭"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/03-expense-editor.png",
+          "sha256": "dfdc99fae6ff5535cfa3e0f64c6599b99b5dc2d0d2726d87c34e1e074c669a9e",
+          "bytes": 83199,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/03-expense-editor.xml",
+          "sha256": "5e4f24f088379c6d566c904533a1dd0a36d58b01b8047a104ccc1981ef2bfdfa",
+          "bytes": 42870,
+          "root_tag": "hierarchy",
+          "node_count": 113
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S06",
+      "title": "启用资产后的支出页",
+      "capture_key": "100-editor-with-assets",
+      "feature_ids": [
+        "F02",
+        "F12"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "增加账户选择和转账页签",
+      "entry_recipe": "启用资产功能后新增支出账单",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "资产管理开关开启；开启不证明已经创建账户"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/100-editor-with-assets.png",
+          "sha256": "92d3b24aa64478ccfd2f6ff806cb6aa6473a6d04267d4a8de857e10cbac5e1b4",
+          "bytes": 85732,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/100-editor-with-assets.xml",
+          "sha256": "d3d53e6d929527f0a6175c14b933c6d5d602ce76e7e7378dc0cf9016dc47b169",
+          "bytes": 44390,
+          "root_tag": "hierarchy",
+          "node_count": 117
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S07",
+      "title": "收入记账",
+      "capture_key": "101-income-editor",
+      "feature_ids": [
+        "F02"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "收入分类网格，底部工具项随类型变化",
+      "entry_recipe": "记账页切收入页签",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/101-income-editor.png",
+          "sha256": "7b112f49d083971d9080f9a51a12c324754daef8f643d896d689ba3c3bc9795c",
+          "bytes": 66594,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/101-income-editor.xml",
+          "sha256": "e8a3aa7f4db58425e2afd632b04de1d1344a025e0327191f4c1c0fc9399227c7",
+          "bytes": 30139,
+          "root_tag": "hierarchy",
+          "node_count": 79
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S08",
+      "title": "转账记账",
+      "capture_key": "102-transfer-editor",
+      "feature_ids": [
+        "F02",
+        "F11"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "转出与转入账户、方向交换、手续费",
+      "entry_recipe": "启用资产后记账页切转账页签",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "资产管理开关开启；开启不证明已经创建账户"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/102-transfer-editor.png",
+          "sha256": "5e62c4133e9c60752471c7ce9d3a2bdb7d2c84c05c375577132755979c093941",
+          "bytes": 60623,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/102-transfer-editor.xml",
+          "sha256": "8c45b9abdc40e001ac1fc97aa2127ff677f6a73b6b06ca9465d73aa7d14bdaff",
+          "bytes": 23471,
+          "root_tag": "hierarchy",
+          "node_count": 61
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S09",
+      "title": "二级分类展开",
+      "capture_key": "106-subcategory-expanded",
+      "feature_ids": [
+        "F02",
+        "F05"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "子分类插入所在一级分类行的下方",
+      "entry_recipe": "记账页点击有子分类的一级分类",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/106-subcategory-expanded.png",
+          "sha256": "6d1e78f4fa612d1623f65b9395afd63766a2f25f06c666ec58621360bc39dffc",
+          "bytes": 93099,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/106-subcategory-expanded.xml",
+          "sha256": "f770bc1d80737d15e36808553966fc449a8d88375293d44ead646925c1796233",
+          "bytes": 50379,
+          "root_tag": "hierarchy",
+          "node_count": 133
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S10",
+      "title": "账单标记",
+      "capture_key": "103-bill-flags",
+      "feature_ids": [
+        "F02",
+        "F09"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "不计入收支和不计入预算是两个独立选项",
+      "entry_recipe": "记账页点击标记工具",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/103-bill-flags.png",
+          "sha256": "7b3e01eddf8996d91115b062ed77db26867a97111590d03e05b46f6c313844b9",
+          "bytes": 80149,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/103-bill-flags.xml",
+          "sha256": "503009c093a96be5fbc0d2c3dfc135696cd47e3dbc529637a5b49e9df46805a3",
+          "bytes": 9688,
+          "root_tag": "hierarchy",
+          "node_count": 26
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S11",
+      "title": "账单详情",
+      "capture_key": "26-bill-detail",
+      "feature_ids": [
+        "F03"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "底部面板中的复制、退款、修改和删除入口",
+      "entry_recipe": "首页点击一笔已有合成账单",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "原截图可能含已有私人流水；后续运行仅使用独立合成账本"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/26-bill-detail.png",
+          "sha256": "e2ba71dc5eea585fc0a56fd7a90e15a8d78df0e683b178c60e5cf4fb41d88ce5",
+          "bytes": 99260,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/26-bill-detail.xml",
+          "sha256": "005acadbcb8e613010f61bb35cede58b94542e8cf3576bc43288ba4bf4bf1453",
+          "bytes": 13849,
+          "root_tag": "hierarchy",
+          "node_count": 36
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S12",
+      "title": "退款表单",
+      "capture_key": "27-refund-form",
+      "feature_ids": [
+        "F03",
+        "F13"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "原单关联、入账账户、日期、金额、备注与附件",
+      "entry_recipe": "账单详情点击退款",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "原截图可能含已有私人流水；后续运行仅使用独立合成账本"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/27-refund-form.png",
+          "sha256": "23c64f02e6da88296174595eb8388b8a0c6f10df63bd48a5100c67da83c4add7",
+          "bytes": 58734,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/27-refund-form.xml",
+          "sha256": "773d86e2f60a3239bd074a964fea599a766a280cf44da70980710d482967e49c",
+          "bytes": 16502,
+          "root_tag": "hierarchy",
+          "node_count": 44
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S13",
+      "title": "批量选择",
+      "capture_key": "29-batch-selection",
+      "feature_ids": [
+        "F04"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "复选框与悬浮批量工具栏",
+      "entry_recipe": "账单列表长按进入多选",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "原截图可能含已有私人流水；后续运行仅使用独立合成账本"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/29-batch-selection.png",
+          "sha256": "81b5301300ac2274dd9e839ff02aa12c205016a7be459749b358f861e899c9ff",
+          "bytes": 113901,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/29-batch-selection.xml",
+          "sha256": "89de214dfe853c1d894a4d47d0c3e5e12f63c46638a88eefda406b91612c66c6",
+          "bytes": 46933,
+          "root_tag": "hierarchy",
+          "node_count": 120
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S14",
+      "title": "批量修改",
+      "capture_key": "30-batch-edit-fields",
+      "feature_ids": [
+        "F04"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "不变作为默认值，提交前集中修改多个字段",
+      "entry_recipe": "多选后点击修改",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "原截图可能含已有私人流水；后续运行仅使用独立合成账本"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/30-batch-edit-fields.png",
+          "sha256": "4302c8f699bed52915ae69859e1273ff2c71e7a2c83a1c4d9283bc08b753ae3a",
+          "bytes": 71012,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/30-batch-edit-fields.xml",
+          "sha256": "f082b29376ef1a905442b2c2f855fbf1d1833d8bd7b46f3c245038cb6760caa1",
+          "bytes": 13387,
+          "root_tag": "hierarchy",
+          "node_count": 36
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S15",
+      "title": "分类管理",
+      "capture_key": "107-category-manager",
+      "feature_ids": [
+        "F05"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "收支分栏、层级展开、长按排序和行菜单",
+      "entry_recipe": "记账页右上角进入分类管理",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/107-category-manager.png",
+          "sha256": "00b7ac510f354927cc34f2be68b585d9de7de8e3ae929b9815d6e2d1b8fa687b",
+          "bytes": 77043,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/107-category-manager.xml",
+          "sha256": "963a2500e14b940e2570c65f70473c5b41b87b53b98da96459f65c83e4e30b56",
+          "bytes": 46103,
+          "root_tag": "hierarchy",
+          "node_count": 121
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S16",
+      "title": "新增分类",
+      "capture_key": "110-category-create-form",
+      "feature_ids": [
+        "F05"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "名称、批量添加、图标分类和图标搜索",
+      "entry_recipe": "分类管理点击新增",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/110-category-create-form.png",
+          "sha256": "2196f8712d022cec895c9ba87852706a2880538c6946f26af31120e2e4e94f70",
+          "bytes": 108942,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/110-category-create-form.xml",
+          "sha256": "b6937ecaa5d47e90d4076a323aab4b67137ba6e8c189809da078aadb40a8ac59",
+          "bytes": 47919,
+          "root_tag": "hierarchy",
+          "node_count": 128
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S17",
+      "title": "标签管理",
+      "capture_key": "114-tag-manager",
+      "feature_ids": [
+        "F06"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "启用与已归档页签，分别新增标签和分组",
+      "entry_recipe": "从标签选择器进入管理",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/114-tag-manager.png",
+          "sha256": "1de7fcf6e17d1ee4807b7d2638895e885bc84f2c5ffa521a862281f88674e9ca",
+          "bytes": 47951,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/114-tag-manager.xml",
+          "sha256": "295a548bd825f5ed97e52337e627dd2425e91c22b4104773b4559b9e585b8530",
+          "bytes": 10441,
+          "root_tag": "hierarchy",
+          "node_count": 28
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S18",
+      "title": "新增标签",
+      "capture_key": "115-tag-create-form",
+      "feature_ids": [
+        "F06"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "标签名称与颜色选择，未保存",
+      "entry_recipe": "标签管理点击新增标签",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/115-tag-create-form.png",
+          "sha256": "fe5852ed7eb80ff45c4d7f060fc6f5ac52db7e75c52bda5633ea96fcd5c593c6",
+          "bytes": 96729,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/115-tag-create-form.xml",
+          "sha256": "c969b72272c816fdd7b47379c4ab301cb2c6f4dafaa6421cc4d3b7b9b6bc0d7f",
+          "bytes": 19803,
+          "root_tag": "hierarchy",
+          "node_count": 53
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S19",
+      "title": "月度统计",
+      "capture_key": "34-statistics",
+      "feature_ids": [
+        "F07"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "汇总、每日图、分类饼图",
+      "entry_recipe": "首页进入统计并选月度",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/34-statistics.png",
+          "sha256": "c1685f1edc1ca1aba7057813887a7e84c4e907455a22fb11ead7ab2e39452425",
+          "bytes": 87785,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/34-statistics.xml",
+          "sha256": "388df169df3c90c0fef610edd85c1c4c91fddc0ad6ad803202e8a090ee27af5c",
+          "bytes": 23901,
+          "root_tag": "hierarchy",
+          "node_count": 62
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S20",
+      "title": "统计下半部分",
+      "capture_key": "35-statistics-categories",
+      "feature_ids": [
+        "F07"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "分类占比、环比、日报表",
+      "entry_recipe": "统计页下滑查看分类和日报",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/35-statistics-categories.png",
+          "sha256": "6b637e0ede3bb396f280c74c3bbc371bc4fa93fa99fee0a421efd313599126ea",
+          "bytes": 95352,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/35-statistics-categories.xml",
+          "sha256": "731e82973435c50a22c760aaee090902b73501d70a5d3a69909a91305f1eef33",
+          "bytes": 27831,
+          "root_tag": "hierarchy",
+          "node_count": 72
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S21",
+      "title": "分类明细面板",
+      "capture_key": "36-category-statistics",
+      "feature_ids": [
+        "F07"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "从分类报表展开该分类的账单列表",
+      "entry_recipe": "统计页点击分类",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "原截图可能含已有私人流水；后续运行仅使用独立合成账本"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/36-category-statistics.png",
+          "sha256": "e5c25d262d3bfd19476bf2b3343c70b32d384bd89af7d91ecb37aa71d3a6fe24",
+          "bytes": 70116,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/36-category-statistics.xml",
+          "sha256": "fbcf52f5109aa79aca60b2924eef687c9fd8fa421d0e9a0df557834f96c37bfe",
+          "bytes": 10267,
+          "root_tag": "hierarchy",
+          "node_count": 27
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S22",
+      "title": "单分类统计",
+      "capture_key": "37-single-category-trend",
+      "feature_ids": [
+        "F07"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "年与月份选择、笔数、均值和账单",
+      "entry_recipe": "分类明细进入单分类统计",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "原截图可能含已有私人流水；后续运行仅使用独立合成账本"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/37-single-category-trend.png",
+          "sha256": "45402c9ac4b6733fbb4808fa7114aefe4b602fd421028fe21af36bd54d1bb8ca",
+          "bytes": 81085,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/37-single-category-trend.xml",
+          "sha256": "fd252eca61f52bb13c0aac968d7b5319794c8c60ce48d54ea0c8bcfbd3b681d9",
+          "bytes": 26290,
+          "root_tag": "hierarchy",
+          "node_count": 70
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S23",
+      "title": "预算总览",
+      "capture_key": "18-budget-overview",
+      "feature_ids": [
+        "F09"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "月与年、总预算、分类预算和预算趋势",
+      "entry_recipe": "左侧导航进入预算",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/18-budget-overview.png",
+          "sha256": "892dd22fc73d65ea897878819c7d79ed9207b5fec579d10fbb9788e56aab69c4",
+          "bytes": 75031,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/18-budget-overview.xml",
+          "sha256": "dafdfacd7c26afb725e30eb1af56375d3396634476ad72f2620b3cc306c4b624",
+          "bytes": 16612,
+          "root_tag": "hierarchy",
+          "node_count": 44
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S24",
+      "title": "预算金额面板",
+      "capture_key": "19-budget-edit-dialog",
+      "feature_ids": [
+        "F09"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "底部输入金额，未提交修改",
+      "entry_recipe": "预算总览点击金额",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/19-budget-edit-dialog.png",
+          "sha256": "1ae04d4bdad1796e659d9349904f5a26fbccba45192983cdb4f1d4e878585c2b",
+          "bytes": 82157,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/19-budget-edit-dialog.xml",
+          "sha256": "fc59eace5b27630d6c1d9fa55e002ad027431915321168a7facadec3ce65e886",
+          "bytes": 6144,
+          "root_tag": "hierarchy",
+          "node_count": 17
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S25",
+      "title": "账本管理",
+      "capture_key": "51-book-manager",
+      "feature_ids": [
+        "F10"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "账本卡片、当前账本和新增入口",
+      "entry_recipe": "左侧导航进入我的账本",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/51-book-manager.png",
+          "sha256": "30e1e068e76eca344817ab7c3171cd675d9dfafb59f669a6449a7d4bef4b32ac",
+          "bytes": 266499,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/51-book-manager.xml",
+          "sha256": "28d07f57c5e97e32fd934e6b63bb4145755b87fc63ac42ba0e5bcf8fa28d2464",
+          "bytes": 9187,
+          "root_tag": "hierarchy",
+          "node_count": 25
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S26",
+      "title": "账本新增方式",
+      "capture_key": "52-book-types",
+      "feature_ids": [
+        "F10"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "新建、复制设置、加入他人账本",
+      "entry_recipe": "账本管理点击新增",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/52-book-types.png",
+          "sha256": "554faa48c17e7e424c8b06483c684a51ffa30d19e2a544dafd4d9f3e73570e64",
+          "bytes": 243343,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/52-book-types.xml",
+          "sha256": "9cb4ac2a7d28de357fa0effe4a5c3350b5ab310ffeb6ea60eaacf31340c71af5",
+          "bytes": 10645,
+          "root_tag": "hierarchy",
+          "node_count": 28
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S27",
+      "title": "新建账本",
+      "capture_key": "53-create-book-form",
+      "feature_ids": [
+        "F10"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "封面、类型、名称、显示方式与月份起始日",
+      "entry_recipe": "新增方式选择新建账本",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/53-create-book-form.png",
+          "sha256": "93df67565f4744f99cf04d6ae6c97de599c9aa723e5e2e04488440c657f6e896",
+          "bytes": 291179,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/53-create-book-form.xml",
+          "sha256": "9226d947725dcb1c1df224782756a55f1cee0a2ac81aca65a7eeadf73b62a995",
+          "bytes": 11987,
+          "root_tag": "hierarchy",
+          "node_count": 32
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S28",
+      "title": "账本模板",
+      "capture_key": "54-book-templates",
+      "feature_ids": [
+        "F05",
+        "F10"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "日常、旅行、装修、婚礼、出差等模板",
+      "entry_recipe": "新建账本选择模板类型",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/54-book-templates.png",
+          "sha256": "0256cc734c944bb04b936e54b43a67be60a4167aaf7b57782e40544918b72c6b",
+          "bytes": 276182,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/54-book-templates.xml",
+          "sha256": "4f2d0a73e449b938cd2a1772c1cb9fb02f983d79759ace85d57ac068b1114348",
+          "bytes": 20135,
+          "root_tag": "hierarchy",
+          "node_count": 53
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S29",
+      "title": "分期管理",
+      "capture_key": "60-repeat-installment",
+      "feature_ids": [
+        "F14",
+        "F15"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "分期与周期在同一页面的不同页签",
+      "entry_recipe": "左侧导航进入分期与周期",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/60-repeat-installment.png",
+          "sha256": "1d9400e54ef74a75fabed2862e2fc7c3097bab47faaa66583e36cfcace222d52",
+          "bytes": 64328,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/60-repeat-installment.xml",
+          "sha256": "640194157c576d127083608143e5d89d31a238396e43e20b0d30a431ec42be53",
+          "bytes": 9845,
+          "root_tag": "hierarchy",
+          "node_count": 26
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S30",
+      "title": "分期第一步",
+      "capture_key": "61-installment-form",
+      "feature_ids": [
+        "F14"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "三步指示器，首步填写名称和扣款账户",
+      "entry_recipe": "分期页点击新增",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/61-installment-form.png",
+          "sha256": "34501a5f6b11b9b668f3073b865c185e3099831d500f716ad93dc1d0e5d5c432",
+          "bytes": 82002,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/61-installment-form.xml",
+          "sha256": "c9860235df41c05f472bbb959cf2f33d70bd856a28bfcc75fd9ca5a766f42e28",
+          "bytes": 12685,
+          "root_tag": "hierarchy",
+          "node_count": 34
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S31",
+      "title": "周期任务表单",
+      "capture_key": "65-recurring-form",
+      "feature_ids": [
+        "F15"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "开始、周期、结束、账本、分类和金额等",
+      "entry_recipe": "周期页签点击新增",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/65-recurring-form.png",
+          "sha256": "c3c5cc722138f61d5df34e388380d4fc886ad638a2a890e7e80c75d2ddb0efb9",
+          "bytes": 80721,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/65-recurring-form.xml",
+          "sha256": "3ed450899bce6f840a74f17178400f7dd21ba262a885187568e2e037ec8bdb3c",
+          "bytes": 20607,
+          "root_tag": "hierarchy",
+          "node_count": 54
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S32",
+      "title": "重复周期",
+      "capture_key": "66-repeat-cycle-picker",
+      "feature_ids": [
+        "F15"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "天、周、月、年、每 N 天和法定工作日",
+      "entry_recipe": "周期任务点击重复周期",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/66-repeat-cycle-picker.png",
+          "sha256": "eea9ce0731e873a6492f9274229042cc7e5a9d07c54bfd5b637364a17c7b81ae",
+          "bytes": 86910,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/66-repeat-cycle-picker.xml",
+          "sha256": "9e266ad5efbc358a75a85a829281e558bc8ec736b945a7ba23c0ce3b357a76d9",
+          "bytes": 8279,
+          "root_tag": "hierarchy",
+          "node_count": 22
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S33",
+      "title": "任务结束方式",
+      "capture_key": "68-repeat-end-picker",
+      "feature_ids": [
+        "F15"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "永不结束、结束日期、执行次数",
+      "entry_recipe": "周期任务点击结束条件",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/68-repeat-end-picker.png",
+          "sha256": "017713cc57ef66e2930d6310081d87d7f680131b786ce05a839c2e34cdabe547",
+          "bytes": 80017,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/68-repeat-end-picker.xml",
+          "sha256": "a09d8eac37c020af9cefdcccbfe3cf0d777ec569720479d9fc75cf765e734c3c",
+          "bytes": 8406,
+          "root_tag": "hierarchy",
+          "node_count": 23
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S34",
+      "title": "存钱计划空态",
+      "capture_key": "72-savings-home",
+      "feature_ids": [
+        "F16"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "空态说明与新增计划按钮",
+      "entry_recipe": "左侧导航进入存钱计划",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/72-savings-home.png",
+          "sha256": "9b5d2dd4e285a3e13a2ec8b459c56543d4fb380fe410a8d67416e2bc3e97db0c",
+          "bytes": 54358,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/72-savings-home.xml",
+          "sha256": "133bb75e6c142b825644480667b9f8cfeeb4485737827332fbeead25057ed8f6",
+          "bytes": 6202,
+          "root_tag": "hierarchy",
+          "node_count": 17
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S35",
+      "title": "存钱计划类型",
+      "capture_key": "73-savings-types",
+      "feature_ids": [
+        "F16"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "七种计划模式及说明",
+      "entry_recipe": "存钱计划点击新增",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/73-savings-types.png",
+          "sha256": "82fe44413a25f8085cdb0128cd18cd0b1332feba9f23565ee8b7cef406f01333",
+          "bytes": 143604,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/73-savings-types.xml",
+          "sha256": "21de993146bab27e20c4e02cf14837060549773df6715107c6f0c7d7bdf77d30",
+          "bytes": 18847,
+          "root_tag": "hierarchy",
+          "node_count": 48
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S36",
+      "title": "灵活存钱表单",
+      "capture_key": "74-savings-flexible-form",
+      "feature_ids": [
+        "F12",
+        "F16"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "目标金额、币种、开始与截止日期",
+      "entry_recipe": "模式列表选择灵活模式",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/74-savings-flexible-form.png",
+          "sha256": "b56c285803071b99cc9b022f45db5191c80618a7bcbeb8fb01735817ad0ce486",
+          "bytes": 51255,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/74-savings-flexible-form.xml",
+          "sha256": "b8376c20e88c2eb3a8a37f14f610891faffee9188233e85e423b3e3ae91cc2e0",
+          "bytes": 14000,
+          "root_tag": "hierarchy",
+          "node_count": 37
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S37",
+      "title": "资产总览",
+      "capture_key": "90-assets-overview",
+      "feature_ids": [
+        "F11"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "净资产、资产、负债、借入和借出",
+      "entry_recipe": "启用资产后进入资产总览",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "资产管理开关开启；开启不证明已经创建账户"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/90-assets-overview.png",
+          "sha256": "b46c221e9632d53b56a5408e8ff0be14a409bd273991283c28ee1040083613bf",
+          "bytes": 38120,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/90-assets-overview.xml",
+          "sha256": "b0544f3adf2cbde70f5d841acf1234cc998a7f6dd14d33ec89b9f8e2f12a8aa9",
+          "bytes": 15300,
+          "root_tag": "hierarchy",
+          "node_count": 41
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S38",
+      "title": "账户类型上半部分",
+      "capture_key": "92-asset-types",
+      "feature_ids": [
+        "F11"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "资金账户和信用卡账户",
+      "entry_recipe": "资产菜单新增资产并看类型",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "资产管理开关开启；开启不证明已经创建账户"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/92-asset-types.png",
+          "sha256": "5d2d66770e8fb265fdb60e20764dfbdc8258e2ae668909f6f1e3b100cd4f172f",
+          "bytes": 139014,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/92-asset-types.xml",
+          "sha256": "67505a24360e82326cc9bac401535a5a3a5a200efa0ef2c3819c151f75119bb3",
+          "bytes": 37742,
+          "root_tag": "hierarchy",
+          "node_count": 99
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S39",
+      "title": "账户类型下半部分",
+      "capture_key": "93-asset-types-lower",
+      "feature_ids": [
+        "F11"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "充值、投资理财和债务等类别",
+      "entry_recipe": "账户类型列表下滑",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "资产管理开关开启；开启不证明已经创建账户"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/93-asset-types-lower.png",
+          "sha256": "33159f73a739f3bea4719765c46ef8e64ae7a85ea55c6c381f081ec984a47977",
+          "bytes": 137514,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/93-asset-types-lower.xml",
+          "sha256": "334be090fc4f685427eaf88720c0e59a18e6ebf01787ade43aeb41539fe3a4e9",
+          "bytes": 43407,
+          "root_tag": "hierarchy",
+          "node_count": 114
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S40",
+      "title": "选择银行",
+      "capture_key": "94-credit-card-form",
+      "feature_ids": [
+        "F11"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "按银行筛选，支持搜索",
+      "entry_recipe": "添加信用卡并选择银行",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "资产管理开关开启；开启不证明已经创建账户"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/94-credit-card-form.png",
+          "sha256": "7cbc6005fac007136f069934624bf33a0bd64cf032131b2bfa6665bebfe62637",
+          "bytes": 99481,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/94-credit-card-form.xml",
+          "sha256": "4093fa59e8f21e47181c4fbc781df905ee2a7f80b51fefb17764dbb9c05261cd",
+          "bytes": 23640,
+          "root_tag": "hierarchy",
+          "node_count": 63
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S41",
+      "title": "信用卡账户表单",
+      "capture_key": "95-credit-card-fields",
+      "feature_ids": [
+        "F11",
+        "F12"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "额度、欠款、出账日、还款日和计入总资产",
+      "entry_recipe": "选择银行后查看信用卡字段",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "资产管理开关开启；开启不证明已经创建账户"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/95-credit-card-fields.png",
+          "sha256": "df9d42f3e9098908cfb2bf2a4429b8808d52584df5f208b4dfbace839eb6e67f",
+          "bytes": 95859,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/95-credit-card-fields.xml",
+          "sha256": "62862e94ac1c35f4d66059a8f1e3ba6f57dcd2b1c9c6b8e08e68872251ff53f6",
+          "bytes": 21947,
+          "root_tag": "hierarchy",
+          "node_count": 57
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S42",
+      "title": "自动记账入口",
+      "capture_key": "78-auto-record-hub",
+      "feature_ids": [
+        "F17",
+        "F21"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "无障碍和截图 AI 两种模式及通用选项",
+      "entry_recipe": "设置进入自动记账",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/78-auto-record-hub.png",
+          "sha256": "9a25a95a057b9c518bba9af72bdde6637154639b5600c0bad5d949ab361b6173",
+          "bytes": 105500,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/78-auto-record-hub.xml",
+          "sha256": "da9308aea482cdf70e99bbcbf86639b8241a39159f206ad4d708251a51b48dcd",
+          "bytes": 17854,
+          "root_tag": "hierarchy",
+          "node_count": 47
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S43",
+      "title": "无障碍配置",
+      "capture_key": "79-accessibility-config",
+      "feature_ids": [
+        "F17"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "权限、后台存活、可选 AI 匹配和适配说明",
+      "entry_recipe": "自动记账进入无障碍配置",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "未启用/授权自动记账服务，不触发真实支付或上传"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/79-accessibility-config.png",
+          "sha256": "9f13460eda5f53a5aeee758243ef15531be3b68dc18a83e20fc3dd9357a7af33",
+          "bytes": 182486,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/79-accessibility-config.xml",
+          "sha256": "0e7272a2ccd1c59cc3acc1c85e8898d81e5ed6ae6e45118404ccda9804655081",
+          "bytes": 28639,
+          "root_tag": "hierarchy",
+          "node_count": 75
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S44",
+      "title": "截图 AI 配置",
+      "capture_key": "83-screenshot-ai-config",
+      "feature_ids": [
+        "F17"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "系统分享入口及本地 OCR 和脱敏说明",
+      "entry_recipe": "自动记账进入截图配置",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "未启用/授权自动记账服务，不触发真实支付或上传"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/83-screenshot-ai-config.png",
+          "sha256": "bbbfd02bd25712f2b2d679a43e63436e7842496b93600f02f42cf8786d42dc32",
+          "bytes": 129141,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/83-screenshot-ai-config.xml",
+          "sha256": "8f1e7cd54945ab6b37fca650030c7f78b66a049b4f574638359867503fd9365d",
+          "bytes": 11004,
+          "root_tag": "hierarchy",
+          "node_count": 28
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S45",
+      "title": "设置上半部分",
+      "capture_key": "09-settings-top",
+      "feature_ids": [
+        "F19"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "主题、小部件和记账功能开关",
+      "entry_recipe": "打开设置页上段",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/09-settings-top.png",
+          "sha256": "08bfe1d90a4c06fcac71190b9c91092ebabaad460d0f66f1e7e427db1ecd9427",
+          "bytes": 132831,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/09-settings-top.xml",
+          "sha256": "0ae80d855c09cc12e77fe27f47a15c1edbfa7d70adebc6efa71ea832eabdfb4d",
+          "bytes": 25506,
+          "root_tag": "hierarchy",
+          "node_count": 67
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S46",
+      "title": "设置数据工具",
+      "capture_key": "120-settings-data-options",
+      "feature_ids": [
+        "F19"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "标签、导入导出、保护和显示选项",
+      "entry_recipe": "设置页下滑查看数据工具",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/120-settings-data-options.png",
+          "sha256": "8d46c55570925a4c5d5d83612ddea0930f6145b7cbe35e1ae0fa3c0e12da6323",
+          "bytes": 114016,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/120-settings-data-options.xml",
+          "sha256": "2f0479cf62c1d24cf0f65bb2e978aae3215e0998eba769b4d831c2ebb8827642",
+          "bytes": 22746,
+          "root_tag": "hierarchy",
+          "node_count": 60
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S47",
+      "title": "账单显示效果",
+      "capture_key": "121-bill-display-options",
+      "feature_ids": [
+        "F19"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "图标、完整分类、备注优先以及示例账单",
+      "entry_recipe": "设置进入账单显示效果",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/121-bill-display-options.png",
+          "sha256": "cd4d201d347889548aa05db9279bdb974ce8c0f7efdf762244c5ed77d2aa4b20",
+          "bytes": 47594,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/121-bill-display-options.xml",
+          "sha256": "65668c5c335327b329221dfab2f91f7ce090f56d437526ee3f5a65f168325028",
+          "bytes": 10664,
+          "root_tag": "hierarchy",
+          "node_count": 29
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S48",
+      "title": "导入入口",
+      "capture_key": "123-import-entry",
+      "feature_ids": [
+        "F18"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "教程、已导入管理和文件选择",
+      "entry_recipe": "设置进入导入",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/123-import-entry.png",
+          "sha256": "e807fce60c3b1c752b71776b745bb2ebc776095dc6e85ee7e09344c88df6b67a",
+          "bytes": 49243,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/123-import-entry.xml",
+          "sha256": "f2aa221a7360755f18ec6ae8f140d55f7a1899c8e3a3a5382ca0fad00f69d248",
+          "bytes": 6276,
+          "root_tag": "hierarchy",
+          "node_count": 17
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S49",
+      "title": "导出选项",
+      "capture_key": "127-export-options",
+      "feature_ids": [
+        "F18"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "格式、排序、账本和高级筛选",
+      "entry_recipe": "设置进入导出",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/127-export-options.png",
+          "sha256": "ad02a8c497028714096d9f3436e95533e6b80a1fd32900431be9360b3a6d9a3a",
+          "bytes": 102094,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/127-export-options.xml",
+          "sha256": "94380f536435653615c258da49578307a95b71abf82f86072f778644b985f079",
+          "bytes": 19375,
+          "root_tag": "hierarchy",
+          "node_count": 51
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S50",
+      "title": "导出格式",
+      "capture_key": "128-export-formats",
+      "feature_ids": [
+        "F18"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "当前可见选项为 XLSX 与 JSON",
+      "entry_recipe": "导出点击格式",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/128-export-formats.png",
+          "sha256": "2380b64cbcad5a197aee2f00202eb7ae71e95da1e63ea5cb7e3a4d1bd5d0118d",
+          "bytes": 109119,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/128-export-formats.xml",
+          "sha256": "6f530131d9f8945d0ed85d4e9e263d44707968376916eda9b89a59ca4e4bfba3",
+          "bytes": 8978,
+          "root_tag": "hierarchy",
+          "node_count": 24
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S51",
+      "title": "报销升级提示",
+      "capture_key": "58-reimbursement",
+      "feature_ids": [
+        "F13"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "当前账户进入报销页的实际前置状态，未执行升级",
+      "entry_recipe": "左侧导航进入报销",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "原账户旧报销数据升级提示；没有执行升级"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/58-reimbursement.png",
+          "sha256": "600a4f995a25db47f1163da1135208e96746f868a2bc449f930b93e69cdea589",
+          "bytes": 85668,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/58-reimbursement.xml",
+          "sha256": "4b3e09452928b152ce7e5ef550778270983ce9daf43e3f5030d5b1e639b19cb1",
+          "bytes": 7487,
+          "root_tag": "hierarchy",
+          "node_count": 20
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S52",
+      "title": "实验室",
+      "capture_key": "131-laboratory",
+      "feature_ids": [
+        "F21"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "同步诊断、日志、线路和接口调试入口",
+      "entry_recipe": "设置进入实验室",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/131-laboratory.png",
+          "sha256": "12e543c97cfcfd169d7902d73509b22bf4dd7e80dfb15459cfba0404112e8142",
+          "bytes": 97775,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/131-laboratory.xml",
+          "sha256": "a034a89df2ff0136cd69575b94267ae3bc9fbdf9382b9766e7e87ac1c93e6043",
+          "bytes": 14240,
+          "root_tag": "hierarchy",
+          "node_count": 37
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S53",
+      "title": "资产操作菜单",
+      "capture_key": "91-assets-actions",
+      "feature_ids": [
+        "F11"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "新增资产、分组管理和已隐藏资产",
+      "entry_recipe": "资产总览打开操作菜单",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "资产管理开关开启；开启不证明已经创建账户"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/91-assets-actions.png",
+          "sha256": "8f1d1fc78dfe1ff232aee90afc9e0c445e5a36790eb42d6a0780d7d66afc4445",
+          "bytes": 53879,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/91-assets-actions.xml",
+          "sha256": "c7a6868db8670823836e39a1245248eccfa613fde16d04083d5565580c52d812",
+          "bytes": 19696,
+          "root_tag": "hierarchy",
+          "node_count": 52
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S54",
+      "title": "自动记账适配说明",
+      "capture_key": "80-auto-supported-apps",
+      "feature_ids": [
+        "F17"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "各支付应用的页面适配范围与限制",
+      "entry_recipe": "无障碍配置打开适配说明",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "未启用/授权自动记账服务，不触发真实支付或上传"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/80-auto-supported-apps.png",
+          "sha256": "97e141776e3070d127090039175ca62ba59c7250829d402330d428dbb80f0b1c",
+          "bytes": 132033,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/80-auto-supported-apps.xml",
+          "sha256": "092ad345d37e26fb650bf9595750d2b1a9aaf934ea3bb29d84c57090d0d0f372",
+          "bytes": 11419,
+          "root_tag": "hierarchy",
+          "node_count": 30
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S55",
+      "title": "搜索账单",
+      "capture_key": "23-search",
+      "feature_ids": [
+        "F04"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "时间、账本、关键词、结果汇总和按日流水",
+      "entry_recipe": "左侧导航进入搜索",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "原截图可能含已有私人流水；后续运行仅使用独立合成账本"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/23-search.png",
+          "sha256": "2cb1f33ca0c1e49a0155f7cde3c0001c03316b078f5af482c404176d2ff36a67",
+          "bytes": 111677,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/23-search.xml",
+          "sha256": "9af9ec8c2529a6df4a679ccd8396c1a2196a617d85a2d2f820d47b3f015ab99f",
+          "bytes": 43244,
+          "root_tag": "hierarchy",
+          "node_count": 111
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    },
+    {
+      "id": "S56",
+      "title": "搜索筛选",
+      "capture_key": "24-search-filter",
+      "feature_ids": [
+        "F04"
+      ],
+      "historical_observation_class": "O",
+      "observation_scope": "page_or_control_only",
+      "summary": "标签、分类、金额、图片、来源、类型与统计标记",
+      "entry_recipe": "搜索页点击更多筛选",
+      "recipe_provenance": "historical_report_or_navigation_reconstruction_not_reexecuted",
+      "prerequisites": [
+        "Android 钱迹 4.5.4；历史截图账号有会员；夜间主题",
+        "原截图可能含已有私人流水；后续运行仅使用独立合成账本"
+      ],
+      "exit_plan": "返回关闭当前键盘/面板/页面；表单不保存；恢复临时开关；不执行生产提交或升级",
+      "reference_exit_retested": false,
+      "reference_submission_executed": false,
+      "artifacts": [
+        {
+          "kind": "historical_screenshot",
+          "path": "work/qianji-research/24-search-filter.png",
+          "sha256": "b5ebd3fb7391a12159ef6840d06c406b838f176f8649e481a206b6da296de10a",
+          "bytes": 125124,
+          "width": 720,
+          "height": 1570
+        },
+        {
+          "kind": "historical_ui_hierarchy",
+          "path": "work/qianji-research/24-search-filter.xml",
+          "sha256": "d7ae1659b29e45c2e4c35a5448390224719e812dcd0aacdbd4bfce1258e406b5",
+          "bytes": 22571,
+          "root_tag": "hierarchy",
+          "node_count": 57
+        }
+      ],
+      "flowtrace_state_catalog": "ST01-ST10; per-page applicability belongs to P0-04 contracts/ui-map.md"
+    }
+  ]
+}

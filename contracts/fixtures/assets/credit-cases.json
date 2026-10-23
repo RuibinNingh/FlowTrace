@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "evidence": "FlowTrace design defaults N; no original-application submission",
+  "entry_order": [
+    "business_date",
+    "bill_id",
+    "component"
+  ],
+  "cases": [
+    {
+      "id": "C01_fifo_carry_and_repayment",
+      "payload": {
+        "name": "合成信用卡",
+        "kind": "credit_card",
+        "opening": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "-10000"
+        },
+        "include_in_net_assets": true,
+        "hidden": false,
+        "opening_date": "2026-01-01",
+        "credit": {
+          "limit": {
+            "currency": "CNY",
+            "currency_scale": 2,
+            "amount_minor": "20000"
+          },
+          "statement_day": 15,
+          "due_mode": "fixed_day",
+          "due_day": 5
+        }
+      },
+      "balance_minor": "-6000",
+      "entries": [
+        {
+          "business_date": "2026-10-10",
+          "bill_id": "40000000-0000-4000-8000-000000000001",
+          "component": "principal",
+          "amount_minor": "-6000"
+        },
+        {
+          "business_date": "2026-10-16",
+          "bill_id": "40000000-0000-4000-8000-000000000002",
+          "component": "principal",
+          "amount_minor": "-2000"
+        },
+        {
+          "business_date": "2026-10-20",
+          "bill_id": "40000000-0000-4000-8000-000000000003",
+          "component": "principal",
+          "amount_minor": "12000"
+        }
+      ],
+      "start_date": "2026-10-01",
+      "end_date_exclusive": "2026-11-01",
+      "expected": {
+        "total_debt_minor": "6000",
+        "available_credit_minor": "14000",
+        "opening_carry_minor": "0",
+        "repayment_available": true,
+        "cycles": [
+          {
+            "start_date": "2026-09-16",
+            "end_date_exclusive": "2026-10-16",
+            "statement_date": "2026-10-15",
+            "due_date": "2026-11-05",
+            "charges_minor": "6000",
+            "statement_due_minor": "6000",
+            "remaining_due_minor": "4000"
+          }
+        ]
+      }
+    },
+    {
+      "id": "C02_unknown_opening",
+      "payload": {
+        "name": "合成信用卡",
+        "kind": "credit_card",
+        "opening": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "-10000"
+        },
+        "include_in_net_assets": true,
+        "hidden": false,
+        "opening_date": null,
+        "credit": {
+          "statement_day": 15,
+          "due_mode": "days_after",
+          "due_days": 20
+        }
+      },
+      "balance_minor": "-10000",
+      "entries": [],
+      "start_date": "2026-10-01",
+      "end_date_exclusive": "2026-11-01",
+      "expected": {
+        "total_debt_minor": "10000",
+        "opening_carry_minor": null,
+        "repayment_available": false,
+        "issues": [
+          "asset.opening_date_required"
+        ],
+        "cycles": [
+          {
+            "due_date": "2026-11-04",
+            "statement_due_minor": null,
+            "remaining_due_minor": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "C03_partial_terms_overpayment",
+      "payload": {
+        "name": "合成信用卡",
+        "kind": "credit_card",
+        "opening": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "500"
+        },
+        "include_in_net_assets": true,
+        "hidden": false,
+        "opening_date": "2026-01-01",
+        "credit": {
+          "limit": {
+            "currency": "CNY",
+            "currency_scale": 2,
+            "amount_minor": "10000"
+          }
+        }
+      },
+      "balance_minor": "500",
+      "entries": [],
+      "start_date": "2026-10-01",
+      "end_date_exclusive": "2026-11-01",
+      "expected": {
+        "total_debt_minor": "0",
+        "overpayment_minor": "500",
+        "available_credit_minor": "10500",
+        "over_limit_minor": "0",
+        "repayment_available": false,
+        "issues": [
+          "asset.credit_calendar_incomplete"
+        ],
+        "cycles": []
+      }
+    },
+    {
+      "id": "C04_leap_inclusive",
+      "payload": {
+        "name": "合成信用卡",
+        "kind": "credit_card",
+        "opening": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "0"
+        },
+        "include_in_net_assets": true,
+        "hidden": false,
+        "opening_date": "2024-01-01",
+        "credit": {
+          "statement_day": 31,
+          "statement_day_inclusive": true,
+          "due_mode": "fixed_day",
+          "due_day": 29
+        }
+      },
+      "balance_minor": "-125",
+      "entries": [
+        {
+          "business_date": "2024-02-29",
+          "bill_id": "40000000-0000-4000-8000-000000000001",
+          "component": "principal",
+          "amount_minor": "-125"
+        }
+      ],
+      "start_date": "2024-02-01",
+      "end_date_exclusive": "2024-03-01",
+      "expected": {
+        "total_debt_minor": "125",
+        "cycles": [
+          {
+            "start_date": "2024-02-01",
+            "end_date_exclusive": "2024-03-01",
+            "statement_date": "2024-02-29",
+            "due_date": "2024-03-29",
+            "charges_minor": "125",
+            "statement_due_minor": "125",
+            "remaining_due_minor": "125"
+          }
+        ]
+      }
+    },
+    {
+      "id": "C05_leap_exclusive",
+      "payload": {
+        "name": "合成信用卡",
+        "kind": "credit_card",
+        "opening": {
+          "currency": "CNY",
+          "currency_scale": 2,
+          "amount_minor": "0"
+        },
+        "include_in_net_assets": true,
+        "hidden": false,
+        "opening_date": "2024-01-01",
+        "credit": {
+          "statement_day": 31,
+          "statement_day_inclusive": false,
+          "due_mode": "fixed_day",
+          "due_day": 29
+        }
+      },
+      "balance_minor": "-125",
+      "entries": [
+        {
+          "business_date": "2024-02-29",
+          "bill_id": "40000000-0000-4000-8000-000000000001",
+          "component": "principal",
+          "amount_minor": "-125"
+        }
+      ],
+      "start_date": "2024-02-01",
+      "end_date_exclusive": "2024-03-01",
+      "expected": {
+        "total_debt_minor": "125",
+        "cycles": [
+          {
+            "start_date": "2024-01-31",
+            "end_date_exclusive": "2024-02-29",
+            "statement_date": "2024-02-29",
+            "due_date": "2024-03-29",
+            "charges_minor": "0",
+            "statement_due_minor": "0",
+            "remaining_due_minor": "0"
+          }
+        ]
+      }
+    }
+  ]
+}

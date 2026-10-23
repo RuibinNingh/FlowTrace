@@ -1,0 +1,12 @@
+<header><div class="eyebrow">CONFIGURATION ROLLBACK</div><h1>预览回滚</h1><p class="muted">将配置版本 {{ config.version }} 回滚到版本 {{ target_version }} 的设置，并生成新版本；不改写历史记录。</p></header>
+{% if error %}<div class="notice error" role="alert">{{ error }}</div>{% endif %}
+<section class="surface table-wrap"><table><thead><tr><th>设置</th><th>当前值</th><th>目标值</th></tr></thead><tbody>
+{% for key,label,kind,minimum,maximum in configuration_fields %}<tr><td>{{ label }}</td><td>{{ config.public_values[key] }}</td><td>{{ target.public_values[key] }}</td></tr>{% endfor %}
+{% for key,label in secret_fields %}<tr><td>{{ label }}</td><td>{{ '已配置' if config.secret_presence[key] else '未配置' }}</td><td>{{ '已配置' if target.secret_presence[key] else '未配置' }}</td></tr>{% endfor %}
+</tbody></table></section>
+<section class="surface"><h2>确认回滚目标</h2><p class="muted">提交时再次核对版本、当前角色、当前密码、历史密钥可用性和服务登记。部署信息变化可能使历史配置暂时无法回滚。</p>
+<form method="post" action="/admin/configuration/rollback/{{ target_version }}" class="credential-form">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="base_version" value="{{ config.version }}"><input type="hidden" name="request_id" value="{{ request_id }}">
+<label>当前管理密码<input type="password" name="current_password" minlength="12" maxlength="256" autocomplete="current-password" required></label>
+<label class="checkbox"><input type="checkbox" name="confirm_target" value="{{ target_version }}" required>确认从版本 {{ config.version }} 回滚到版本 {{ target_version }}</label>
+<div class="actions"><button class="primary">确认并生成新版本</button><a class="text-link" href="/admin/configuration/history">取消</a></div></form></section>

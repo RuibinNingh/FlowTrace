@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>流迹管理</title><link rel="stylesheet" href="/admin/static/admin.css"></head>
+<body><div class="shell">
+<aside>
+  <a class="brand" href="/admin/overview">流迹<span>FLOWTRACE</span></a>
+  <div class="nav-caption">服务管理</div>
+  <nav aria-label="管理导航">
+    <a class="{{ 'active' if page=='overview' }}" href="/admin/overview">服务概况</a>
+    {% if can_service|default(true) %}
+    <a class="{{ 'active' if page in ['users','sessions','roles','reset_password'] }}" href="/admin/users">用户与会话</a>
+    <a class="{{ 'active' if page=='invites' }}" href="/admin/invites">注册邀请</a>
+    <a class="{{ 'active' if page=='audit' }}" href="/admin/audit">管理审计</a>
+    <a class="{{ 'active' if page in ['configuration','configuration_history','configuration_rollback','configuration_providers'] }}" href="/admin/configuration">服务配置</a>
+    {% endif %}
+    <a class="{{ 'active' if page in ['jobs','job_control','backup_verify'] }}" href="/admin/jobs">任务队列</a>
+    <a class="{{ 'active' if page=='workers' }}" href="/admin/workers">执行器状态</a>
+    <a class="{{ 'active' if page in ['backups','backup_download','backup_create','backup_retention','backup_retention_register','backup_retention_protection','backup_retention_preview','backup_quarantine','backup_quarantine_cancel','restores','restore_confirm','restore_status'] }}" href="/admin/backups">备份管理</a>
+    <a class="{{ 'active' if page=='password' }}" href="/admin/password">修改凭据</a>
+    <a class="{{ 'active' if page=='recovery' }}" href="/admin/recovery">本机恢复说明</a>
+  </nav>
+  <form class="logout" method="post" action="/admin/logout"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="subtle">退出登录</button></form>
+</aside>
+<main class="workspace">
+  <div class="topline">服务控制台<span class="status-dot">管理会话已验证</span></div>
+  {% include 'pages/' ~ page ~ '.html' %}
+</main></div></body></html>

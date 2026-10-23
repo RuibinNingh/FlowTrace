@@ -1,0 +1,690 @@
+{
+  "schema_version": 1,
+  "retest_cases": [
+    {
+      "id": "V01",
+      "title": "保存输入与单笔维护",
+      "reference_status": "not_executed_in_isolated_reference_environment",
+      "reason": "本轮未提供/建立专用原应用账号与隔离设备；现有账号含私人流水，禁止用于提交/升级实验。",
+      "feature_ids": [
+        "F01",
+        "F02",
+        "F03",
+        "F08"
+      ],
+      "state_ids": [
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S10",
+        "S11"
+      ],
+      "implementation_tasks": [
+        "P0-02",
+        "P3-01",
+        "P3-02"
+      ],
+      "journey_ids": [
+        "J01",
+        "J02"
+      ],
+      "owner_role": "product_evidence_owner_with_domain_reviewer",
+      "required_environment": [
+        "专用测试账号和空账本",
+        "独立Android设备或模拟器及固定4.5.4版本",
+        "仅合成金额/附件/支付页，不写真实账目"
+      ],
+      "reference_test_steps": [
+        "创建全新合成账本/资金账户，记录期初",
+        "分别录入收入、支出、转账、加减小数、再记和取消",
+        "复制/改金额账户日期/删除，核对列表、余额、统计及开关显示"
+      ],
+      "record_after_retest": [
+        "版本/平台/开关",
+        "输入和操作",
+        "前后余额及账单ID集合",
+        "统计/预算结果",
+        "截图或安全摘要",
+        "仍未知事项"
+      ],
+      "flowtrace_defaults": [
+        {
+          "id": "V01-D01",
+          "evidence_class": "N",
+          "statement": "所有金额走精确领域契约；保存后本地事务与outbox一致",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V01-D02",
+          "evidence_class": "N",
+          "statement": "复制生成新业务ID；修改/删除撤销旧影响后应用新影响",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V01-D03",
+          "evidence_class": "N",
+          "statement": "校验失败和未保存退出保留可恢复输入，不冒充成功",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        }
+      ],
+      "blocks_independent_flowtrace_development": false,
+      "exact_reference_parity_claim_allowed": false
+    },
+    {
+      "id": "V02",
+      "title": "资产信用卡债务与免息期",
+      "reference_status": "not_executed_in_isolated_reference_environment",
+      "reason": "本轮未提供/建立专用原应用账号与隔离设备；现有账号含私人流水，禁止用于提交/升级实验。",
+      "feature_ids": [
+        "F11",
+        "F12"
+      ],
+      "state_ids": [
+        "S37",
+        "S38",
+        "S39",
+        "S40",
+        "S41",
+        "S53"
+      ],
+      "implementation_tasks": [
+        "P0-02",
+        "P4-01"
+      ],
+      "journey_ids": [
+        "J03",
+        "J05"
+      ],
+      "owner_role": "product_evidence_owner_with_domain_reviewer",
+      "required_environment": [
+        "专用测试账号和空账本",
+        "独立Android设备或模拟器及固定4.5.4版本",
+        "仅合成金额/附件/支付页，不写真实账目"
+      ],
+      "reference_test_steps": [
+        "各类虚构账户建档，覆盖隐藏分组/调整余额",
+        "信用卡消费/还款、借入借出/归还利息，记录前后本金及净资产",
+        "核对账单日/还款日/免息期、资产负债表/曲线"
+      ],
+      "record_after_retest": [
+        "版本/平台/开关",
+        "输入和操作",
+        "前后余额及账单ID集合",
+        "统计/预算结果",
+        "截图或安全摘要",
+        "仍未知事项"
+      ],
+      "flowtrace_defaults": [
+        {
+          "id": "V02-D01",
+          "evidence_class": "N",
+          "statement": "普通转账不使用债务贷款账户，债务走独立往来类型",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V02-D02",
+          "evidence_class": "N",
+          "statement": "私人账户归用户，分享账本不分享资产总览",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V02-D03",
+          "evidence_class": "N",
+          "statement": "手续费、还款和转账分别按显式事件计算，不重复计收支",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        }
+      ],
+      "blocks_independent_flowtrace_development": false,
+      "exact_reference_parity_claim_allowed": false
+    },
+    {
+      "id": "V03",
+      "title": "退款报销预算与跨期归属",
+      "reference_status": "not_executed_in_isolated_reference_environment",
+      "reason": "本轮未提供/建立专用原应用账号与隔离设备；现有账号含私人流水，禁止用于提交/升级实验。",
+      "feature_ids": [
+        "F07",
+        "F09",
+        "F12",
+        "F13"
+      ],
+      "state_ids": [
+        "S12",
+        "S23",
+        "S24",
+        "S51"
+      ],
+      "implementation_tasks": [
+        "P0-02",
+        "P3-03",
+        "P4-02"
+      ],
+      "journey_ids": [
+        "J04",
+        "J05"
+      ],
+      "owner_role": "product_evidence_owner_with_domain_reviewer",
+      "required_environment": [
+        "专用测试账号和空账本",
+        "独立Android设备或模拟器及固定4.5.4版本",
+        "仅合成金额/附件/支付页，不写真实账目"
+      ],
+      "reference_test_steps": [
+        "独立测试账号进入新版报销；不要升级用户原账号",
+        "合成同月/跨月/跨币种原单，部分多次退款、超额退款和分次报销",
+        "组合四种统计预算标记及总/分类预算，记录原单与入账期报表"
+      ],
+      "record_after_retest": [
+        "版本/平台/开关",
+        "输入和操作",
+        "前后余额及账单ID集合",
+        "统计/预算结果",
+        "截图或安全摘要",
+        "仍未知事项"
+      ],
+      "flowtrace_defaults": [
+        {
+          "id": "V03-D01",
+          "evidence_class": "N",
+          "statement": "退款/报销关联分配影响净支出，到账账户按真实分录变化",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V03-D02",
+          "evidence_class": "N",
+          "statement": "跨期净支出归原单周期，现金流按到账期，明确这是流迹默认",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V03-D03",
+          "evidence_class": "N",
+          "statement": "超额退款显式保留并拆分超过原单剩余额的收入分量；报销不得超剩余可分配额",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V03-D04",
+          "evidence_class": "N",
+          "statement": "总预算小于分类预算和分支先拒绝歧义配置并给出修正提示；完整规则由P0-02固定",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        }
+      ],
+      "blocks_independent_flowtrace_development": false,
+      "exact_reference_parity_claim_allowed": false
+    },
+    {
+      "id": "V04",
+      "title": "分类标签引用及批量规则",
+      "reference_status": "not_executed_in_isolated_reference_environment",
+      "reason": "本轮未提供/建立专用原应用账号与隔离设备；现有账号含私人流水，禁止用于提交/升级实验。",
+      "feature_ids": [
+        "F04",
+        "F05",
+        "F06"
+      ],
+      "state_ids": [
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S55",
+        "S56"
+      ],
+      "implementation_tasks": [
+        "P0-02",
+        "P3-01",
+        "P3-02"
+      ],
+      "journey_ids": [
+        "J02"
+      ],
+      "owner_role": "product_evidence_owner_with_domain_reviewer",
+      "required_environment": [
+        "专用测试账号和空账本",
+        "独立Android设备或模拟器及固定4.5.4版本",
+        "仅合成金额/附件/支付页，不写真实账目"
+      ],
+      "reference_test_steps": [
+        "创建一级二级收支分类、标签分组并添加合成引用",
+        "测试归档/恢复、分类层级转换/删除/迁移",
+        "多账本/多币种/不同类型和共享成员批量操作，记录可修改字段与余额"
+      ],
+      "record_after_retest": [
+        "版本/平台/开关",
+        "输入和操作",
+        "前后余额及账单ID集合",
+        "统计/预算结果",
+        "截图或安全摘要",
+        "仍未知事项"
+      ],
+      "flowtrace_defaults": [
+        {
+          "id": "V04-D01",
+          "evidence_class": "N",
+          "statement": "归档不抹去历史记录关联；删除被引用对象需要明确替代/迁移规则",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V04-D02",
+          "evidence_class": "N",
+          "statement": "批量未选字段保持不变；逐项权限及失败报告可追踪",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V04-D03",
+          "evidence_class": "N",
+          "statement": "不把原普通支出表单未出现的金额/账户字段声称为已对照能力",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        }
+      ],
+      "blocks_independent_flowtrace_development": false,
+      "exact_reference_parity_claim_allowed": false
+    },
+    {
+      "id": "V05",
+      "title": "共享权限撤销与同步冲突",
+      "reference_status": "not_executed_in_isolated_reference_environment",
+      "reason": "本轮未提供/建立专用原应用账号与隔离设备；现有账号含私人流水，禁止用于提交/升级实验。",
+      "feature_ids": [
+        "F10",
+        "F11",
+        "F20"
+      ],
+      "state_ids": [
+        "S25",
+        "S26",
+        "S27",
+        "S28"
+      ],
+      "implementation_tasks": [
+        "P0-02",
+        "P0-03",
+        "P2-01",
+        "P2-02"
+      ],
+      "journey_ids": [
+        "J06",
+        "J07"
+      ],
+      "owner_role": "product_evidence_owner_with_domain_reviewer",
+      "required_environment": [
+        "专用测试账号和空账本",
+        "独立Android设备或模拟器及固定4.5.4版本",
+        "仅合成金额/附件/支付页，不写真实账目"
+      ],
+      "reference_test_steps": [
+        "专用账号甲/乙/丙，构造私账与共享账",
+        "编辑/只读成员尝试记录/导出/资产引用，撤权后重连",
+        "两设备离线改改、改删、响应丢失和旧游标重连，记录外部可见结果"
+      ],
+      "record_after_retest": [
+        "版本/平台/开关",
+        "输入和操作",
+        "前后余额及账单ID集合",
+        "统计/预算结果",
+        "截图或安全摘要",
+        "仍未知事项"
+      ],
+      "flowtrace_defaults": [
+        {
+          "id": "V05-D01",
+          "evidence_class": "N",
+          "statement": "owner/editor/viewer与后台角色分离；服务端逐请求授权",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V05-D02",
+          "evidence_class": "N",
+          "statement": "不得借共享编辑更改他人私人资产；已撤权操作拒绝",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V05-D03",
+          "evidence_class": "N",
+          "statement": "修订不符返回冲突并保留两边意图；幂等重试不重复账",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V05-D04",
+          "evidence_class": "N",
+          "statement": "离线已复制内容无法被即时远程收回，联网后清理受控缓存",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        }
+      ],
+      "blocks_independent_flowtrace_development": false,
+      "exact_reference_parity_claim_allowed": false
+    },
+    {
+      "id": "V06",
+      "title": "分期周期后续与执行",
+      "reference_status": "not_executed_in_isolated_reference_environment",
+      "reason": "本轮未提供/建立专用原应用账号与隔离设备；现有账号含私人流水，禁止用于提交/升级实验。",
+      "feature_ids": [
+        "F14",
+        "F15"
+      ],
+      "state_ids": [
+        "S29",
+        "S30",
+        "S31",
+        "S32",
+        "S33"
+      ],
+      "implementation_tasks": [
+        "P0-02",
+        "P0-03",
+        "P4-03",
+        "P4-04"
+      ],
+      "journey_ids": [
+        "J08"
+      ],
+      "owner_role": "product_evidence_owner_with_domain_reviewer",
+      "required_environment": [
+        "专用测试账号和空账本",
+        "独立Android设备或模拟器及固定4.5.4版本",
+        "仅合成金额/附件/支付页，不写真实账目"
+      ],
+      "reference_test_steps": [
+        "在合成账户推进分期三步，覆盖已执行期/费用方式/除不尽尾差",
+        "执行和全额提前还款，核对未出账本金、余额及未来停止",
+        "周期月底/闰日/工作日/次数截止、停机补跑和重复执行"
+      ],
+      "record_after_retest": [
+        "版本/平台/开关",
+        "输入和操作",
+        "前后余额及账单ID集合",
+        "统计/预算结果",
+        "截图或安全摘要",
+        "仍未知事项"
+      ],
+      "flowtrace_defaults": [
+        {
+          "id": "V06-D01",
+          "evidence_class": "N",
+          "statement": "分摊和等于原总额；最终期承担明确尾差，作为流迹默认",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V06-D02",
+          "evidence_class": "N",
+          "statement": "服务端唯一生成正式发生期，客户端仅显示预计项目",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V06-D03",
+          "evidence_class": "N",
+          "statement": "每计划发生期稳定幂等键；任务变更只影响未来，历史用修正事件",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V06-D04",
+          "evidence_class": "N",
+          "statement": "未有可靠法定工作日数据时显示不可用原因，不用周一到周五假代",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        }
+      ],
+      "blocks_independent_flowtrace_development": false,
+      "exact_reference_parity_claim_allowed": false
+    },
+    {
+      "id": "V07",
+      "title": "七种存钱模式完整生命周期",
+      "reference_status": "not_executed_in_isolated_reference_environment",
+      "reason": "本轮未提供/建立专用原应用账号与隔离设备；现有账号含私人流水，禁止用于提交/升级实验。",
+      "feature_ids": [
+        "F16"
+      ],
+      "state_ids": [
+        "S34",
+        "S35",
+        "S36"
+      ],
+      "implementation_tasks": [
+        "P0-02",
+        "P4-05"
+      ],
+      "journey_ids": [
+        "J09"
+      ],
+      "owner_role": "product_evidence_owner_with_domain_reviewer",
+      "required_environment": [
+        "专用测试账号和空账本",
+        "独立Android设备或模拟器及固定4.5.4版本",
+        "仅合成金额/附件/支付页，不写真实账目"
+      ],
+      "reference_test_steps": [
+        "七种模式各创建小额合成计划，记录模式表单与计划表",
+        "存入、关联/不关联账单、修改取消和达到目标",
+        "核对是否产生转账、分录和计划进度"
+      ],
+      "record_after_retest": [
+        "版本/平台/开关",
+        "输入和操作",
+        "前后余额及账单ID集合",
+        "统计/预算结果",
+        "截图或安全摘要",
+        "仍未知事项"
+      ],
+      "flowtrace_defaults": [
+        {
+          "id": "V07-D01",
+          "evidence_class": "N",
+          "statement": "七种模式保留独立规则，不以一种通用目标冒充",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V07-D02",
+          "evidence_class": "N",
+          "statement": "仅记录计划进度不能虚增资产；关联转账只记一次",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V07-D03",
+          "evidence_class": "N",
+          "statement": "目标/进度与真实资产行为分别记录；具体自动生成机制由领域合同固定",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        }
+      ],
+      "blocks_independent_flowtrace_development": false,
+      "exact_reference_parity_claim_allowed": false
+    },
+    {
+      "id": "V08",
+      "title": "无障碍截图OCR与AI",
+      "reference_status": "not_executed_in_isolated_reference_environment",
+      "reason": "本轮未提供/建立专用原应用账号与隔离设备；现有账号含私人流水，禁止用于提交/升级实验。",
+      "feature_ids": [
+        "F17",
+        "F21"
+      ],
+      "state_ids": [
+        "S42",
+        "S43",
+        "S44",
+        "S54"
+      ],
+      "implementation_tasks": [
+        "P0-04",
+        "P5-01"
+      ],
+      "journey_ids": [
+        "J10"
+      ],
+      "owner_role": "product_evidence_owner_with_domain_reviewer",
+      "required_environment": [
+        "专用测试账号和空账本",
+        "独立Android设备或模拟器及固定4.5.4版本",
+        "仅合成金额/附件/支付页，不写真实账目"
+      ],
+      "reference_test_steps": [
+        "在独立设备/模拟支付页授予再撤销测试权限",
+        "合成截图本地OCR与敏感字段过滤，AI关闭/不可用/失败回退",
+        "重复事件/截图、低置信候选、用户修正确认与取消"
+      ],
+      "record_after_retest": [
+        "版本/平台/开关",
+        "输入和操作",
+        "前后余额及账单ID集合",
+        "统计/预算结果",
+        "截图或安全摘要",
+        "仍未知事项"
+      ],
+      "flowtrace_defaults": [
+        {
+          "id": "V08-D01",
+          "evidence_class": "N",
+          "statement": "识别只产生可编辑候选，用户确认后走统一记账入口",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V08-D02",
+          "evidence_class": "N",
+          "statement": "AI默认关闭，手工录入不依赖外部AI服务",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V08-D03",
+          "evidence_class": "N",
+          "statement": "诊断不保留原图/原始识别文本/凭据；平台能力分别验收",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        }
+      ],
+      "blocks_independent_flowtrace_development": false,
+      "exact_reference_parity_claim_allowed": false
+    },
+    {
+      "id": "V09",
+      "title": "导入导出迁移与附件",
+      "reference_status": "not_executed_in_isolated_reference_environment",
+      "reason": "本轮未提供/建立专用原应用账号与隔离设备；现有账号含私人流水，禁止用于提交/升级实验。",
+      "feature_ids": [
+        "F18"
+      ],
+      "state_ids": [
+        "S48",
+        "S49",
+        "S50"
+      ],
+      "implementation_tasks": [
+        "P0-02",
+        "P5-02",
+        "P8-02"
+      ],
+      "journey_ids": [
+        "J11"
+      ],
+      "owner_role": "product_evidence_owner_with_domain_reviewer",
+      "required_environment": [
+        "专用测试账号和空账本",
+        "独立Android设备或模拟器及固定4.5.4版本",
+        "仅合成金额/附件/支付页，不写真实账目"
+      ],
+      "reference_test_steps": [
+        "独立账号导入人工生成Excel/CSV并查看映射预览",
+        "确认、重复导入、错误行、关联退款/报销/分期与撤销",
+        "XLSX/JSON按条件导出及图片嵌入/链接，再恢复到另一个空实例"
+      ],
+      "record_after_retest": [
+        "版本/平台/开关",
+        "输入和操作",
+        "前后余额及账单ID集合",
+        "统计/预算结果",
+        "截图或安全摘要",
+        "仍未知事项"
+      ],
+      "flowtrace_defaults": [
+        {
+          "id": "V09-D01",
+          "evidence_class": "N",
+          "statement": "预览不写账；来源ID去重优先，不自动丢弃合法同额两笔",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V09-D02",
+          "evidence_class": "N",
+          "statement": "主线导出XLSX/JSON；CSV导出仅静态分支线索，不伪装已见UI",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V09-D03",
+          "evidence_class": "N",
+          "statement": "备份覆盖数据库/设置/附件并校验，在独立库/目录恢复",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        }
+      ],
+      "blocks_independent_flowtrace_development": false,
+      "exact_reference_parity_claim_allowed": false
+    },
+    {
+      "id": "V10",
+      "title": "主题保护小部件与币种设置",
+      "reference_status": "not_executed_in_isolated_reference_environment",
+      "reason": "本轮未提供/建立专用原应用账号与隔离设备；现有账号含私人流水，禁止用于提交/升级实验。",
+      "feature_ids": [
+        "F12",
+        "F19",
+        "F21"
+      ],
+      "state_ids": [
+        "S45",
+        "S46",
+        "S47",
+        "S52"
+      ],
+      "implementation_tasks": [
+        "P0-04",
+        "P4-01",
+        "P5-03"
+      ],
+      "journey_ids": [
+        "J01",
+        "J10",
+        "J12"
+      ],
+      "owner_role": "product_evidence_owner_with_domain_reviewer",
+      "required_environment": [
+        "专用测试账号和空账本",
+        "独立Android设备或模拟器及固定4.5.4版本",
+        "仅合成金额/附件/支付页，不写真实账目"
+      ],
+      "reference_test_steps": [
+        "独立设备切浅深色/字体放大/语言/颜色/显示设置",
+        "配置桌面小部件、应用锁，测试后台返回/失败/退出/失权",
+        "核对币种管理、诊断脱敏、不同平台不适用入口"
+      ],
+      "record_after_retest": [
+        "版本/平台/开关",
+        "输入和操作",
+        "前后余额及账单ID集合",
+        "统计/预算结果",
+        "截图或安全摘要",
+        "仍未知事项"
+      ],
+      "flowtrace_defaults": [
+        {
+          "id": "V10-D01",
+          "evidence_class": "N",
+          "statement": "设置不更改历史账务含义；本机与账号同步设置分离",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V10-D02",
+          "evidence_class": "N",
+          "statement": "锁定/退出/失权时小部件不展示受保护金额",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        },
+        {
+          "id": "V10-D03",
+          "evidence_class": "N",
+          "statement": "Web/Windows提供相应图片导入与本地保护；不宣称Android专属权限跨端等价",
+          "authority": "在P0-02/P0-03契约固定；不是钱迹动态实测"
+        }
+      ],
+      "blocks_independent_flowtrace_development": false,
+      "exact_reference_parity_claim_allowed": false
+    }
+  ]
+}

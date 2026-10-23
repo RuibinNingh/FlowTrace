@@ -1,0 +1,5 @@
+DROP TRIGGER tr_import_source_marker_immutable ON public.import_stages;
+DROP TRIGGER tr_import_source_release_no_truncate ON public.import_stage_source_releases;
+DROP TRIGGER tr_import_source_release_immutable ON public.import_stage_source_releases;
+DROP FUNCTION public.flowtrace_import_source_marker_immutable();
+DROP FUNCTION public.flowtrace_import_source_release_immutable();

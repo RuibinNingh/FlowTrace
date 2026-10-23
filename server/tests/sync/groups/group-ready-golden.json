@@ -1,0 +1,133 @@
+{
+  "status": {
+    "pull_id": "00000000-0000-0000-0000-000000000065",
+    "request_id": "00000000-0000-0000-0000-0000000000c9",
+    "sync_epoch": "00000000-0000-0000-0000-0000000000cc",
+    "expires_at": "2026-10-23T00:00:00Z",
+    "status": "ready",
+    "progress_code": "ready",
+    "next_step_token": null,
+    "manifest": {
+      "protocol": "group-sync-v1",
+      "pull_id": "00000000-0000-0000-0000-000000000065",
+      "request_id": "00000000-0000-0000-0000-0000000000c9",
+      "instance_id": "00000000-0000-0000-0000-0000000000ca",
+      "user_id": "00000000-0000-0000-0000-000000000001",
+      "client_id": "00000000-0000-0000-0000-0000000000cb",
+      "sync_epoch": "00000000-0000-0000-0000-0000000000cc",
+      "control_version": "0",
+      "permission_versions": {
+        "00000000-0000-0000-0000-000000000001": "0"
+      },
+      "base_cursors": {},
+      "checkpoint": {
+        "00000000-0000-0000-0000-000000000001": "1"
+      },
+      "unit_count": 1,
+      "index_pages": [
+        {
+          "page_index": 0,
+          "item_count": 1,
+          "sha256": "e4c875596e91fdbbf84df06548868ef5089db41da373501acc41870f082d2914"
+        }
+      ]
+    },
+    "manifest_sha256": "dfc7f04d98cd783d03b5a9d100c99493dee9de5eb884938576050346290f9d1f",
+    "first_page_token": "first-index-token-00000000000001"
+  },
+  "index_page": {
+    "pull_id": "00000000-0000-0000-0000-000000000065",
+    "kind": "index",
+    "page_index": 0,
+    "next_page_token": "manifest-token-0000000000000001",
+    "units": [
+      {
+        "unit_index": 0,
+        "group_id": "00000000-0000-0000-0000-000000000066",
+        "kind": "commit",
+        "commit_count": 1,
+        "event_count": 1,
+        "end_cursors": {
+          "00000000-0000-0000-0000-000000000001": "1"
+        },
+        "manifest_parts": [
+          {
+            "page_index": 0,
+            "item_count": 2,
+            "sha256": "2828a3b60e3adb34e881d7e8d31df1779ee3fb1efb54b464b658b4581c557722"
+          }
+        ],
+        "manifest_sha256": "d452b8c8022de925bc82eac1f29dee87d1aa39ffff54ec296626d0033a0927e5"
+      }
+    ],
+    "page_sha256": "e4c875596e91fdbbf84df06548868ef5089db41da373501acc41870f082d2914"
+  },
+  "unit_manifest_page": {
+    "pull_id": "00000000-0000-0000-0000-000000000065",
+    "group_id": "00000000-0000-0000-0000-000000000066",
+    "kind": "manifest",
+    "page_index": 0,
+    "next_page_token": "data-page-token-0000000000000001",
+    "commits": [
+      {
+        "commit_index": 0,
+        "commit_id": "00000000-0000-0000-0000-00000000000a",
+        "event_count": 1,
+        "events_sha256": "0465e5de014f957a2f7ad21128e02016a373a4015fdb6867836a042b4a237119"
+      }
+    ],
+    "data_pages": [
+      {
+        "page_index": 0,
+        "item_count": 1,
+        "sha256": "326fb2ab24371fd47fac066aa35c1c7901bdef239453935a16987624e56cde3a"
+      }
+    ],
+    "page_sha256": "2828a3b60e3adb34e881d7e8d31df1779ee3fb1efb54b464b658b4581c557722"
+  },
+  "data_page": {
+    "pull_id": "00000000-0000-0000-0000-000000000065",
+    "group_id": "00000000-0000-0000-0000-000000000066",
+    "kind": "data",
+    "page_index": 0,
+    "next_page_token": null,
+    "fragments": [
+      {
+        "commit_index": 0,
+        "event_offset": 0,
+        "events": [
+          {
+            "scope_id": "00000000-0000-0000-0000-000000000001",
+            "scope_revision": "1",
+            "event_index": 0,
+            "entity_type": "account",
+            "entity_id": "00000000-0000-0000-0000-0000000003e8",
+            "revision": "1",
+            "deleted": false,
+            "data": {
+              "projection_kind": "account",
+              "payload": {
+                "name": "合成账户",
+                "kind": "cash",
+                "opening": {
+                  "currency": "CNY",
+                  "currency_scale": 2,
+                  "amount_minor": "9007199254740993"
+                },
+                "include_in_net_assets": true,
+                "hidden": false,
+                "note": "中文😀"
+              },
+              "balance": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "9007199254740993"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "page_sha256": "326fb2ab24371fd47fac066aa35c1c7901bdef239453935a16987624e56cde3a"
+  }
+}

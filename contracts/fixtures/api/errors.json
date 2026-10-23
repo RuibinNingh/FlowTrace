@@ -1,0 +1,114 @@
+{
+  "cases": [
+    {
+      "http_status": 401,
+      "response": {
+        "error": {
+          "code": "unauthorized",
+          "message": "合成错误示例",
+          "request_id": "test-request",
+          "details": {}
+        }
+      }
+    },
+    {
+      "http_status": 403,
+      "response": {
+        "error": {
+          "code": "forbidden",
+          "message": "合成错误示例",
+          "request_id": "test-request",
+          "details": {}
+        }
+      }
+    },
+    {
+      "http_status": 404,
+      "response": {
+        "error": {
+          "code": "not_found",
+          "message": "合成错误示例",
+          "request_id": "test-request",
+          "details": {}
+        }
+      }
+    },
+    {
+      "http_status": 409,
+      "response": {
+        "error": {
+          "code": "revision_conflict",
+          "message": "合成错误示例",
+          "request_id": "test-request",
+          "details": {}
+        }
+      }
+    },
+    {
+      "http_status": 409,
+      "response": {
+        "error": {
+          "code": "idempotency_mismatch",
+          "message": "合成错误示例",
+          "request_id": "test-request",
+          "details": {}
+        }
+      }
+    },
+    {
+      "http_status": 410,
+      "response": {
+        "error": {
+          "code": "cursor_expired",
+          "message": "合成错误示例",
+          "request_id": "test-request",
+          "details": {}
+        }
+      }
+    },
+    {
+      "http_status": 409,
+      "response": {
+        "error": {
+          "code": "epoch_changed",
+          "message": "合成错误示例",
+          "request_id": "test-request",
+          "details": {}
+        }
+      }
+    },
+    {
+      "http_status": 413,
+      "response": {
+        "error": {
+          "code": "payload_too_large",
+          "message": "合成错误示例",
+          "request_id": "test-request",
+          "details": {}
+        }
+      }
+    },
+    {
+      "http_status": 422,
+      "response": {
+        "error": {
+          "code": "invalid_money",
+          "message": "合成错误示例",
+          "request_id": "test-request",
+          "details": {}
+        }
+      }
+    },
+    {
+      "http_status": 503,
+      "response": {
+        "error": {
+          "code": "database_unavailable",
+          "message": "合成错误示例",
+          "request_id": "test-request",
+          "details": {}
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "pull_id": "00000000-0000-0000-0000-000000000065",
+  "group_id": "00000000-0000-0000-0000-000000000066",
+  "kind": "data",
+  "page_index": 0,
+  "next_page_token": null,
+  "fragments": [
+    {
+      "commit_index": 0,
+      "event_offset": 0,
+      "events": [
+        {
+          "scope_id": "00000000-0000-0000-0000-000000000001",
+          "scope_revision": "1",
+          "event_index": 0,
+          "entity_type": "account",
+          "entity_id": "00000000-0000-0000-0000-0000000003e8",
+          "revision": "1",
+          "deleted": false,
+          "data": {
+            "projection_kind": "account",
+            "payload": {
+              "name": "合成账户",
+              "kind": "cash",
+              "opening": {
+                "currency": "CNY",
+                "currency_scale": 2,
+                "amount_minor": "9007199254740993"
+              },
+              "include_in_net_assets": true,
+              "hidden": false,
+              "note": "中文😀"
+            },
+            "balance": {
+              "currency": "CNY",
+              "currency_scale": 2,
+              "amount_minor": "9007199254740993"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "page_sha256": "326fb2ab24371fd47fac066aa35c1c7901bdef239453935a16987624e56cde3a"
+}

@@ -1,0 +1,4 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>登录 · 流迹管理</title><link rel="stylesheet" href="/admin/static/admin.css"></head>
+<body class="login-body"><main class="login-card"><div class="eyebrow">FLOWTRACE · CONTROL</div><h1>流迹管理</h1><p class="muted">管理你的服务，陪伴每一笔记录。</p>
+{% if error %}<div class="notice error" role="alert">{{ error }}</div>{% endif %}
+<form method="post" action="/admin/login"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><label>管理员账号<input name="username" autocomplete="username" minlength="3" maxlength="64" required autofocus></label><label>密码<input name="password" type="password" autocomplete="current-password" minlength="12" maxlength="256" required></label><button class="primary full" type="submit">登录后台</button></form><p class="footnote">仅限已获授权的管理账号。</p></main></body></html>

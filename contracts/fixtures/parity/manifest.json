@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "task_id": "P0-01",
+  "recorded_on": "2026-10-21",
+  "timezone": "Asia/Shanghai",
+  "fixture_kind": "behavior_evidence_metadata_not_business_data",
+  "reference_app": {
+    "package": "com.mutangtech.qianji",
+    "version_name": "4.5.4",
+    "version_code": "1234",
+    "apk_sha256_recorded": "908d7d4e2ddcedb4201d57cd5ed541248f888c1f2330d37c577eb86ed690e268",
+    "apk_file_hash_verified_this_task": false
+  },
+  "historical_observation": {
+    "date": "2026-10-20",
+    "platform": "Android",
+    "device": "OPPO PLT140",
+    "android_version": "16",
+    "theme": "dark",
+    "membership": "enabled_in_reference_account",
+    "asset_feature_originally_enabled": false,
+    "reimbursement_legacy_upgrade_prompt": true
+  },
+  "this_task_scope": {
+    "reference_app_launched": false,
+    "reference_writes_performed": false,
+    "user_database_read": false,
+    "business_api_called": false,
+    "screenshots_copied": false,
+    "private_xml_text_copied": false,
+    "new_live_reference_observations": 0,
+    "flowtrace_application_tested": false
+  },
+  "evidence_classes": {
+    "O": "历史真机页面观察，本任务只核对文件和有限截图，不证明提交",
+    "C": "静态客户端代码/布局，非服务端或运行证明",
+    "G": "官方指南，版本适用性另列",
+    "U": "未实测或证据不足",
+    "N": "流迹需求或设计默认"
+  },
+  "local_sources": [
+    {
+      "id": "SRC-STATES",
+      "path": "work/qianji-research/selected-ui-states.json",
+      "kind": "historical_state_index",
+      "sha256": "993d34eacfa8475097180fabbcdf811693697ec5fd43da79808c7911003ce300",
+      "bytes": 16826
+    },
+    {
+      "id": "SRC-APK",
+      "path": "work/qianji-research/apk-facts.json",
+      "kind": "recorded_apk_facts",
+      "sha256": "2c9b5d821b78abe412ad34cb91b2ce957f71da065976e99d1d643ecdbabdce22",
+      "bytes": 942
+    },
+    {
+      "id": "C01",
+      "path": "work/qianji-research/decompiled/sources/com/mutangtech/qianji/data/model/Bill.java",
+      "kind": "static_client_code",
+      "sha256": "d2a4192e5187a824b1f2bdb90b7d06332f45c5712b1626d4bf2f91968bff0c25",
+      "bytes": 64206
+    },
+    {
+      "id": "C02",
+      "path": "work/qianji-research/decompiled/sources/com/mutangtech/qianji/data/model/BillExtra.java",
+      "kind": "static_client_code",
+      "sha256": "79a8529c53d0a1746f482c3f25e5dc540d91b0efac177dd5e62462b9b7fcaf6a",
+      "bytes": 9581
+    },
+    {
+      "id": "C03",
+      "path": "work/qianji-research/decompiled/sources/com/mutangtech/qianji/bill/transfer/f.java",
+      "kind": "static_client_code",
+      "sha256": "39a44fe26cfa16d1211395608a4d2398b480b24cc25a8ce97ba83f4a98f74ee6",
+      "bytes": 13686
+    },
+    {
+      "id": "C04",
+      "path": "work/qianji-research/decompiled/sources/oe/b.java",
+      "kind": "static_client_code",
+      "sha256": "6c1fc392375fadf79abb5980008e18367173f94e2acc1a2a2adad587a69547c3",
+      "bytes": 7030
+    },
+    {
+      "id": "C05",
+      "path": "work/qianji-research/decompiled/sources/jd/n0.java",
+      "kind": "static_client_code",
+      "sha256": "32e8bc6fbf5c856f11d4c7fd49643f40182e35c06bb8dc449f591d393cb52651",
+      "bytes": 4798
+    },
+    {
+      "id": "C06",
+      "path": "work/qianji-research/decompiled/sources/com/mutangtech/qianji/data/db/dbhelper/m.java",
+      "kind": "static_client_code",
+      "sha256": "9819370364f59e6a97b95106248c891ccb7926aae23dc8f07916d6ffe7bb4081",
+      "bytes": 77382
+    },
+    {
+      "id": "C07",
+      "path": "work/qianji-research/decompiled/resources/res/layout/include_installment_submit_step2.xml",
+      "kind": "static_layout",
+      "sha256": "42a3e70f4f699916f5738fe9d31190cec2bd77ce4380092b4e2690a2ddd02f38",
+      "bytes": 4311
+    },
+    {
+      "id": "C08",
+      "path": "work/qianji-research/decompiled/resources/res/layout/include_installment_submit_step3.xml",
+      "kind": "static_layout",
+      "sha256": "88c637a948145145cf4e21703bd1eeed13c122b8a7c39daa6206d12aa42926ba",
+      "bytes": 12741
+    },
+    {
+      "id": "C09",
+      "path": "work/qianji-research/decompiled/resources/res/layout/installment_pre_pay_params.xml",
+      "kind": "static_layout",
+      "sha256": "398f9c0dc536889269bc023aafd8ffbc9c80ed4cdabb542c8ecf4bc4fef1cfa2",
+      "bytes": 8738
+    },
+    {
+      "id": "C10",
+      "path": "work/qianji-research/decompiled/resources/res/layout/act_saving_plan_deposit.xml",
+      "kind": "static_layout",
+      "sha256": "20be2796f1934318a36d91c94308f1d8189d3349e666a01b3dd4da0b080c220a",
+      "bytes": 5241
+    },
+    {
+      "id": "C11",
+      "path": "work/qianji-research/decompiled/resources/res/layout/include_saving_plan_deposit_bill_info.xml",
+      "kind": "static_layout",
+      "sha256": "b8fdd743c47fee4fe089ac043d790fead4814689cad88151c40737a33d382a3f",
+      "bytes": 4737
+    },
+    {
+      "id": "C12",
+      "path": "work/qianji-research/decompiled/sources/e9/a.java",
+      "kind": "static_client_code",
+      "sha256": "63c1010800936f84fa742bca8455e2a3716647c6153a0231e99002b21fc97e34",
+      "bytes": 6871
+    },
+    {
+      "id": "C13",
+      "path": "work/qianji-research/decompiled/sources/gd/d.java",
+      "kind": "static_client_code",
+      "sha256": "ecf1369dc9647c2fecaa940e670f8d412314a67127b39b81b26af47b53d01c3d",
+      "bytes": 14579
+    },
+    {
+      "id": "C14",
+      "path": "work/qianji-research/decompiled/sources/uc/h.java",
+      "kind": "static_client_code",
+      "sha256": "89698894000a11149538efce31ce16b14a2240f2b1fa792601cfbf67cf63fa69",
+      "bytes": 15440
+    },
+    {
+      "id": "C15",
+      "path": "work/qianji-research/decompiled/sources/com/mutangtech/qianji/dataimport/importfile/ImportFilePresenter.java",
+      "kind": "static_client_code",
+      "sha256": "85232bf136477e7660b69c2debefbd474bf37819afbca5bf821252e32f4ef82d",
+      "bytes": 12232
+    },
+    {
+      "id": "C16",
+      "path": "work/qianji-research/decompiled/sources/com/mutangtech/qianji/dataexport/exportor/BillExportorFactory.java",
+      "kind": "static_client_code",
+      "sha256": "2c664d9f1418a2451c6dd989df5719edd1d11ecca095df5815ae3a59cb7ecf43",
+      "bytes": 1175
+    },
+    {
+      "id": "C17",
+      "path": "work/qianji-research/decompiled/sources/com/mutangtech/qianji/data/model/BookMemberDao.java",
+      "kind": "static_client_code",
+      "sha256": "f455cc8d9cc96fcfc39fd977d05f52f165f1fdd7a3e6bf1e879c759152255059",
+      "bytes": 5814
+    },
+    {
+      "id": "C18",
+      "path": "work/qianji-research/decompiled/sources/com/mutangtech/qianji/data/model/CurrencyDao.java",
+      "kind": "static_client_code",
+      "sha256": "7dc2ae4e529bfb30d0d352a81c7c7b4d48eb009ee3c49fd17671563ee311144c",
+      "bytes": 6229
+    },
+    {
+      "id": "C19",
+      "path": "work/qianji-research/schema.sql",
+      "kind": "reconstructed_schema",
+      "sha256": "37d1e3afc607431d3e38e718f3f65cb886974a30181384946832e08bd8c17608",
+      "bytes": 7821
+    }
+  ],
+  "external_sources": [
+    {
+      "id": "G01",
+      "url": "https://docs.qianjiapp.com/vip/vip_budget.html",
+      "title": "钱迹预算说明",
+      "retrieved_on": "2026-10-21",
+      "evidence_class": "G",
+      "version_scope": "current_guide_not_fixed_android_4_5_4"
+    },
+    {
+      "id": "G02",
+      "url": "https://docs.qianjiapp.com/change-log/change_log_pc.html",
+      "title": "钱迹电脑版更新记录",
+      "retrieved_on": "2026-10-21",
+      "evidence_class": "G",
+      "version_scope": "Windows/Mac Version 3.0.11-722 (2022-12-25), not Android 4.5.4"
+    }
+  ],
+  "expected_counts": {
+    "states": 56,
+    "features": 22,
+    "retest_cases": 10,
+    "journeys": 12,
+    "historical_pngs": 56,
+    "historical_xmls": 56
+  },
+  "source_path_migration": {
+    "old_prefix": "C:/Ruibin_Ningh/program/QianJi/work/qianji-research/",
+    "current_repo_prefix": "work/qianji-research/",
+    "strategy": "resolve capture key locally; retain original files without rewrite"
+  },
+  "portable_validation": "verify.py validates IDs and mappings without private artifacts; --local-sources additionally verifies local files/hashes/XML/PNG dimensions",
+  "release_impact": "Unexecuted original-app tests retain U and explicit FlowTrace defaults; they do not justify deleting features or claiming exact observed parity."
+}

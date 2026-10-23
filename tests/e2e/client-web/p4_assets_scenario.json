@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "purpose": "flowtrace-p4-assets-ui-synthetic",
+  "scenario_order": ["login", "sync", "inspect", "overview", "overview-narrow", "group-create", "account-create", "account-metadata", "money-privacy", "fund-repayment", "fund-borrow", "fund-lend", "fund-collect", "fund-repay", "fund-fx", "sync", "currency-preferences", "rate-create", "rate-replace", "read-details", "read-credit", "read-history", "verify-reopen", "logout", "logout-reopen"],
+  "seed": {
+    "book_name": "FT资产-P4-{marker}",
+    "book_payload": {"currency": "CNY", "timezone": "Asia/Shanghai", "month_start_day": 1, "show_assets": true},
+    "expense_category_name": "FT手续费-{marker}",
+    "accounts": {
+      "cash": {"name": "FT现金-{marker}", "payload": {"name": "FT现金-{marker}", "kind": "cash", "opening": {"currency": "CNY", "currency_scale": 2, "amount_minor": "100000"}, "include_in_net_assets": true, "hidden": false, "group_id": null, "sort_order": 0, "archived": false, "icon": "cash", "note": "合成现金，不含真实财务", "provider_id": null, "bank_id": null, "card_last_four": null, "opening_date": "{year_start}", "credit": null}},
+      "eur": {"name": "FT欧元-{marker}", "payload": {"name": "FT欧元-{marker}", "kind": "bank", "opening": {"currency": "EUR", "currency_scale": 2, "amount_minor": "0"}, "include_in_net_assets": true, "hidden": false, "group_id": null, "sort_order": 1, "archived": false, "icon": "bank", "note": "合成欧元，不用历史汇率估值", "provider_id": null, "bank_id": null, "card_last_four": null, "opening_date": "{year_start}", "credit": null}},
+      "fee_account": {"name": "FT独立手续费-{marker}", "payload": {"name": "FT独立手续费-{marker}", "kind": "bank", "opening": {"currency": "CNY", "currency_scale": 2, "amount_minor": "10000"}, "include_in_net_assets": true, "hidden": false, "group_id": null, "sort_order": 2, "archived": false, "icon": "bank", "note": "合成独立手续费账户", "provider_id": null, "bank_id": null, "card_last_four": null, "opening_date": "{year_start}", "credit": null}},
+      "credit": {"name": "FT信用卡-{marker}", "payload": {"name": "FT信用卡-{marker}", "kind": "credit_card", "opening": {"currency": "CNY", "currency_scale": 2, "amount_minor": "-20000"}, "include_in_net_assets": true, "hidden": false, "group_id": null, "sort_order": 3, "archived": false, "icon": "credit_card", "note": "期初欠款与本期应还区分", "provider_id": null, "bank_id": "cmb", "card_last_four": "0422", "opening_date": "{year_start}", "credit": {"limit": {"currency": "CNY", "currency_scale": 2, "amount_minor": "100000"}, "statement_day": 15, "statement_day_inclusive": true, "due_mode": "fixed_day", "due_day": 5, "due_days": null}}},
+      "receivable": {"name": "FT借出-{marker}", "payload": {"name": "FT借出-{marker}", "kind": "loan_receivable", "opening": {"currency": "CNY", "currency_scale": 2, "amount_minor": "30000"}, "include_in_net_assets": true, "hidden": false, "group_id": null, "sort_order": 4, "archived": false, "icon": "account", "note": "合成应收本金", "provider_id": null, "bank_id": null, "card_last_four": null, "opening_date": "{year_start}", "credit": null}},
+      "payable": {"name": "FT借入-{marker}", "payload": {"name": "FT借入-{marker}", "kind": "loan_payable", "opening": {"currency": "CNY", "currency_scale": 2, "amount_minor": "-40000"}, "include_in_net_assets": true, "hidden": false, "group_id": null, "sort_order": 5, "archived": false, "icon": "account", "note": "合成应付本金", "provider_id": null, "bank_id": null, "card_last_four": null, "opening_date": "{year_start}", "credit": null}},
+      "unknown_opening": {"name": "FT未知期初-{marker}", "payload": {"name": "FT未知期初-{marker}", "kind": "cash", "opening": {"currency": "CNY", "currency_scale": 2, "amount_minor": "0"}, "include_in_net_assets": true, "hidden": false, "group_id": null, "sort_order": 6, "archived": false, "icon": "cash", "note": "零余额也没有历史日期证据", "provider_id": null, "bank_id": null, "card_last_four": null, "opening_date": null, "credit": null}}
+    }
+  },
+  "names": {
+    "book": "FT资产-P4-{marker}", "expense_category": "FT手续费-{marker}",
+    "cash": "FT现金-{marker}", "eur": "FT欧元-{marker}", "fee_account": "FT独立手续费-{marker}",
+    "credit": "FT信用卡-{marker}", "receivable": "FT借出-{marker}", "payable": "FT借入-{marker}",
+    "unknown_opening": "FT未知期初-{marker}", "ui_credit": "FT网页新卡-{marker}", "ui_group": "FT网页分组-{marker}"
+  },
+  "inputs": {
+    "group-create": {"sort_order": "4"},
+    "account-create": {"opening": "-80.00", "limit": "500.00", "statement_day": "31", "due_day": "5"},
+    "account-metadata": {"account_name_key": "ui_credit", "sort_order": "2"},
+    "fund-repayment": {"account_name_key": "credit", "from_name_key": "cash", "to_name_key": "credit", "amount": "50", "note": "UI还款50-{marker}"},
+    "fund-borrow": {"account_name_key": "payable", "from_name_key": "payable", "to_name_key": "cash", "amount": "100", "note": "UI借入100-{marker}"},
+    "fund-lend": {"account_name_key": "receivable", "from_name_key": "cash", "to_name_key": "receivable", "amount": "75", "note": "UI借出75-{marker}"},
+    "fund-collect": {"account_name_key": "receivable", "from_name_key": "receivable", "to_name_key": "cash", "amount": "25", "note": "UI收回25-{marker}"},
+    "fund-repay": {"account_name_key": "payable", "from_name_key": "cash", "to_name_key": "payable", "amount": "40", "note": "UI偿还40-{marker}"},
+    "fund-fx": {"account_name_key": "cash", "from_name_key": "cash", "to_name_key": "eur", "amount": "100", "target_money": "12.50", "transfer_rate": "0.125", "fee": "0.25", "note": "UI转账100到12.50独立费0.25-{marker}"},
+    "rate-create": {"from_label": "EUR Euro", "to_label": "CNY Yuan Renminbi", "rate": "8", "date": "{today}", "source": "UI手动8-{marker}"},
+    "rate-replace": {"from_label": "EUR Euro", "to_label": "CNY Yuan Renminbi", "rate": "9", "date": "{today}", "source": "UI手动9-{marker}", "previous_row": "EUR → CNY 8"}
+  },
+  "expected": {
+    "overview": ["CNY 800.00", "CNY 1400.00", "CNY 600.00", "CNY 400.00", "CNY 300.00", "FT现金-{marker}", "FT信用卡-{marker}"],
+    "overview-narrow": ["CNY 800.00", "CNY 1400.00", "CNY 600.00", "FT现金-{marker}"],
+    "group-create": ["FT网页分组-{marker}", "排序 4"],
+    "account-create": ["FT网页新卡-{marker}", "CNY -80.00", "CNY 720.00", "CNY 680.00"],
+    "account-metadata": ["FT网页新卡-{marker}", "FT网页分组-{marker}", "已隐藏", "CNY -80.00", "CNY 720.00"],
+    "money-privacy": ["CNY 720.00", "CNY 1400.00", "CNY 680.00"],
+    "visible_money": ["CNY 720.00", "CNY 1400.00", "CNY 680.00", "CNY 400.00", "CNY 300.00", "CNY -80.00", "CNY -200.00", "CNY -400.00", "CNY 100.00", "EUR 0.00"],
+    "fund-repayment": ["CNY 950.00", "CNY -150.00", "CNY 720.00", "CNY 1350.00", "CNY 630.00"],
+    "fund-borrow": ["CNY 1050.00", "CNY -500.00", "CNY 500.00", "CNY 720.00"],
+    "fund-lend": ["CNY 975.00", "CNY 375.00", "CNY 720.00"],
+    "fund-collect": ["CNY 1000.00", "CNY 350.00", "CNY 720.00"],
+    "fund-repay": ["CNY 960.00", "CNY -460.00", "CNY 460.00", "CNY 720.00"],
+    "fund-fx": ["CNY 860.00", "CNY 99.75", "EUR 12.50", "合计暂不可用"],
+    "currency-preferences": ["配置已由服务器确认。", "使用估值日或之前最新报价"],
+    "rate-create": ["EUR → CNY 8", "{today}", "UI手动8-{marker}"],
+    "rate-replace": ["EUR → CNY 9", "{today}", "UI手动9-{marker}"],
+    "valuation_at_8": ["CNY 719.75", "CNY 1409.75", "CNY 690.00", "CNY 460.00", "CNY 350.00", "EUR→CNY 8"],
+    "valuation_at_9": ["CNY 732.25", "CNY 1422.25", "CNY 690.00", "EUR→CNY 9"],
+    "read-details": ["服务器期间期初 CNY 1000.00", "服务器期间期末 CNY 860.00", "共 6 条分录", "本机原币余额 CNY 860.00"],
+    "read-credit": ["服务器已同步总欠款 CNY 150.00", "溢缴 CNY 0.00", "可用额度 CNY 850.00", "超额 CNY 0.00", "期初未归属账期欠款 CNY 150.00", "期间消费 CNY 0.00", "出账时应还 CNY 0.00", "服务器已同步剩余应还 CNY 0.00"],
+    "read-history": ["资产趋势", "服务器已确认", "缺少账户启用日期，历史余额与账期应还不可用。"],
+    "verify-reopen": ["CNY 732.25", "CNY 1422.25", "CNY 690.00", "FT现金-{marker}", "EUR 12.50", "CNY 99.75"]
+  },
+  "expected_rows": {
+    "overview": {"cash": "CNY 1000.00", "eur": "EUR 0.00", "fee_account": "CNY 100.00", "credit": "CNY -200.00", "receivable": "CNY 300.00", "payable": "CNY -400.00"},
+    "account-create": {"ui_credit": "CNY -80.00"},
+    "account-metadata": {"ui_credit": "CNY -80.00"},
+    "fund-repayment": {"cash": "CNY 950.00", "credit": "CNY -150.00"},
+    "fund-borrow": {"cash": "CNY 1050.00", "payable": "CNY -500.00"},
+    "fund-lend": {"cash": "CNY 975.00", "receivable": "CNY 375.00"},
+    "fund-collect": {"cash": "CNY 1000.00", "receivable": "CNY 350.00"},
+    "fund-repay": {"cash": "CNY 960.00", "payable": "CNY -460.00"},
+    "fund-fx": {"cash": "CNY 860.00", "eur": "EUR 12.50", "fee_account": "CNY 99.75"},
+    "verify-reopen": {"cash": "CNY 860.00", "eur": "EUR 12.50", "fee_account": "CNY 99.75", "credit": "CNY -150.00"}
+  },
+  "absent": {"verify-reopen": ["FT网页新卡-{marker}"]},
+  "calculated": {
+    "initial": {"balances_minor": {"cash": "100000", "eur": "0", "fee_account": "10000", "credit": "-20000", "receivable": "30000", "payable": "-40000", "unknown_opening": "0"}, "totals_minor": {"assets": "140000", "liabilities": "60000", "net": "80000", "borrowed": "40000", "lent": "30000"}},
+    "account-create": {"balances_minor": {"ui_credit": "-8000"}, "totals_minor": {"assets": "140000", "liabilities": "68000", "net": "72000", "borrowed": "40000", "lent": "30000"}},
+    "fund-repayment": {"balances_minor": {"cash": "95000", "credit": "-15000"}, "totals_minor": {"assets": "135000", "liabilities": "63000", "net": "72000", "borrowed": "40000", "lent": "30000"}},
+    "fund-borrow": {"balances_minor": {"cash": "105000", "payable": "-50000"}, "totals_minor": {"assets": "145000", "liabilities": "73000", "net": "72000", "borrowed": "50000", "lent": "30000"}},
+    "fund-lend": {"balances_minor": {"cash": "97500", "receivable": "37500"}, "totals_minor": {"assets": "145000", "liabilities": "73000", "net": "72000", "borrowed": "50000", "lent": "37500"}},
+    "fund-collect": {"balances_minor": {"cash": "100000", "receivable": "35000"}, "totals_minor": {"assets": "145000", "liabilities": "73000", "net": "72000", "borrowed": "50000", "lent": "35000"}},
+    "fund-repay": {"balances_minor": {"cash": "96000", "payable": "-46000"}, "totals_minor": {"assets": "141000", "liabilities": "69000", "net": "72000", "borrowed": "46000", "lent": "35000"}},
+    "fund-fx": {"balances_minor": {"cash": "86000", "eur": "1250", "fee_account": "9975"}, "totals_minor": null},
+    "valuation_at_8": {"rate": "8", "totals_minor": {"assets": "140975", "liabilities": "69000", "net": "71975", "borrowed": "46000", "lent": "35000"}},
+    "valuation_at_9": {"rate": "9", "totals_minor": {"assets": "142225", "liabilities": "69000", "net": "73225", "borrowed": "46000", "lent": "35000"}},
+    "read-details": {"opening_minor": "100000", "closing_minor": "86000", "entry_count": 6},
+    "read-credit": {"total_debt_minor": "15000", "overpayment_minor": "0", "available_credit_minor": "85000", "over_limit_minor": "0", "opening_carry_minor": "15000", "charges_minor": "0", "statement_due_minor": "0", "remaining_due_minor": "0"},
+    "cleanup_balances_minor": {"cash": "100000", "eur": "0", "fee_account": "10000", "credit": "-20000", "receivable": "30000", "payable": "-40000", "unknown_opening": "0", "ui_credit": "-8000"}
+  },
+  "cleanup": {"mode": "normal_tombstones_only", "delete_bills_first": true, "restore_exact_openings_before_deleting_accounts": true, "include_ui_created_credit_and_group": true, "remove_manual_rates": true, "logout_all_synthetic_sessions": true, "never_reset_database": true}
+}

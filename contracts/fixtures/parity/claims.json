@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "claims": [
+    {
+      "id": "K01",
+      "class": "C",
+      "source_ids": [
+        "C02"
+      ],
+      "location": "BillExtra.java:28-30",
+      "statement": "不计入收支与不计入预算分别为独立位标记 1/2，可组合。",
+      "limit": "常量不证明所有报表和预算路径运行一致。"
+    },
+    {
+      "id": "K02",
+      "class": "C",
+      "source_ids": [
+        "C03"
+      ],
+      "location": "transfer/f.java:335-350",
+      "statement": "普通转账校验两账户非空且不同；任一是 isDebtLoan() 时拒绝此普通转账。",
+      "limit": "不证明债务往来应禁止，只说明需独立债务类型处理。"
+    },
+    {
+      "id": "K03",
+      "class": "C",
+      "source_ids": [
+        "C01",
+        "C02"
+      ],
+      "location": "Bill.java:1197-1204",
+      "statement": "getRealMoney 从统计金额扣关联退款和已报销金额。",
+      "limit": "没有动态证据说明跨月、跨币种或超额的全部统计归属。"
+    },
+    {
+      "id": "K04",
+      "class": "C",
+      "source_ids": [
+        "C06"
+      ],
+      "location": "dbhelper/m.java:1310-1330",
+      "statement": "conf_ids 分支为冲突业务账单重新生成 ID。",
+      "limit": "这是 ID 冲突线索，不能宣称已还原同记录并发修改合并。"
+    },
+    {
+      "id": "K05",
+      "class": "C",
+      "source_ids": [
+        "C12"
+      ],
+      "location": "e9/a.java:116",
+      "statement": "enable_ai_smart_match 的读取默认值为 false。",
+      "limit": "不证明规则/OCR/AI 结果已经实际成功；AI 网络路径不等于离线。"
+    },
+    {
+      "id": "K06",
+      "class": "C",
+      "source_ids": [
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "location": "分期第二步、第三步与全额提前还款 XML",
+      "statement": "后续字段含分类/标记/备注、期数/已执行数/利息方式/余数/计划，提前还款有停止未来出账和平账说明。",
+      "limit": "布局不能证明计算、真实执行和所有后续操作。"
+    },
+    {
+      "id": "K07",
+      "class": "C",
+      "source_ids": [
+        "C16"
+      ],
+      "location": "BillExportorFactory.java:24",
+      "statement": "导出工厂存在 CSV/JSON/XLSX 三分支。",
+      "limit": "当前历史 S50 仅显示 XLSX/JSON；不可把 CSV 写成已经可见的导出选项。"
+    },
+    {
+      "id": "K08",
+      "class": "G",
+      "source_ids": [
+        "G01"
+      ],
+      "statement": "当前官方指南描述：只有总预算纳入全部支出；只有分类预算合计所设分类；总额等于分类和则排除其他分类，大于则纳入其他分类且可用差额；新月复制上月配置。",
+      "limit": "当前指南非 Android 4.5.4 动态实测；总额小于分类和未说明。"
+    },
+    {
+      "id": "K09",
+      "class": "G",
+      "source_ids": [
+        "G02"
+      ],
+      "statement": "电脑端 3.0.11-722 旧更新记录存在超额退款呈现收入的修复线索。",
+      "limit": "版本/平台不同，不能当作 Android 4.5.4 已验证行为；保留超额退款能力需求并制定显式默认。"
+    }
+  ]
+}

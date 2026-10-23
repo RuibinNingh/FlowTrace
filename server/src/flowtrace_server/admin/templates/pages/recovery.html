@@ -1,0 +1,2 @@
+<header><div class="eyebrow">LOCAL RECOVERY</div><h1>本机受控恢复</h1><p class="muted">适用于管理入口丢失，由服务器本机操作系统及数据库权限控制。</p></header>
+<section class="surface"><h2>恢复已有管理账号</h2><p class="muted">先在服务器本机核对账号，然后使用独立Python环境执行：</p><code class="command">python -m flowtrace_server.tools.bootstrap_admin --recover --username {{ username }}</code><p class="muted">命令通过交互提示读取新密码，恢复该已有账号的所有者、服务及恢复角色并启用账号，撤销旧会话，记录本机恢复审计。它不会创建一个未知账号。</p><p class="muted">本页提供说明，不提供网页恢复执行入口，也不接受操作系统路径、SQL或任意命令。</p><a class="button secondary" href="/admin/overview">返回概况</a></section>

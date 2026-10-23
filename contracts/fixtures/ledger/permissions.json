@@ -1,0 +1,881 @@
+{
+  "contract_version": "1.0",
+  "subjects": {
+    "alice": {
+      "user_enabled": true,
+      "book_roles": {
+        "private": "owner",
+        "shared": "owner"
+      },
+      "private_accounts": [
+        "alice_bank"
+      ],
+      "admin_roles": []
+    },
+    "bob": {
+      "user_enabled": true,
+      "book_roles": {
+        "shared": "editor"
+      },
+      "private_accounts": [
+        "bob_bank"
+      ],
+      "admin_roles": []
+    },
+    "carol": {
+      "user_enabled": true,
+      "book_roles": {
+        "shared": "viewer"
+      },
+      "private_accounts": [
+        "carol_bank"
+      ],
+      "admin_roles": []
+    },
+    "operator": {
+      "user_enabled": true,
+      "book_roles": {},
+      "private_accounts": [],
+      "admin_roles": [
+        "service_admin"
+      ]
+    },
+    "recovery": {
+      "user_enabled": true,
+      "book_roles": {},
+      "private_accounts": [],
+      "admin_roles": [
+        "recovery_admin"
+      ]
+    }
+  },
+  "cases": [
+    {
+      "case_id": "alice_bill.read",
+      "principal": "alice",
+      "action": "bill.read",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_statistics.read",
+      "principal": "alice",
+      "action": "statistics.read",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_attachment.download",
+      "principal": "alice",
+      "action": "attachment.download",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_export.create",
+      "principal": "alice",
+      "action": "export.create",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_sync.pull",
+      "principal": "alice",
+      "action": "sync.pull",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_bill.create",
+      "principal": "alice",
+      "action": "bill.create",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_bill.update",
+      "principal": "alice",
+      "action": "bill.update",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_bill.delete",
+      "principal": "alice",
+      "action": "bill.delete",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_import.create",
+      "principal": "alice",
+      "action": "import.create",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_sync.push",
+      "principal": "alice",
+      "action": "sync.push",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_private_read",
+      "principal": "alice",
+      "action": "account.read",
+      "resource": {
+        "account_id": "alice_bank",
+        "account_owner_user_id": "alice"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_shared_private_edit",
+      "principal": "alice",
+      "action": "bill.update_financial",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "alice_bank",
+        "account_owner_user_id": "alice"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_invite",
+      "principal": "alice",
+      "action": "book.invite",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "alice_admin",
+      "principal": "alice",
+      "action": "admin.users.disable",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "alice_backup",
+      "principal": "alice",
+      "action": "backup.download",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "alice_restore",
+      "principal": "alice",
+      "action": "backup.restore",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "bob_bill.read",
+      "principal": "bob",
+      "action": "bill.read",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "bob_statistics.read",
+      "principal": "bob",
+      "action": "statistics.read",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "bob_attachment.download",
+      "principal": "bob",
+      "action": "attachment.download",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "bob_export.create",
+      "principal": "bob",
+      "action": "export.create",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "bob_sync.pull",
+      "principal": "bob",
+      "action": "sync.pull",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "bob_bill.create",
+      "principal": "bob",
+      "action": "bill.create",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "bob_bill.update",
+      "principal": "bob",
+      "action": "bill.update",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "bob_bill.delete",
+      "principal": "bob",
+      "action": "bill.delete",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "bob_import.create",
+      "principal": "bob",
+      "action": "import.create",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "bob_sync.push",
+      "principal": "bob",
+      "action": "sync.push",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "bob_private_read",
+      "principal": "bob",
+      "action": "account.read",
+      "resource": {
+        "account_id": "alice_bank",
+        "account_owner_user_id": "alice"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "bob_shared_private_edit",
+      "principal": "bob",
+      "action": "bill.update_financial",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "alice_bank",
+        "account_owner_user_id": "alice"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "bob_invite",
+      "principal": "bob",
+      "action": "book.invite",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "bob_admin",
+      "principal": "bob",
+      "action": "admin.users.disable",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "bob_backup",
+      "principal": "bob",
+      "action": "backup.download",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "bob_restore",
+      "principal": "bob",
+      "action": "backup.restore",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_bill.read",
+      "principal": "carol",
+      "action": "bill.read",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "carol_statistics.read",
+      "principal": "carol",
+      "action": "statistics.read",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "carol_attachment.download",
+      "principal": "carol",
+      "action": "attachment.download",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "carol_export.create",
+      "principal": "carol",
+      "action": "export.create",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "carol_sync.pull",
+      "principal": "carol",
+      "action": "sync.pull",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": true
+    },
+    {
+      "case_id": "carol_bill.create",
+      "principal": "carol",
+      "action": "bill.create",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_bill.update",
+      "principal": "carol",
+      "action": "bill.update",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_bill.delete",
+      "principal": "carol",
+      "action": "bill.delete",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_import.create",
+      "principal": "carol",
+      "action": "import.create",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_sync.push",
+      "principal": "carol",
+      "action": "sync.push",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_private_read",
+      "principal": "carol",
+      "action": "account.read",
+      "resource": {
+        "account_id": "alice_bank",
+        "account_owner_user_id": "alice"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_shared_private_edit",
+      "principal": "carol",
+      "action": "bill.update_financial",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "alice_bank",
+        "account_owner_user_id": "alice"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_invite",
+      "principal": "carol",
+      "action": "book.invite",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_admin",
+      "principal": "carol",
+      "action": "admin.users.disable",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_backup",
+      "principal": "carol",
+      "action": "backup.download",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "carol_restore",
+      "principal": "carol",
+      "action": "backup.restore",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_bill.read",
+      "principal": "operator",
+      "action": "bill.read",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_statistics.read",
+      "principal": "operator",
+      "action": "statistics.read",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_attachment.download",
+      "principal": "operator",
+      "action": "attachment.download",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_export.create",
+      "principal": "operator",
+      "action": "export.create",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_sync.pull",
+      "principal": "operator",
+      "action": "sync.pull",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_bill.create",
+      "principal": "operator",
+      "action": "bill.create",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_bill.update",
+      "principal": "operator",
+      "action": "bill.update",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_bill.delete",
+      "principal": "operator",
+      "action": "bill.delete",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_import.create",
+      "principal": "operator",
+      "action": "import.create",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_sync.push",
+      "principal": "operator",
+      "action": "sync.push",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_private_read",
+      "principal": "operator",
+      "action": "account.read",
+      "resource": {
+        "account_id": "alice_bank",
+        "account_owner_user_id": "alice"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_shared_private_edit",
+      "principal": "operator",
+      "action": "bill.update_financial",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "alice_bank",
+        "account_owner_user_id": "alice"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_invite",
+      "principal": "operator",
+      "action": "book.invite",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_admin",
+      "principal": "operator",
+      "action": "admin.users.disable",
+      "resource": {},
+      "expected_allowed": true
+    },
+    {
+      "case_id": "operator_backup",
+      "principal": "operator",
+      "action": "backup.download",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "operator_restore",
+      "principal": "operator",
+      "action": "backup.restore",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_bill.read",
+      "principal": "recovery",
+      "action": "bill.read",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_statistics.read",
+      "principal": "recovery",
+      "action": "statistics.read",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_attachment.download",
+      "principal": "recovery",
+      "action": "attachment.download",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_export.create",
+      "principal": "recovery",
+      "action": "export.create",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_sync.pull",
+      "principal": "recovery",
+      "action": "sync.pull",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_bill.create",
+      "principal": "recovery",
+      "action": "bill.create",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_bill.update",
+      "principal": "recovery",
+      "action": "bill.update",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_bill.delete",
+      "principal": "recovery",
+      "action": "bill.delete",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_import.create",
+      "principal": "recovery",
+      "action": "import.create",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_sync.push",
+      "principal": "recovery",
+      "action": "sync.push",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "shared_cash",
+        "account_owner_book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_private_read",
+      "principal": "recovery",
+      "action": "account.read",
+      "resource": {
+        "account_id": "alice_bank",
+        "account_owner_user_id": "alice"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_shared_private_edit",
+      "principal": "recovery",
+      "action": "bill.update_financial",
+      "resource": {
+        "book_id": "shared",
+        "account_id": "alice_bank",
+        "account_owner_user_id": "alice"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_invite",
+      "principal": "recovery",
+      "action": "book.invite",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_admin",
+      "principal": "recovery",
+      "action": "admin.users.disable",
+      "resource": {},
+      "expected_allowed": false
+    },
+    {
+      "case_id": "recovery_backup",
+      "principal": "recovery",
+      "action": "backup.download",
+      "resource": {},
+      "expected_allowed": true
+    },
+    {
+      "case_id": "recovery_restore",
+      "principal": "recovery",
+      "action": "backup.restore",
+      "resource": {},
+      "expected_allowed": true
+    },
+    {
+      "case_id": "disabled_alice",
+      "principal": "alice",
+      "action": "bill.create",
+      "resource": {
+        "book_id": "private"
+      },
+      "expected_allowed": false,
+      "override": {
+        "user_enabled": false
+      }
+    },
+    {
+      "case_id": "bob_removed",
+      "principal": "bob",
+      "action": "sync.push",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false,
+      "override": {
+        "book_roles": {}
+      }
+    },
+    {
+      "case_id": "bob_viewer",
+      "principal": "bob",
+      "action": "sync.push",
+      "resource": {
+        "book_id": "shared"
+      },
+      "expected_allowed": false,
+      "override": {
+        "book_roles": {
+          "shared": "viewer"
+        }
+      }
+    },
+    {
+      "case_id": "last_admin",
+      "principal": "operator",
+      "action": "admin.role.revoke",
+      "resource": {
+        "target_user": "operator"
+      },
+      "expected_allowed": false,
+      "context": {
+        "last_recoverable_admin": true
+      }
+    }
+  ],
+  "projection_cases": [
+    {
+      "principal": "bob",
+      "resource": {
+        "book_id": "shared",
+        "account_owner_user_id": "alice"
+      },
+      "allowed_fields": [
+        "bill_id",
+        "payer_user_id",
+        "money",
+        "business_date",
+        "category_id"
+      ],
+      "forbidden_fields": [
+        "private_account_id",
+        "private_account_name",
+        "private_balance_minor",
+        "other_private_bills"
+      ]
+    }
+  ]
+}

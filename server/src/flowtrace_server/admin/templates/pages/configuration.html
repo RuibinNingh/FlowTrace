@@ -1,0 +1,39 @@
+<header><div class="eyebrow">SERVICE CONFIGURATION</div><h1>服务配置</h1><p class="muted">当前版本 {{ config.version }}。修改以新版本保存，已有版本保留供核对和回滚。</p></header>
+{% if message %}<div class="notice" role="status">{{ message }}</div>{% endif %}
+{% if error %}<div class="notice error" role="alert">{{ error }}</div>{% endif %}
+{% if preview %}<section class="surface"><h2>公开设置预览</h2><p class="muted">尚未保存。下方显示预览值；密钥和当前密码需要重新输入。</p></section>{% endif %}
+<form method="post" action="/admin/configuration" class="configuration-form">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <input type="hidden" name="base_version" value="{{ config.version }}">
+  <input type="hidden" name="request_id" value="{{ request_id }}">
+  <section class="surface"><h2>公开设置</h2><div class="configuration-grid">
+  {% for key,label,kind,minimum,maximum in configuration_fields %}
+    <label>{{ label }}
+      {% if kind == 'bool' %}
+        <select name="{{ key }}"><option value="true" {{ 'selected' if config.public_values[key] }}>开启</option><option value="false" {{ 'selected' if not config.public_values[key] }}>关闭</option></select>
+      {% elif kind == 'provider' %}
+        {% set provider_id = 'ocr_primary' if key == 'ocr_provider' else 'ai_primary' %}
+        {% set registered = provider_id in registered_providers %}
+        <select name="{{ key }}"><option value="disabled" {{ 'selected' if config.public_values[key]=='disabled' }}>停用</option><option value="{{ provider_id }}" {{ 'selected' if config.public_values[key]==provider_id }} {{ 'disabled' if not registered and config.public_values[key]!=provider_id }}>{{ provider_id }}（{{ '已由部署登记' if registered else '部署尚未登记' }}）</option></select>
+      {% else %}
+        <input name="{{ key }}" type="number" value="{{ config.public_values[key] }}" min="{{ minimum }}" max="{{ maximum }}" step="{{ '0.001' if kind=='float' else '1' }}" required>
+      {% endif %}
+      <small class="field-hint">{{ '已接入运行行为' if key in config.effective_fields else '可保存；运行行为尚未接入' }}</small>
+    </label>
+  {% endfor %}
+  </div><p class="footnote">单个附件最大 10 MiB；用户配额不得小于单个附件上限。保留天数会影响后续回收判断，保存设置本身不发起清理。</p></section>
+  <section class="surface"><h2>连接凭据</h2><p class="muted">仅显示是否已配置。保留无需输入；替换会创建新的私有密钥资料。删除当前引用仍保留历史版本的密钥，供显式回滚使用。</p><div class="configuration-grid">
+  {% for key,label in secret_fields %}
+    <fieldset><legend>{{ label }} · {{ '引用不可用，需重新提供' if secret_states[key]=='unavailable' else '已配置' if config.secret_presence[key] else '未配置' }}</legend>
+      <label>处理方式<select name="{{ key }}_action" aria-label="{{ label }}处理方式"><option value="keep">保留当前引用</option><option value="replace">替换为新密钥</option><option value="delete">删除当前引用</option></select></label>
+      <label>新密钥<input type="password" name="{{ key }}_value" maxlength="4096" autocomplete="new-password" aria-label="{{ label }}新密钥"></label>
+    </fieldset>
+  {% endfor %}
+  </div></section>
+  <section class="surface"><h2>确认保存</h2><p class="muted">基于版本 {{ config.version }} 提交；其他管理员已修改时会拒绝覆盖。当前密码只用于本次操作。</p>
+    <div class="credential-form"><label>当前管理密码<input type="password" name="current_password" autocomplete="current-password" minlength="12" maxlength="256" required></label>
+    <label class="checkbox"><input type="checkbox" name="confirm_version" value="{{ config.version }}" required>确认修改当前配置版本 {{ config.version }}</label></div>
+    <div class="actions"><button class="primary">保存为新版本</button><button class="secondary" formaction="/admin/configuration/preview" formnovalidate>预览公开设置</button><a class="text-link" href="/admin/configuration/history">查看版本历史</a><a class="text-link" href="/admin/configuration/providers">检查服务连接</a></div>
+  </section>
+</form>
+<section class="surface"><h2>受控清理</h2><p class="muted">后台批量清理计划与引用复核尚未接入，当前页面不发起删除。已接入的保留策略会影响之后的回收判断；历史密钥仍保留供回滚使用。</p></section>

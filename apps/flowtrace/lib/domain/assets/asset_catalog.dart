@@ -1,0 +1,70 @@
+// Generated from contracts/fixtures/assets/catalogs.json; keep fixture parity.
+final class AssetProvider {
+  const AssetProvider(this.name, this.kind);
+  final String name, kind;
+}
+
+const assetKindNames = <String, String>{
+  'cash': '现金与电子钱包',
+  'bank': '银行卡',
+  'credit_card': '信用卡',
+  'prepaid': '充值与储值',
+  'investment': '投资账户',
+  'loan_receivable': '应收债权',
+  'loan_payable': '应付债务',
+};
+
+const assetBanks = <String, String>{
+  'boc': '中国银行',
+  'cmb': '招商银行',
+  'icbc': '工商银行',
+  'abc': '农业银行',
+  'ccb': '建设银行',
+  'bocom': '交通银行',
+  'spdb': '浦发银行',
+  'cgb': '广发银行',
+  'psbc': '邮储银行',
+  'rcc': '农信社',
+  'pingan': '平安银行',
+};
+const assetProviders = <String, AssetProvider>{
+  'wechat': AssetProvider('微信', 'cash'),
+  'lingqiantong': AssetProvider('微信零钱通', 'cash'),
+  'alipay': AssetProvider('支付宝', 'cash'),
+  'yuebao': AssetProvider('余额宝', 'cash'),
+  'yulibao': AssetProvider('余利宝', 'cash'),
+  'xiaohebao': AssetProvider('小荷包', 'cash'),
+  'unionpay': AssetProvider('云闪付', 'cash'),
+  'housing': AssetProvider('公积金', 'cash'),
+  'qq': AssetProvider('QQ钱包', 'cash'),
+  'jd': AssetProvider('京东金融', 'cash'),
+  'medical': AssetProvider('医保', 'cash'),
+  'ecny': AssetProvider('数字人民币', 'cash'),
+  'huawei': AssetProvider('华为钱包', 'cash'),
+  'pinduoduo': AssetProvider('多多钱包', 'cash'),
+  'paypal': AssetProvider('Paypal', 'cash'),
+  'credit_card': AssetProvider('信用卡', 'credit_card'),
+  'huabei': AssetProvider('花呗', 'credit_card'),
+  'jiebei': AssetProvider('借呗', 'credit_card'),
+  'baitiao': AssetProvider('京东白条', 'credit_card'),
+  'meituan': AssetProvider('美团月付', 'credit_card'),
+  'douyin': AssetProvider('抖音月付', 'credit_card'),
+  'fenfu': AssetProvider('微信分付', 'credit_card'),
+  'phone': AssetProvider('话费', 'prepaid'),
+  'utilities': AssetProvider('水电', 'prepaid'),
+  'meal': AssetProvider('饭卡', 'prepaid'),
+  'deposit': AssetProvider('押金', 'prepaid'),
+  'transit': AssetProvider('公交卡', 'prepaid'),
+  'membership': AssetProvider('会员卡', 'prepaid'),
+  'fuel': AssetProvider('加油卡', 'prepaid'),
+  'sinopec': AssetProvider('石化钱包', 'prepaid'),
+  'apple': AssetProvider('Apple', 'prepaid'),
+  'stock': AssetProvider('股票', 'investment'),
+  'fund': AssetProvider('基金', 'investment'),
+  'gold': AssetProvider('黄金', 'investment'),
+  'forex': AssetProvider('外汇', 'investment'),
+  'futures': AssetProvider('期货', 'investment'),
+  'bond': AssetProvider('债券', 'investment'),
+  'fixed_income': AssetProvider('固定收益', 'investment'),
+  'crypto': AssetProvider('加密货币', 'investment'),
+};

@@ -1,0 +1,39 @@
+# 本地调研资料、第三方工具和生成交付物
+/work/
+/outputs/
+
+# 本机凭据与环境配置；示例配置可以跟踪
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# 临时文件与系统缓存
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Python / Flutter local environments and generated build output
+.venv/
+.wheel-venv/
+.wheel-move-venv/
+.wheel-assets-venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+htmlcov/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+dist/
+local.properties
+key.properties
+*.jks
+*.keystore
+# Private runtime logs and attachment objects.
+/server/var/
+/var/

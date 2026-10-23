@@ -1,0 +1,8 @@
+<header><div class="eyebrow">BACKUP VERIFICATION</div><h1>{{ '确认校验备份' if target_id else '校验指定备份' }}</h1><p class="muted">校验已有备份的清单、文件大小和SHA-256。任务由独立执行器完成，排队不代表校验成功。</p></header>
+<section class="surface">{% if error %}<div class="notice error" role="alert">{{ error }}</div>{% endif %}
+{% if target_id %}<dl class="facts"><div><dt>备份UUID</dt><dd class="mono break-anywhere">{{ target_id }}</dd></div><div><dt>请求UUID</dt><dd class="mono break-anywhere">{{ request_id }}</dd></div></dl>
+<form class="credential-form" method="post" action="/admin/jobs/backup-verify"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="backup_id" value="{{ target_id }}"><input type="hidden" name="request_id" value="{{ request_id }}">
+<label>当前管理密码<input type="password" name="current_password" autocomplete="current-password" minlength="12" maxlength="256" required></label>
+<label class="checkbox"><input type="checkbox" name="confirm_target" value="{{ target_id }}" required>我确认对上述备份排队校验</label><div class="actions"><button class="primary">排队校验</button><a class="button secondary" href="/admin/jobs">返回</a></div></form>
+{% else %}<form class="credential-form" method="post" action="/admin/jobs/backup-verify"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><label>备份UUID<input name="backup_id" maxlength="36" pattern="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" spellcheck="false" autocomplete="off" required></label><button class="primary">核对目标</button></form>{% endif %}
+<p class="footnote">仅接受服务备份目录中的UUID，不接受文件路径、数据库连接或命令。错误、损坏或缺失备份会记录明确失败状态。</p></section>

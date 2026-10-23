@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "journeys": [
+    {
+      "id": "J01",
+      "title": "首次与快速记账",
+      "implementation_tasks": [
+        "P2-01",
+        "P3-01",
+        "P5-03"
+      ],
+      "retest_ids": [
+        "V01",
+        "V10"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J02",
+      "title": "单笔与批量维护",
+      "implementation_tasks": [
+        "P3-01",
+        "P3-02"
+      ],
+      "retest_ids": [
+        "V01",
+        "V04"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J03",
+      "title": "资产转账信用卡债务",
+      "implementation_tasks": [
+        "P4-01"
+      ],
+      "retest_ids": [
+        "V02"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J04",
+      "title": "退款与分次报销",
+      "implementation_tasks": [
+        "P4-02"
+      ],
+      "retest_ids": [
+        "V03"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J05",
+      "title": "统计日历预算币种",
+      "implementation_tasks": [
+        "P3-03",
+        "P4-01"
+      ],
+      "retest_ids": [
+        "V01",
+        "V02",
+        "V03"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J06",
+      "title": "多用户共享",
+      "implementation_tasks": [
+        "P2-01",
+        "P2-02",
+        "P3-01"
+      ],
+      "retest_ids": [
+        "V05"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J07",
+      "title": "离线并发恢复",
+      "implementation_tasks": [
+        "P2-02",
+        "P2-03",
+        "P3-04",
+        "P6-03",
+        "P7-03"
+      ],
+      "retest_ids": [
+        "V05"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J08",
+      "title": "分期与周期",
+      "implementation_tasks": [
+        "P4-03",
+        "P4-04"
+      ],
+      "retest_ids": [
+        "V06"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J09",
+      "title": "七种存钱计划",
+      "implementation_tasks": [
+        "P4-05"
+      ],
+      "retest_ids": [
+        "V07"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J10",
+      "title": "自动记账截图",
+      "implementation_tasks": [
+        "P5-01"
+      ],
+      "retest_ids": [
+        "V08",
+        "V10"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J11",
+      "title": "迁移导出恢复",
+      "implementation_tasks": [
+        "P5-02",
+        "P8-02"
+      ],
+      "retest_ids": [
+        "V09"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    },
+    {
+      "id": "J12",
+      "title": "后台与三端一致",
+      "implementation_tasks": [
+        "P2-04",
+        "P5-04",
+        "P6-03",
+        "P7-03",
+        "P8-01"
+      ],
+      "retest_ids": [
+        "V05",
+        "V10"
+      ],
+      "status": "acceptance_plan_not_executed",
+      "business_fixture_owner": "P0-02 contracts/fixtures/ledger",
+      "platform_scenario_owner": "P0-04 contracts/fixtures/scenarios"
+    }
+  ]
+}
