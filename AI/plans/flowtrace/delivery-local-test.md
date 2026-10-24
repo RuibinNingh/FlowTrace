@@ -1,6 +1,6 @@
 # 最终产物与部署交付
 
-> **当前授权与状态（2026-10-24，Asia/Shanghai）**：Windows/APK已重建0.1.1+2并内置正式HTTPS服务器，旧手动地址/资料保持，见[本包记录](../../logs/2026-10-24_native-client-rebuild.md)。Linux生产/Web仍为上一已交付钱迹兼容与日志修复版本，本包未替换；安卓设备测试继续取消。独立外网/整机重启等边界保留，不称全量验收，无Git推送。
+> **当前授权与状态（2026-10-24，Asia/Shanghai）**：0.1.1+2 Web已更新生产，前包Windows/APK已发布HTTPS下载，三端内置正式地址，旧设置/资料保持，见[部署记录](../../logs/2026-10-24_client-production-deployment.md)。后端1447709复用，安卓设备测试取消；独立外网/整机重启等边界保留，不称全量验收，无Git推送。
 > 恢复入口：[progress.md](progress.md) 顶部、[当前任务记录](../../logs/2026-10-24_production-deployment.md)、[生产部署模块](../../modules/production-deployment.md)与[Linux 运行手册](../../../deployment/linux/README.md)。文件名保留本机测试任务来源；旧方案见下文历史节。当前范围按[Alpha里程碑](alpha-milestones.md)，完整钱迹功能仍是后续目标。
 
 ## 用户要求
@@ -15,7 +15,7 @@
 | 产物 | 交付与检查 |
 |---|---|
 | Windows x64 | 新建普通0.1.1+2/production/qa=false ZIP，内置正式地址，提供路径/hash/来源；全新隔离根实际schema5启动通过，未签名/完整UI/旧库原地升级边界保留 |
-| Web | 当前使用钱迹修复fcdcda0完整静态产物，实际41文件/ZIP/hash；同版隔离IAB完整105条旅程与正式域名TLS/API分开记录，旧a3d9保留 |
+| Web | 当前0.1.1+2来源5f3e813/41文件，生产HTTPS39资源hash及主页已验；旧fcdcda0的隔离105条旅程证据保留，不冒称本包重新执行 |
 | Android APK | 新建普通0.1.1+2/ARM64 Debug APK，内置正式地址、沿用.dev及原证书、versionCode2；CRC/元数据/v2签名/main/地址通过，设备测试取消 |
 | 配套资料 | 实际版本/来源、SHA256清单、安装/访问/升级与限制；独立后端wheel和35项生产依赖锁、Linux原生部署/启停/备份恢复资料 |
 

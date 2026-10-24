@@ -9,6 +9,8 @@
 
 ## 当前行为
 
+2026-10-24按追加生产授权已上线Web0.1.1+2及Windows/APK生产HTTPS下载；前包“仅本地交付”由本包覆盖。新Web来源5f3e813/release271e8395…f8dd，原生158ebc2字节复用；一致备份、首次0700权限故障自动回退与窄修、39资源/两个下载完整HTTPS hash、Windows域名HEAD和生产IAB主页均有证据。后端1447709/PID/env/身份保持，无DDL、无登录/账务写入或安卓操作，见[部署记录](../logs/2026-10-24_client-production-deployment.md)。
+
 2026-10-24Windows/APK `0.1.1+2`已按用户新要求重建，默认正式服务器地址、既有手动设置及资料空间边界明确；产物在`outputs/releases/production/20261024-clients-0.1.1+2/`，有manifest/hash/升级说明。来源`158ebc2`，41定向/范围分析、Windows隔离schema5启动、APK签名/包名/版本/内置地址均通过；无设备操作、无生产替换、无Git推送，见[本包记录](../logs/2026-10-24_native-client-rebuild.md)。下文为上一生产包及更早快照。
 
 2026-10-24钱迹兼容修复已交付并更新生产：后端`1447709`、Web`fcdcda0`（release `5ba6ba58…f6770`），新包在`outputs/releases/production/20261024-qianji-1447709/`。用户原始105条/3退款在Linux隔离库完成精确金额/报表、重放和撤销；同版Web以合成105条完成独立IAB文件选择/整批导入/同步/重开。正式HTTPS错误解析与后台脱敏导出通过，诊断OS/运行双开，Python3.13私有采集兼容修复已验；生产没有自动导入原文件。实际命令、失败和范围见[本包记录](../logs/2026-10-24_qianji-export-import-fix.md)。临时QA API/worker与本包SSH转发验证后精确关闭，QA库/原件/证据保留；没有推送。
@@ -78,7 +80,7 @@ git check-ignore -v -- work/qianji-research/session-completion.json work/tools/j
 
 ## 当前缺口
 
-当前Alpha生产验收边界：初始版本生产浏览器取页超时证据保留；已部署修复Web在隔离同版服务通过独立IAB的105条合成文件导入/同步/重开，正式域名另验TLS/API/脱敏导出，未替用户操作真实生产账本导入。当前原生0.1.1+2新安装默认正式HTTPS服务器；现有自定义地址保持，已部署旧Web未随本包更新，首次仍按需设置地址。旧Web更新先保存草稿并使用应用内提示，不清空站点资料。Windows新包隔离schema5启动已验，未签名/完整UI/真实旧库原地升级仍未验；APK新包为schema5源码的ARM64 Android Debug，签名与原.dev包相同、versionCode2，未执行设备测试或安装。独立外网、IPv6与整机重启/断电未验。两项每日timer已配置且手动执行通过；未来到期调度没有等待实测。备份与私有配置归档仍同机，未接FlowTrace异机备份和Guard告警。
+当前Alpha生产验收边界：初始浏览器取页超时证据保留；先前修复Web已在隔离同版IAB完成105条合成导入/同步/重开，正式域名另验TLS/API/脱敏导出，未替用户导入真实账本。当前Web/原生0.1.1+2均默认正式HTTPS，手动地址保持；生产Web首页实际渲染、新版提示已观察，更新点击工具回执超时而后续截图正常，不扩大为完整多标签/离线升级验收。更新先保存工作、使用应用内提示，不清空站点资料。Windows隔离schema5启动已验，未签名/完整UI/真实旧库原地升级未验；APK为ARM64 Android Debug、原.dev证书/code2，设备测试取消。独立外网、IPv6及整机重启/断电未验。两项每日timer已配置且手动执行通过；未来到期调度未等待实测。备份与私有配置归档仍同机，未接异机备份/Guard告警。
 
 完整高级回款/typed重构、周期分期/储蓄、OCR/AI等长期功能保持延期。并发更新sync_clients时新group曾发生PG40001/503，原场景有界重试修复未落地；新Web实际105条stage发布/刷新已通过，不能据此声称所有并发group场景修复。生产普通v1 account/bill写入、原请求重放与pull有原有实测证据。所有已知失败场景、旧QA/恢复资料和现场保留，不以本包发布清理。
 

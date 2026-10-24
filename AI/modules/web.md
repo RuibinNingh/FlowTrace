@@ -8,7 +8,7 @@
 
 ## 当前行为
 
-2026-10-24生产Web已由初始a3d9更新为钱迹修复版，来源`fcdcda0`、release `5ba6ba58d80d6c79419d1439101752bbcd0d801ad6a63bdb9cc0fd7eb61f6770`，39资源加manifest/worker共41文件。新ZIP为25,835,422B，SHA256为`66225934f6cb756928b274693d40fe94f31265a758e9103c700ce3b12d8908f6`；后续仅后端修复，复用这个已验Web包。schema5业务包含完整stage入口，1015项/8专用live跳过及范围静态分析通过；同候选独立IAB以合成105条完成文件选择、具体错误、交接完整导入、同步与重开。生产域名TLS/API/脱敏导出通过；浏览器业务旅程在隔离同版服务，不能写成真实生产账本已导入。当前路径、首次服务器设置与更新边界见[生产部署](production-deployment.md)、[运行手册](../../deployment/linux/README.md)和[本包记录](../logs/2026-10-24_qianji-export-import-fix.md)。
+2026-10-24当前生产Web为0.1.1+2、来源`5f3e813`，release `271e839535a9f2c94f689cd45a3b54f8d156481e6dbb968d127569a64c29f8dd`；内置正式HTTPS地址，已有手动设置保持。普通main新构建45.6秒，seal39资源加manifest/worker共41文件，ZIP25,835,302B/SHA`a677510547fecd5ff2ddd1df4139c5a502ed97ef11ed43baf2efbe26bbfce1fe`。生产HTTPS逐项核对39资源、IAB实际渲染主页；观察到完整新版提示，点击回执超时但后续截图为正常主页且提示消失，不扩大为完整多标签/离线升级验收。旧fcdcda0和原105条合成浏览器证据保留；本包复用其业务验证与前包41定向，不重复1015整套。版本/切换/第一次权限回退/第二次修复见[生产模块](production-deployment.md)、[Linux手册](../../deployment/linux/README.md)和[部署记录](../logs/2026-10-24_client-production-deployment.md)。
 
 构建后`seal_release.py`对新产物生成SHA256清单和版本，生产worker仅发布完整包/完成标记。安装校验失败保留旧完整包，已缓存资源损坏返回503，不从新网络版本补单个资源。首装有实际进度，离线准备失败提供明确仅联网路径；未把估算配额当成实际可写容量。
 

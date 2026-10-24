@@ -1,6 +1,15 @@
 # 流迹开发计划进度
 
-> **当前执行与恢复（2026-10-24，Asia/Shanghai；内置服务器与原生重建包已交付）**
+> **当前执行与恢复（2026-10-24，Asia/Shanghai；0.1.1+2生产部署已交付）**
+> - 用户追加“生产部署啊”，已更新实际生产Web并将前包Windows/APK原字节发布为正式HTTPS下载；三端默认正式地址，已存手动设置/数据不改。恢复：[本次部署记录](../../logs/2026-10-24_client-production-deployment.md) → [生产模块](../../modules/production-deployment.md) → [Linux手册](../../../deployment/linux/README.md)。
+> - Web0.1.1+2来源5f3e813，release271e839535a9f2c94f689cd45a3b54f8d156481e6dbb968d127569a64c29f8dd；current指向`/www/wwwroot/flowtrace/releases/20261024-client-production-5f3e813`。原生下载在正式域名`/downloads/0.1.1-2/`，来源158ebc2/旧签名不变，未重跑已验构建或安卓设备测试。
+> - 39个Web资源和两个原生文件从真实HTTPS完整读取/hash通过，Windows端TLS/下载HEAD通过；IAB实际渲染主页并观察新版提示消失，点击回执超时单列，不称完整PWA旅程。后端1447709/PID/env/实例身份保持，ready200，无DDL/金融写入。
+> - 写前一致备份4ed86241、5文件/227775B，控制备份`/root/workspace/backups/flowtrace-clients-20261024T140019Z`。首次新目录受umask变0700被Nginx拒绝，已自动回退；明确修0755/文件0644并www预读后第二次切换通过，失败现场保留。
+> - 本地Web/上传manifest/回执在`outputs/releases/production/20261024-client-production-5f3e813/`和`outputs/validation/client-production-20261024/`；服务器项目文档/wiki同步，保存本地提交，无推送。下一步用户保存工作后更新页面，或直接下载原生包覆盖使用；不自动开启新包。
+
+## 前包原生重建接收快照
+
+> **2026-10-24内置服务器与原生重建包已交付（当时仅本地）**
 > - 用户要求以后内置`home.ruibin-ningh.top`并重建Windows/APK；本包默认完整地址为`https://home.ruibin-ningh.top:18473`，版本`0.1.1+2`。仅没有已存active_server时采用默认值，手动地址及旧资料空间保留；没有自动搬账或切换既有账号。
 > - 代码恢复提交`158ebc2`，基线`57b6386`干净；普通main、未传QA/local-test define，Windows Release与Android ARM64 Debug串行构建，214项源码/资源/锁定输入前后不变。旧包保留，APK`.dev`/原Debug证书保持、versionCode2。
 > - 验证：41项地址/身份/账号页定向通过、两文件分析No issues；Windows全新解压25运行文件/hash通过，隔离根实际启动schema5并注册默认正式地址，仅关测试进程；APK元数据、v2签名、161成员CRC、main入口/内置地址、私有值排除通过。没有Android/ADB或完整原生UI/旧库原地升级验收，不重复上包1015完整测试。
@@ -87,7 +96,7 @@ P4-02的[实施细化](p4-02-implementation.md)包含开工差异、A–F依赖�
 
 ## 下一步
 
-本次原生0.1.1+2包已交付，内置正式服务器；从[本包记录](../../logs/2026-10-24_native-client-rebuild.md)恢复。用户正常关闭旧Windows版本后解压运行新包，APK沿用原签名可覆盖安装且不清数据；已有手动地址仍保持。安卓设备测试不恢复，生产/Web仍是上包版本；真实账本导入仍须映射/预览/确认，不自动开启新功能包。其他边界集中见workspace。
+0.1.1+2已实际部署生产Web，并提供原生HTTPS下载；从[本次部署记录](../../logs/2026-10-24_client-production-deployment.md)恢复。用户保存工作后使用Web更新提示，或下载Windows/APK；旧设置/数据保留，APK原签名可覆盖安装。后续功能包、安卓设备测试、独立外网/整机重启等不自动开启，边界集中见workspace。
 
 ### 原全功能恢复顺序（历史，当前不执行）
 
@@ -107,6 +116,7 @@ P4-02的[实施细化](p4-02-implementation.md)包含开工差异、A–F依赖�
 
 | 日期 | 变更 | 依据 |
 |---|---|---|
+| 2026-10-24 | 实际生产更新0.1.1+2 Web及Windows/APK HTTPS下载，复用已验原生/后端，无金融迁移 | 用户追加“生产部署啊”；[本次部署记录](../../logs/2026-10-24_client-production-deployment.md) |
 | 2026-10-24 | 默认内置正式HTTPS服务器，重建Windows/APK为0.1.1+2，保留旧资料/手动地址；本地交付不替换生产Web/后端 | 用户“以后应用内置服务器就是home.ruibin-ningh.top的，重建windows和apk”；[本包记录](../../logs/2026-10-24_native-client-rebuild.md) |
 | 2026-10-24 | 完成实际钱迹导出105条/3退款、分型分类、具体错误和脱敏日志，并在分项测试/真实Linux与浏览器验证后更新生产 | 用户明确修复及生产更新授权；[本包记录](../../logs/2026-10-24_qianji-export-import-fix.md)，保持额度受控单包及安卓取消边界 |
 | 2026-10-21 | 确认多用户、Android → Web → Windows、Linux 原生部署并加入后台面板 | 用户本次与前轮确认 |

@@ -1,18 +1,20 @@
 # FlowTrace Linux 生产运行手册
 
-2026-10-24 生产 Alpha（钱迹兼容修复已更新）：`root@192.168.0.145`，入口 **https://home.ruibin-ningh.top:18473/**，后台 **https://home.ruibin-ningh.top:18473/admin/login**。本目录保存实际部署的配置与续期脚本；没有容器依赖。当前事实、验证和限制见[生产模块](../../AI/modules/production-deployment.md)、[本次更新](../../AI/logs/2026-10-24_qianji-export-import-fix.md)及[首次部署记录](../../AI/logs/2026-10-24_production-deployment.md)。
+2026-10-24 生产 Alpha（Web/原生下载0.1.1+2已上线）：`root@192.168.0.145`，入口 **https://home.ruibin-ningh.top:18473/**，后台 **https://home.ruibin-ningh.top:18473/admin/login**。本目录保存实际部署配置，无容器依赖。当前事实和限制见[生产模块](../../AI/modules/production-deployment.md)、[本次部署](../../AI/logs/2026-10-24_client-production-deployment.md)、[钱迹修复](../../AI/logs/2026-10-24_qianji-export-import-fix.md)及[首次部署](../../AI/logs/2026-10-24_production-deployment.md)。
 
 ## 开始试用
 
 正式账号为 `flowtrace_owner`。初始密码在目标机 `/root/workspace/apps/flowtrace/bootstrap-credentials.json`（root:0600）；本地交接副本在忽略目录 `work/flowtrace-production/bootstrap-credentials.json`，ACL仅授予当前Windows用户。不要把该文件复制进网站、版本库或wiki。
 
-新原生Windows/APK `0.1.1+2`默认已指向生产HTTPS；已有手动保存的服务器地址不覆盖。当前生产Web仍是上一修复包版本，未随原生重建更新，初次或仍指向旧地址时执行：
+当前Web/Windows/APK `0.1.1+2`新安装默认指向生产HTTPS，已有手动保存的地址不覆盖。旧页面先保存工作、按应用内“更新”提示切换；必要时关闭其他流迹标签再重开，不清空站点资料。仍指向旧地址时执行：
 
 1. 打开 Web，进入设置的服务器地址，保存 `https://home.ruibin-ningh.top:18473`。
 2. 在账号页登录 `flowtrace_owner`，使用上述私有文件里的密码。
 3. 进入同步页进行同步，再开始自己的记账。不要把临时试用账号 `flowtrace_test` 当作生产账号。
 
 Windows将新ZIP解压到独立目录，正常关闭旧版本后运行`FlowTrace/flowtrace.exe`，默认已是生产地址；应用未签名。APK已重建为`0.1.1+2` ARM64 Android Debug，沿用`.dev`包名及原Debug证书，versionCode2可覆盖原code1；不需要卸载清数据。没有执行设备安装/测试。新原生包在本地`outputs/releases/production/20261024-clients-0.1.1+2/`；已有Web站点数据属于各自origin，改地址不把临时库直接迁入生产。
+
+生产下载：[Windows x64 ZIP](https://home.ruibin-ningh.top:18473/downloads/0.1.1-2/FlowTrace-0.1.1-2-windows-x64.zip)、[Android ARM64 Debug APK](https://home.ruibin-ningh.top:18473/downloads/0.1.1-2/FlowTrace-0.1.1-2-android-arm64-debug.apk)、[SHA256清单](https://home.ruibin-ningh.top:18473/downloads/0.1.1-2/SHA256SUMS.txt)。两包原字节复用，完整HTTPS取回hash匹配；版本URL不覆盖旧包，下载区不存凭据/账目/备份，不开放目录列表。
 
 ## 导入钱迹实际导出
 
@@ -32,7 +34,8 @@ Windows将新ZIP解压到独立目录，正常关闭旧版本后运行`FlowTrace
 | 运维文档与安全回执 | `/root/workspace/apps/flowtrace/` |
 | 后端版本与current软链 | `/opt/flowtrace/releases/20261024-qianji-1447709`、`/opt/flowtrace/current` |
 | 运维脚本 | `/opt/flowtrace/operations/`，root所有；目录0755、脚本0644，无内嵌密钥 |
-| 公共静态Web | `/www/wwwroot/flowtrace/releases/20261024-qianji-fcdcda0`、`/www/wwwroot/flowtrace/current` |
+| 公共静态Web | `/www/wwwroot/flowtrace/releases/20261024-client-production-5f3e813`、`/www/wwwroot/flowtrace/current` |
+| 原生版本下载 | `/www/wwwroot/flowtrace/downloads/0.1.1-2/`，专用Nginx`/downloads/` alias；仅公开产物/清单/说明 |
 | 数据与附件 | `/var/lib/flowtrace`，专用用户 `flowtrace` 所有、0700 |
 | 数据库 | 原生PG17 `flowtrace_prod`，本机5432；角色`flowtrace_app`无superuser/createdb/createrole |
 | systemd | `/etc/systemd/system/flowtrace-api.service`、`flowtrace-worker.service`、`flowtrace-backup.*`、`flowtrace-certificate.*` |
@@ -53,7 +56,7 @@ journalctl -u flowtrace-api -u flowtrace-worker -n 80 --no-pager
 systemctl restart flowtrace-api.service flowtrace-worker.service
 ```
 
-API的绑定是`127.0.0.1:18210`。Nginx只代理精确的`/api/`、`/admin/`、`/health/`，其他请求是固定静态文件，未知404。静态文件不含环境文件、密码和数据库。没有新增API访问日志；journal输出有服务限速，Nginx只写`/www/wwwlogs/flowtrace.error.log` warn级错误。
+API的绑定是`127.0.0.1:18210`。Nginx只代理`/api/`、`/admin/`、`/health/`；`/downloads/`单独指向公开版本目录，主入口仍为固定Web文件，未知404。静态目录不含环境文件、密码和数据库。没有新增API访问日志；journal输出有服务限速，Nginx只写`/www/wwwlogs/flowtrace.error.log` warn级错误。
 
 脱敏诊断现已开启：`FLOWTRACE_DIAGNOSTICS_ENABLED=true`且数据库运行开关为true；两者均允许才收集。私有目录`/var/lib/flowtrace/diagnostics`为0700、JSONL为0600。每条仅固定事件/路由模板/错误码、状态/耗时、行字段/数量及合法UUID；不记录原文件名、备注、正文、图片、密码或token。1MiB×3轮换、含当天7个UTC日期/合计8MiB的既有上限保持，容量可能更早淘汰记录。
 
@@ -93,6 +96,10 @@ openssl x509 -in /www/server/panel/vhost/letsencrypt/home.ruibin-ningh.top/fullc
 不要改其他域名证书、重置DNS凭据或批量续期。未来自动临期调度尚未等待实测；本次真实签发及新服务“无需续期”分支分开验证。
 
 ## 升级与退出本次部署
+
+当前客户端生产切换前一致备份`4ed86241-44d3-4c7f-b075-a56aebc7e318`，5文件/227775B已校验；原Web指针、Nginx及manifest在`/root/workspace/backups/flowtrace-clients-20261024T140019Z`。本次仅原子切Web并添加公开下载alias，后端进程/身份/env不改。第一次因umask造成新目录0700而自动回退，之后显式0755/文件0644且以www预读通过，再成功切换；私有目录权限没有放宽。
+
+回退本次静态发布时，仅将Web current恢复到备份的旧指针、专用Nginx文件恢复为该包写前副本，`nginx -t`通过后reload；保留下载包和新旧Web目录。不要恢复旧数据库覆盖后续账目，亦不需重启API/worker或回滚路由器。公开文件即使部署助手使用私有umask，也须在切换前显式设置新目录0755/文件0644、用www身份核对读取；不递归修改整个站点或私有数据根。
 
 本次修复未加DDL，仍`0016_backup_quarantine`。最终更新前一致备份`ff301d6b-6b9c-4d9e-8d54-c2f8d0fa3b69`已校验，5文件/186993B；旧指针/env/manifest在`/root/workspace/backups/flowtrace-qianji-20261024T130322Z`，最初Alpha材料另在`flowtrace-qianji-20261024T125008Z`。仅切换本项目程序/Web软链、开启诊断并重启API/worker，未改其他站点、路由和证书；旧版本保留，没有实际执行回退。若需程序回退，先停这两项服务、核对备份记录的原指针及schema，再原子恢复匹配指针/env并启动检查，不恢复旧数据库覆盖新增账目。
 

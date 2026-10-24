@@ -4,11 +4,11 @@
 > - 入口：`deployment/linux/README.md`、该目录的 systemd/Nginx 配置；目标机 `/root/workspace/apps/flowtrace/README.md`。
 > - 不变量：业务进程使用专用非 root 身份；数据库/附件不在静态目录；密钥不入库；恢复只进入全新隔离目标；不改动其他服务。
 > - 必跑测试：独立锁定安装、真实迁移/check、TLS/身份/精确账务与重放、含附件备份/隔离恢复、仅本服务重启保持；浏览器与外网证据分别报告。
-> - 相关：[服务端](server.md)、[后台](admin.md)、[数据工具](data-tools.md)、[Web](web.md)、[最新更新记录](../logs/2026-10-24_qianji-export-import-fix.md)、[首次部署记录](../logs/2026-10-24_production-deployment.md)、[当前缺口](workspace.md#当前缺口)。
+> - 相关：[服务端](server.md)、[后台](admin.md)、[数据工具](data-tools.md)、[Web](web.md)、[最新部署记录](../logs/2026-10-24_client-production-deployment.md)、[钱迹修复记录](../logs/2026-10-24_qianji-export-import-fix.md)、[首次部署记录](../logs/2026-10-24_production-deployment.md)、[当前缺口](workspace.md#当前缺口)。
 
 ## 当前部署
 
-2026-10-24原生客户端另已本地交付`0.1.1+2`，Windows/APK内置正式HTTPS地址，来源`158ebc2`；替代用户后续安装使用的旧M1候选，详见[重建记录](../logs/2026-10-24_native-client-rebuild.md)。本包没有替换下表生产程序/Web，也未上传原生包或操作生产数据库；当前服务器版本仍以下表为准。
+2026-10-24按用户追加“生产部署啊”已更新Web为`0.1.1+2`并发布同版本Windows/APK HTTPS下载，三端内置正式地址。原生包复用`158ebc2`已验字节，新Web来源`5f3e813`；后端继续1447709，无DDL/API/worker替换或账号/账务迁移。原“仅本地交付”边界已被本次授权覆盖，构建与部署回执分见[重建记录](../logs/2026-10-24_native-client-rebuild.md)、[部署记录](../logs/2026-10-24_client-production-deployment.md)。
 
 2026-10-24 按用户明确授权部署到 `192.168.0.145`，项目运维文档放在 `/root/workspace/apps/flowtrace/`。服务器 wiki 实际为 `/root/workspace/wiki/`；只提供背景、稳定约束和项目入口，运行配置及本手册是操作依据。
 
@@ -20,7 +20,8 @@
 | Python | 3.13.5，发行目录独立 venv，35项锁定依赖按 hash 安装；36个包依赖检查通过 |
 | 服务 | `flowtrace-api.service` / `flowtrace-worker.service`，用户 `flowtrace`，均已启用；API 仅 `127.0.0.1:18210` |
 | 程序 | `/opt/flowtrace/releases/20261024-qianji-1447709`，`/opt/flowtrace/current` 指向本次发行 |
-| 静态 Web | `/www/wwwroot/flowtrace/releases/20261024-qianji-fcdcda0`，`/www/wwwroot/flowtrace/current` 指向本次发行 |
+| 静态 Web | `/www/wwwroot/flowtrace/releases/20261024-client-production-5f3e813`，`/www/wwwroot/flowtrace/current` 指向本次发行 |
+| 原生下载 | `/www/wwwroot/flowtrace/downloads/0.1.1-2/`，仅公开Windows/APK、hash/manifest/说明；`/downloads/`无目录列表 |
 | 资料 | `/var/lib/flowtrace`，`flowtrace` 所有、0700；独立于 Web、宝塔递归权限目录和旧测试资料 |
 | 私有配置 | `/etc/flowtrace/server.env`、`/root/workspace/apps/flowtrace/bootstrap-credentials.json`，均 root 所有、0600 |
 | 私有诊断 | OS与数据库运行开关均开启；`/var/lib/flowtrace/diagnostics` 0700、JSONL 0600，后台受权脱敏导出 |
@@ -31,6 +32,8 @@
 原生 PG 集群 `start.conf=auto`，`postgresql.service` enabled；实例通过 Debian generator 启动，`postgresql@17-main` 显示 enabled-runtime。本次没有重启整台主机。
 
 ## 已取得的证据
+
+本次一致备份`4ed86241-44d3-4c7f-b075-a56aebc7e318`校验5文件/227775B，Web指针、专用Nginx配置和旧manifest保存在`/root/workspace/backups/flowtrace-clients-20261024T140019Z`。第一次切换因umask令新公开目录变0700而HTTP读取失败，已自动回退；核对stat/站点日志后只将新Web/下载目录改0755，文件0644，并以www预读通过，再切换成功。39个Web资源及两个原生包完整HTTPS取回hash一致，私有路径404；Windows域名TLS/HEAD也通过。API/worker PID、后端指针、私有env及server-info身份前后保持，ready200；没有停止业务服务或改其他站点配置。IAB实际显示生产主页，更新点击工具回执超时与后续正常截图分别保留。
 
 最新钱迹修复：原文件105条/3退款在独立Linux库完成逐条金额/报表/重放/撤销核对，同版Web以合成105条在独立IAB完成选择文件、完整预览/确认、同步与重开；生产仅执行合成错误解析、正常/后台登录退出和脱敏导出，没有替用户导入真实账本。最终HTTPS ready200，错误请求ID与私有导出一致，敏感哨兵/文件名/凭据不在日志；API/worker active。Python3.13私有日志分派故障已窄修并在真实TCP通过后切换最终版本。
 
@@ -49,8 +52,8 @@
 
 ## 发行与验收范围
 
-当前后端来源`144770926da48b8049fd05cee7c81c7e11c3356a`，wheel431617B，SHA256 `f8e69b8ac3300b1ca9f973d2b985cfd54ec0824c1b7651bddc306405ad5b8e77`；Web来源`fcdcda06d3009945f6b9955ccb09ce6a25eccf52`，release `5ba6ba58d80d6c79419d1439101752bbcd0d801ad6a63bdb9cc0fd7eb61f6770`。Web使用schema5；新本地Windows/APK已重建0.1.1+2，旧[M1候选](../plans/flowtrace/alpha-candidates.md)继续保留。opt-in诊断字段保持旧客户端响应兼容，新包不是本轮服务器/Web重新部署。
+当前后端来源`144770926da48b8049fd05cee7c81c7e11c3356a`，wheel431617B，SHA256 `f8e69b8ac3300b1ca9f973d2b985cfd54ec0824c1b7651bddc306405ad5b8e77`，本次复用。Web来源`5f3e813625778623ca313e3eea4203c304be18ad`，release `271e839535a9f2c94f689cd45a3b54f8d156481e6dbb968d127569a64c29f8dd`；Windows/APK来源158ebc2，均为0.1.1+2并已公开下载。旧[M1候选](../plans/flowtrace/alpha-candidates.md)继续保留，opt-in诊断兼容规则不改。
 
-新包位于`outputs/releases/production/20261024-qianji-1447709/`，含wheel、锁、Web ZIP、manifest及hash；Web ZIP25835422B，SHA256 `66225934f6cb756928b274693d40fe94f31265a758e9103c700ce3b12d8908f6`。初始Alpha三端包和旧Web仍在`20261024-alpha-0926681/`，没有覆盖。首次服务器地址设置及安全更新见运行手册。
+新Web及上传/发布manifest在`outputs/releases/production/20261024-client-production-5f3e813/`，Web ZIP25835302B，SHA256 `a677510547fecd5ff2ddd1df4139c5a502ed97ef11ed43baf2efbe26bbfce1fe`；原生包仍由`20261024-clients-0.1.1+2/`复用。前两次生产发行与初始Alpha均未覆盖。升级提示/下载/完整摘要及回退见运行手册，私有控制回执在项目`updates/20261024-client-production-5f3e813/`。
 
 初始生产浏览器取页超时的旧证据保留；本次相同新候选已在隔离同版服务完成真实IAB业务旅程，正式域名另验TLS/API/日志，不把它当作真实生产账本导入证据。用户可在正式Web选择原文件、映射资源并确认105条导入。本轮Android测试取消；Windows完整原生UI、独立外网与整机重启未验。其他已知待办集中见[工作区](workspace.md#当前缺口)，不将本包标为全量P8验收。

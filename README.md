@@ -6,7 +6,7 @@
 
 2026-10-24 Alpha 已按用户授权原生部署至 Linux：[访问流迹](https://home.ruibin-ningh.top:18473/)、[后台](https://home.ruibin-ningh.top:18473/admin/login)。钱迹实际导出兼容修复已上线：原文件105条/3退款已隔离验证，页面显示具体错误及请求ID，生产脱敏日志已开启；真实账本仍由用户预览后确认导入。首次服务器设置、账号、完整导入、启停及备份见[Linux运行手册](deployment/linux/README.md)。
 
-Windows/APK已重建为`0.1.1+2`，新安装默认服务器为`https://home.ruibin-ningh.top:18473`，既有手动地址与资料保持。产物在`outputs/releases/production/20261024-clients-0.1.1+2/`，见[重建记录](AI/logs/2026-10-24_native-client-rebuild.md)；Windows未签名，APK为沿用原签名的ARM64 Debug包，未做设备测试。当前生产Web/后端仍为`20261024-qianji-1447709/`所记版本，本包没有替换生产服务或Web。
+Web/Windows/APK `0.1.1+2`已部署到生产，新安装默认服务器为`https://home.ruibin-ningh.top:18473`，既有手动地址与资料保持。[Windows下载](https://home.ruibin-ningh.top:18473/downloads/0.1.1-2/FlowTrace-0.1.1-2-windows-x64.zip)、[Android ARM64 APK下载](https://home.ruibin-ningh.top:18473/downloads/0.1.1-2/FlowTrace-0.1.1-2-android-arm64-debug.apk)已实取核对hash；Windows未签名、APK为原Debug证书且未做设备测试。部署与回退证据见[本次记录](AI/logs/2026-10-24_client-production-deployment.md)，原生构建见[前包](AI/logs/2026-10-24_native-client-rebuild.md)。后端继续已验1447709，schema不变。
 
 - [完整开发计划](AI/plans/flowtrace/plan.md)：需求、范围、阶段、验收与委派要求。
 - [当前进度](AI/plans/flowtrace/progress.md)：实施状态与下一项任务。
