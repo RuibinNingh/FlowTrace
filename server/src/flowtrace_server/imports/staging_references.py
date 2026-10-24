@@ -9,6 +9,7 @@ import re
 from dataclasses import dataclass
 
 from .parsers import ImportFormatError, _decode_json, decode_json
+from .qianji_export import export_category_name
 from .staging_schemas import STAGE_MAX_SOURCE_BYTES
 
 IDENTIFIER = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
@@ -28,7 +29,7 @@ class SourceReference:
         return self.kind, self.source_kind, self.resource_type, self.source_key
 
 
-def qianji_references(raw, line, *, check_budget):
+def qianji_references(raw, line, *, check_budget, exported=False):
     """Yield names even when a later amount/date/mapping check rejects a row."""
     if not isinstance(raw, dict) or None in raw:
         return
@@ -44,7 +45,10 @@ def qianji_references(raw, line, *, check_budget):
     yield from add("account", raw.get("账户1"))
     if raw.get("类型") in {"转账", "还款"}:
         yield from add("account", raw.get("账户2"))
-    yield from add("category", raw.get("二级分类") or raw.get("分类"))
+    yield from add(
+        "category",
+        export_category_name(raw) if exported else raw.get("二级分类") or raw.get("分类"),
+    )
     tags = raw.get("标签", "")
     if isinstance(tags, str):
         for value in tags.split("#"):

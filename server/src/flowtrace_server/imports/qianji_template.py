@@ -133,7 +133,7 @@ def parse_qianji_csv(content: bytes, mapping: TemplateMapping) -> ParsedTable:
 
 def inspect_mapping_requirements(content: bytes, format_name: str) -> list[dict]:
     """Return only explicit resource names from this caller's bounded upload."""
-    from .qianji_export import export_profile, xlsx_text
+    from .qianji_export import export_category_name, export_profile, xlsx_text
 
     if len(content) > MAX_FILE_BYTES:
         raise ImportFormatError("file_too_large")
@@ -168,7 +168,7 @@ def inspect_mapping_requirements(content: bytes, format_name: str) -> list[dict]
                     }
 
             records = rows()
-        export_profile(headers or ())
+        exported = export_profile(headers or ())
         required = {}
 
         def add(kind, value, row):
@@ -186,7 +186,13 @@ def inspect_mapping_requirements(content: bytes, format_name: str) -> list[dict]
             add("account", record.get("账户1", ""), position)
             if record.get("类型") in {"转账", "还款"}:
                 add("account", record.get("账户2", ""), position)
-            add("category", record.get("二级分类") or record.get("分类", ""), position)
+            add(
+                "category",
+                export_category_name(record)
+                if exported
+                else record.get("二级分类") or record.get("分类", ""),
+                position,
+            )
             for value in record.get("标签", "").split("#"):
                 add("tag", value, position)
             links = record.get("账单图片", "")

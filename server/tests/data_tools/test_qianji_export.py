@@ -222,16 +222,49 @@ def test_export_datetime_cell_seconds_and_mapping_names_are_preserved():
     )
     raw = content([row], false_dimension=True)
     requirements = inspect_mapping_requirements(raw, "qianji_xlsx")
-    assert {r["source_value"] for r in requirements} == {"合成现金", "合成分类"}
+    assert {r["source_value"] for r in requirements} == {"合成现金", "支出 · 合成分类"}
     target = mapping().model_copy(
         update={
             "account_names": {"合成现金": str(uuid4())},
-            "category_names": {"合成分类": str(uuid4())},
+            "category_names": {"支出 · 合成分类": str(uuid4())},
         }
     )
     parsed = parse_qianji_xlsx(raw, target)
     assert not parsed.errors
     assert parsed.document.rows[0].payload["occurred_at"].endswith("12:34:56+08:00")
+
+
+@pytest.mark.parametrize("format_name", ["qianji_csv", "qianji_xlsx"])
+def test_actual_export_same_name_income_expense_categories_have_distinct_mapping_keys(format_name):
+    rows = [
+        record("source", 分类="其他"),
+        record("income", 类型="收入", 分类="其他"),
+        record("refund", 类型="退款", 金额="1.00", 分类="其他", 关联账单="source"),
+    ]
+    raw = content(rows, format_name, false_dimension=True)
+    requirements = inspect_mapping_requirements(raw, format_name)
+    assert {r["source_value"] for r in requirements} == {"收入 · 其他", "支出 · 其他"}
+    expense, income = str(uuid4()), str(uuid4())
+    target = mapping().model_copy(
+        update={
+            "category_names": {"支出 · 其他": expense, "收入 · 其他": income},
+        }
+    )
+    with open_stage_source(
+        raw,
+        format_name,
+        StageMapping(template_mapping=target.model_dump()),
+        check_budget=lambda: None,
+    ) as source:
+        parsed = list(source.rows)
+    assert all(not item.errors for item in parsed)
+    assert [p.row.payload["category_id"] for p in parsed] == [expense, income, expense]
+    assert [p.requirements[-1].source_key for p in parsed] == [
+        "支出 · 其他",
+        "收入 · 其他",
+        "支出 · 其他",
+    ]
+    assert parsed[2].row.payload["bill_type"] == "refund"
 
 
 def test_export_formula_does_not_become_private_error_text():

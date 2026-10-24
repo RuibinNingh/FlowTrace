@@ -104,7 +104,9 @@ def _validated_rows(
         row, errors, requirement_errors, requirements, defined = None, (), (), [], None
         try:
             if qianji:
-                references = qianji_references(raw, line, check_budget=check_budget)
+                references = qianji_references(
+                    raw, line, check_budget=check_budget, exported=export_context is not None
+                )
                 if export_context is not None:
                     defined = export_context.definition(raw)
                     reference = export_context.reference(raw)

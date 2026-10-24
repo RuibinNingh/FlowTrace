@@ -55,6 +55,24 @@ def source_identifier(value):
     return str(uuid5(NAMESPACE_URL, EXPORT_NAMESPACE + ":" + value))
 
 
+def export_category_name(raw):
+    """Export names are scoped by financial kind, unlike legacy V10 names.
+
+    Ordinary income/expense commands require their category kind to match.
+    Refund/reimbursement commands accept an expense category and retain the
+    source-expense classification; they never become an ordinary income.
+    """
+    category = raw.get("二级分类") or raw.get("分类", "")
+    if not category:
+        return ""
+    if not isinstance(category, str) or "\x00" in category:
+        raise ImportFormatError("mapping_source_value_invalid", field="分类")
+    key = ("收入" if raw.get("类型") == "收入" else "支出") + " · " + category
+    if len(key) > 2000:
+        raise ImportFormatError("mapping_source_value_invalid", field="分类")
+    return key
+
+
 @dataclass(frozen=True)
 class _Source:
     line: int
@@ -88,6 +106,7 @@ class ExportContext:
         source = self.sources[raw["ID"]]
         receipt = source.kind in {"退款", "报销入账"}
         public = {key: raw.get(key, "") for key in PUBLIC_COLUMNS}
+        public["分类"], public["二级分类"] = export_category_name(raw), ""
         if receipt:
             public["类型"] = "收入"
         result = convert_public_record(public, "", mapping, line, allow_seconds=True)
