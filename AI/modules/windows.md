@@ -18,6 +18,8 @@
 
 ## 当前证据
 
+2026-10-24普通`0.1.1+2` production Release已重建，来源`158ebc2`，内置`https://home.ruibin-ningh.top:18473`，不传local-test或QA define。ZIP29,479,922B/SHA`c2be922a3055f1e039b5bc5be3331f7700d28352b72656306fc3388ccff8f78e`，25个清单运行文件及manifest经全新解压校验；CRT官方签名保持Valid、应用NotSigned。独立合成数据根实际启动，SQLite schema5及注册的默认正式地址正确；仅关闭本包进程，用户桌面应用保持运行。没有登录/金融写入，不声称完整UI或旧schema3原地升级旅程通过。现行包在`outputs/releases/production/20261024-clients-0.1.1+2/windows/`，命令与回执见[本包记录](../logs/2026-10-24_native-client-rebuild.md)，下文保留此前候选边界。
+
 2026-10-24 M1复用下面普通fda06dae/local-test候选：ZIP 29,202,962B/SHA17a7f6d9…88a63，26个文件CRC/安全集合/逐hash及既有bundle全部一致，CRT三DLL当前签名Valid，应用NotSigned。冻结副本在outputs/releases/alpha/m1-20261024，详见[候选清单](../plans/flowtrace/alpha-candidates.md)。167输入与Web a3d9的144个lib/资源/pub完全一致，仅Web壳不同；旧原生DB header schema3。本包未重建/原生UI操作，不借用当前schema5/group验证；实际组合联机与持久保持留M2。
 
 WindowsRuntime6项、MSVC `/W4 /WX`宿主4项、打包恶意ZIP6组、离线快照恢复最新10组通过；中间junction漏查实际失败后已修，原SQLite SHA保持。QA release101→102真实原生升级保留9007199254740868精确余额、3条outbox/1份冻结正文、完整草稿、原件/设置与合成凭据，第二writer73，所属测试进程已关闭。SQLite探针实际BUSY/FULL不等于填满宿主磁盘；进程关闭重开不等于整机重启。

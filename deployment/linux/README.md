@@ -6,13 +6,13 @@
 
 正式账号为 `flowtrace_owner`。初始密码在目标机 `/root/workspace/apps/flowtrace/bootstrap-credentials.json`（root:0600）；本地交接副本在忽略目录 `work/flowtrace-production/bootstrap-credentials.json`，ACL仅授予当前Windows用户。不要把该文件复制进网站、版本库或wiki。
 
-复用的普通客户端默认指向以前的本机地址，首次使用执行：
+新原生Windows/APK `0.1.1+2`默认已指向生产HTTPS；已有手动保存的服务器地址不覆盖。当前生产Web仍是上一修复包版本，未随原生重建更新，初次或仍指向旧地址时执行：
 
 1. 打开 Web，进入设置的服务器地址，保存 `https://home.ruibin-ningh.top:18473`。
 2. 在账号页登录 `flowtrace_owner`，使用上述私有文件里的密码。
 3. 进入同步页进行同步，再开始自己的记账。不要把临时试用账号 `flowtrace_test` 当作生产账号。
 
-Windows 解压ZIP后运行 `flowtrace.exe`，同样设置该HTTPS地址；它是未签名 Alpha。APK为已冻结ARM64 Android Debug包；本轮按用户要求取消安卓测试，未新构建/安装。已有Web站点数据属于各自origin，改地址不把临时库直接迁入生产。
+Windows将新ZIP解压到独立目录，正常关闭旧版本后运行`FlowTrace/flowtrace.exe`，默认已是生产地址；应用未签名。APK已重建为`0.1.1+2` ARM64 Android Debug，沿用`.dev`包名及原Debug证书，versionCode2可覆盖原code1；不需要卸载清数据。没有执行设备安装/测试。新原生包在本地`outputs/releases/production/20261024-clients-0.1.1+2/`；已有Web站点数据属于各自origin，改地址不把临时库直接迁入生产。
 
 ## 导入钱迹实际导出
 

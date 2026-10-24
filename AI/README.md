@@ -2,10 +2,11 @@
 
 先读根目录 [AGENTS.md](../AGENTS.md)，再按当前任务选择材料。
 
-> **当前恢复入口（2026-10-24）**：钱迹实际导出兼容、105条/3退款、具体错误及脱敏日志修复已按用户授权更新生产，域名 `home.ruibin-ningh.top`；安卓测试取消。先读[当前进度](plans/flowtrace/progress.md)顶部，再读[本包记录](logs/2026-10-24_qianji-export-import-fix.md)、[生产部署模块](modules/production-deployment.md)及[Linux运行手册](../deployment/linux/README.md)。不自动开启新功能包，旧本机测试限制与等待M2为历史。
+> **当前恢复入口（2026-10-24）**：Windows/APK `0.1.1+2`已重建，源代码默认服务器改为`https://home.ruibin-ningh.top:18473`，既有手动地址与资料保留。先读[当前进度](plans/flowtrace/progress.md)及[原生重建记录](logs/2026-10-24_native-client-rebuild.md)。生产仍为已上线的钱迹兼容/日志修复包，见[生产部署模块](modules/production-deployment.md)及[Linux手册](../deployment/linux/README.md)；本包未替换生产Web/后端，安卓设备测试仍取消。
 
 | 当前任务 | 阅读入口 |
 |---|---|
+| 内置生产地址、Windows/APK 0.1.1+2与升级边界 | [原生重建记录](logs/2026-10-24_native-client-rebuild.md)、[客户端](modules/client.md)、[Windows](modules/windows.md) |
 | 钱迹原始导出、105条完整导入、退款与错误定位 | [导出兼容契约](../contracts/qianji-export-v1.md)、[数据工具](modules/data-tools.md)、[本包记录](logs/2026-10-24_qianji-export-import-fix.md) |
 | 当前 Linux 生产部署、验证与 Alpha 收尾 | [当前进度](plans/flowtrace/progress.md)、[生产部署模块](modules/production-deployment.md)、[Linux 运行手册](../deployment/linux/README.md) |
 | 了解流迹目标、后台面板与完整实施顺序 | [完整开发计划](plans/flowtrace/plan.md) |

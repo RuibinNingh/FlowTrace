@@ -9,6 +9,8 @@
 
 ## 当前行为
 
+2026-10-24新原生交付`0.1.1+2`来源`158ebc2`：无已存地址时内置`https://home.ruibin-ningh.top:18473`，不覆盖手动`active_server`或迁移旧资料空间。Windows production Release与Android ARM64 Debug均由普通main重建，214项输入构建前后不变；41项定向测试、两文件范围分析、Windows隔离schema5真实启动和APK版本/签名/内置地址核验通过。APK沿用`.dev`包名和原Debug证书，versionCode升至2；Windows未签名，没有Android设备/完整桌面UI验收。本包不更新生产Web/后端，以下“未重建”是前包快照，最新以[本包记录](../logs/2026-10-24_native-client-rebuild.md)为准。
+
 2026-10-24当前生产Web已更新钱迹完整导入入口、文件交接及错误原因/行字段/请求ID；后端opt-in字段兼容旧Windows/APK。1015项通过/8专用live默认跳过，变更范围9项静态分析无问题；一个未接收的回款历史测试编译错误排除在本次集成之外，详情集中见[工作区缺口](workspace.md#当前缺口)。同版Web真实浏览器以合成105条完成文件选择→完整预览/确认→同步→重开105条且0待传。Windows/APK未重建，安卓测试取消；原文件Linux隔离验证与生产状态见[任务记录](../logs/2026-10-24_qianji-export-import-fix.md)。以下M1/schema快照不是当前Web版本。
 
 2026-10-24 M1冻结[Alpha候选](../plans/flowtrace/alpha-candidates.md)：Windows/Web复用相同业务来源的旧schema3普通包，Android为较早schema3普通debug APK，不新编三端，也不声称三端功能完全一致。APK实际0.1.0+1/com.flowtrace.flowtrace.dev、ARM64/min24/target36，Android Debug签名及v2验证通过，与保留普通包/历史安装/stamp同hash，当前未ADB。下面schema5/1009等为各自源码快照证据，不能自动归给这些候选；新后端组合联调留M2。

@@ -8,6 +8,8 @@
 
 ## 当前部署
 
+2026-10-24原生客户端另已本地交付`0.1.1+2`，Windows/APK内置正式HTTPS地址，来源`158ebc2`；替代用户后续安装使用的旧M1候选，详见[重建记录](../logs/2026-10-24_native-client-rebuild.md)。本包没有替换下表生产程序/Web，也未上传原生包或操作生产数据库；当前服务器版本仍以下表为准。
+
 2026-10-24 按用户明确授权部署到 `192.168.0.145`，项目运维文档放在 `/root/workspace/apps/flowtrace/`。服务器 wiki 实际为 `/root/workspace/wiki/`；只提供背景、稳定约束和项目入口，运行配置及本手册是操作依据。
 
 访问入口为 [FlowTrace](https://home.ruibin-ningh.top:18473/) 和[后台登录](https://home.ruibin-ningh.top:18473/admin/login)。家庭网络 80/443 不适合该入口，使用独立 TCP 18473；BT/UFW 主机规则及 OpenWrt 精确 DNAT/回流已保存。Windows 使用域名、不跳过证书验证得到 200；这是局域网经公网地址回流，未取得独立外网验收。
@@ -47,7 +49,7 @@
 
 ## 发行与验收范围
 
-当前后端来源`144770926da48b8049fd05cee7c81c7e11c3356a`，wheel431617B，SHA256 `f8e69b8ac3300b1ca9f973d2b985cfd54ec0824c1b7651bddc306405ad5b8e77`；Web来源`fcdcda06d3009945f6b9955ccb09ce6a25eccf52`，release `5ba6ba58d80d6c79419d1439101752bbcd0d801ad6a63bdb9cc0fd7eb61f6770`。Web使用schema5，Windows/APK仍复用[M1候选](../plans/flowtrace/alpha-candidates.md)的较早切面，未重建；opt-in诊断字段保持旧客户端响应兼容。
+当前后端来源`144770926da48b8049fd05cee7c81c7e11c3356a`，wheel431617B，SHA256 `f8e69b8ac3300b1ca9f973d2b985cfd54ec0824c1b7651bddc306405ad5b8e77`；Web来源`fcdcda06d3009945f6b9955ccb09ce6a25eccf52`，release `5ba6ba58d80d6c79419d1439101752bbcd0d801ad6a63bdb9cc0fd7eb61f6770`。Web使用schema5；新本地Windows/APK已重建0.1.1+2，旧[M1候选](../plans/flowtrace/alpha-candidates.md)继续保留。opt-in诊断字段保持旧客户端响应兼容，新包不是本轮服务器/Web重新部署。
 
 新包位于`outputs/releases/production/20261024-qianji-1447709/`，含wheel、锁、Web ZIP、manifest及hash；Web ZIP25835422B，SHA256 `66225934f6cb756928b274693d40fe94f31265a758e9103c700ce3b12d8908f6`。初始Alpha三端包和旧Web仍在`20261024-alpha-0926681/`，没有覆盖。首次服务器地址设置及安全更新见运行手册。
 

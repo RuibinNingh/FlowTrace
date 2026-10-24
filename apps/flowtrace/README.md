@@ -2,6 +2,8 @@
 
 当前已接入 Android/Web/Windows 共用工程、本地 SQLite 草稿与迁移、资料空间隔离、邀请码注册和登录、设备会话、主题及手动同步入口。同步页面提供冲突选择和恢复备份核对；算法与真实验收见模块文档。正式记账和完整三平台体验继续按计划开发，本地草稿不会被算为账单。
 
+当前版本`0.1.1+2`。源代码内置服务器为`https://home.ruibin-ningh.top:18473`，仅没有保存`active_server`时使用，手动配置和按服务器隔离的本地资料保持。Windows/APK已重新构建，包含此前钱迹完整导入/错误提示修复；当前生产Web仍为上一包版本，本次未重建部署Web。实际产物及边界见[本包记录](../../AI/logs/2026-10-24_native-client-rebuild.md)。
+
 在本目录运行：
 
 ```powershell
@@ -10,6 +12,7 @@ dart run build_runner build --force-jit
 flutter --no-version-check analyze --no-pub
 flutter --no-version-check test --no-pub
 flutter --no-version-check devices
+flutter --no-version-check build windows --release --no-pub --target lib/main.dart
 flutter --no-version-check build apk --debug --no-pub --target-platform android-arm64
 flutter --no-version-check build web --no-pub --pwa-strategy=none --no-web-resources-cdn
 ```

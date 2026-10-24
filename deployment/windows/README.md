@@ -2,6 +2,8 @@
 
 Windows x64 采用每版本独立目录的 ZIP 分发，不写注册表或系统服务。`Package-FlowTrace.ps1`只包装已构建 bundle，生成逐文件清单、签名状态和 ZIP SHA256；`Expand-FlowTrace.ps1`先校验 SHA256 和目录边界，再解压到全新目录并逐文件复核。脚本不删除旧版本或用户数据，不执行联网自动更新。
 
+当前普通包为`0.1.1+2`、production profile，位于`outputs/releases/production/20261024-clients-0.1.1+2/windows/`。新安装内置服务器`https://home.ruibin-ningh.top:18473`，已保存的手动地址保持。先正常关闭正在使用的旧版本，再将新ZIP解压到独立目录运行`FlowTrace/flowtrace.exe`；不要覆盖运行中的Desktop目录或删除用户资料。该包应用未签名，已验全新隔离根启动/schema5/默认地址，完整UI与真实旧库升级仍按[任务记录](../../AI/logs/2026-10-24_native-client-rebuild.md)边界报告。
+
 打包还从已安装 Visual Studio 的官方 `VC/Redist/MSVC/<version>/x64/Microsoft.VC*.CRT` 复制未修改的 `msvcp140.dll`、`vcruntime140.dll`、`vcruntime140_1.dll`。脚本核对 x64 PE 架构，清单记录版本和摘要，并带 `Microsoft-VC-Runtime-NOTICE.txt`；不搜索系统目录或网络下载 DLL。默认使用该 Visual Studio 的 `Microsoft.VCRedistVersion.default.txt`，可用 `-RuntimeDirectory` 指定同一官方 Redist 树中的已装 x64 CRT 版本。构建输入中的旧 `release-manifest.json`、`BUILD-PROFILE.txt` 被忽略，重新生成本次清单及构建说明。
 
 依据：[Flutter ZIP分发要求](https://docs.flutter.dev/platform-integration/windows/building#building-your-own-zip-file-for-windows)、[Visual Studio 2026可再分发清单](https://learn.microsoft.com/en-us/visualstudio/releases/2026/redistribution)。这些组件沿用适用 Microsoft 许可，不能据本地运行声称已在无开发工具的干净机器验收。
@@ -11,7 +13,7 @@ Windows x64 采用每版本独立目录的 ZIP 分发，不写注册表或系统
 ./deployment/windows/Expand-FlowTrace.ps1 -Package ./outputs/releases/windows/0.1.0-local/FlowTrace-0.1.0+1-windows-x64.zip -Sha256 (Get-FileHash ./outputs/releases/windows/0.1.0-local/FlowTrace-0.1.0+1-windows-x64.zip).Hash -InstallDirectory ./outputs/releases/windows/installed-0.1.0
 ```
 
-`-BuildProfile` 只接受 `production` 或 `local-test`，默认 `production`。该参数声明已编译二进制的 profile，打包器不检测或更改 Dart 编译期常量，调用者必须保留与声明一致的构建命令和回执。普通 Windows Release 的 `production` 使用 HTTPS；本机测试服务需要 HTTP 时，先在获准的 SDK 窗口以普通 `lib/main.dart` 加 `--dart-define=FLOWTRACE_LOCAL_TEST=true` 构建，再包装为 `local-test`。测试 profile 只允许本机/局域网 HTTP，公网地址仍须 HTTPS。服务地址在应用设置中填写，包内不附凭据或私有配置。
+`-BuildProfile` 只接受 `production` 或 `local-test`，默认 `production`。该参数声明已编译二进制的 profile，打包器不检测或更改 Dart 编译期常量，调用者必须保留与声明一致的构建命令和回执。普通 Windows Release 的 `production` 使用 HTTPS；本机测试服务需要 HTTP 时，先在获准的 SDK 窗口以普通 `lib/main.dart` 加 `--dart-define=FLOWTRACE_LOCAL_TEST=true` 构建，再包装为 `local-test`。测试 profile 只允许本机/局域网 HTTP，公网地址仍须 HTTPS。当前默认服务器为上述正式HTTPS地址，可在设置中修改；包内不附凭据或私有配置。
 
 ```powershell
 # Version 和产物需对应同一次实际普通 main 构建；此处版本仅为调用示例。
