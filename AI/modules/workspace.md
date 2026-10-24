@@ -9,6 +9,8 @@
 
 ## 当前行为
 
+2026-10-24用户追加临时试用：同源Web/API已在`http://127.0.0.1:18200`回环运行，M1 a3d9/0016 wheel、新普通测试账号与独立新DB，仅复用原PG55432集群。实际HTTP及页面登录已验，IAB标签保留；私有口令不入库文档。运行资料在work/flowtrace-temp-web/0d1cca687157495999e1dd090fcf1800，详见[任务记录](../logs/2026-10-24_temporary-web.md)。没有常驻Install/自启或生产部署，M2/M3仍待逐包决定。
+
 2026-10-24 M1已完成：[普通候选清单](../plans/flowtrace/alpha-candidates.md)冻结Windows ZIP、Web a3d9目录、Android普通debug APK及唯一补建的后端wheel到outputs/releases/alpha/m1-20261024。Windows/Web业务源一致，APK较早；保留schema3旧客户端，不借当前schema5回归。文件完整性与wheel6项入口检查通过，未实际三端/DB联调或持久部署，下一包M2等待用户决定。
 
 2026-10-24起按用户新要求执行[额度受控Alpha](../plans/flowtrace/alpha-milestones.md)：先保存本地Git恢复点，当前0个活跃子代理；暂停非交付必需的新功能。Windows/Web/APK与独立本地测试服务优先，每包返回结果/额度后等待用户决定。M0只保存与交接，不重新构建、回归或安装服务。

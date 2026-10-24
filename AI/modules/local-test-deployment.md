@@ -8,6 +8,8 @@
 
 实现提供Prepare与显式Install/Start/Stop/Status/Backup/登录任务管理。当前只准备实现与合成/短程验证，未运行Install、真实持久实例、自启注册或整机重启。PG55432、旧18080及QA资料不由本工具复用。初次安装以当前用户ACL保护新Root，固定wheelhouse离线解析，新建SCRAM cluster/DB/身份，版本与数据分离；部分失败保留，不自动重置。
 
+2026-10-24另按用户临时试用要求启动回环18200 Web/API，复用本入口的同源静态包装、M1 Web/wheel和开发venv依赖。仅复用原测试PG集群并新建独立数据库，实际普通账号登录通过，保留进程供用户测试；此临时辅助不是本工具的Install/M3独立cluster、自启或持久验收，详见[临时记录](../logs/2026-10-24_temporary-web.md)。
+
 2026-10-24 M1已冻结可供后续使用的普通Web a3d9和新head0016 wheel；wheel展开目录与开发依赖下的6项ASGI入口/静态字节/响应头检查通过。该短程检查没有独立安装、连接真实DB、监听端口或注册服务；Install/Start/保持验收仍属于待用户决定的M3，详见[候选清单](../plans/flowtrace/alpha-candidates.md)。
 
 新ASGI入口包装普通create_app，API/admin/health仍按原路由；精确白名单提供已seal Web，没有未知业务URL的index回退。启动验证所有资源和worker manifest，每次静态读取复核hash；COOP/COEP、no-store、nosniff及正确WASM/JS MIME避免离线壳混版与错误资源回退。秘密/备份/私有配置位于独立数据根，不进入静态目录。
