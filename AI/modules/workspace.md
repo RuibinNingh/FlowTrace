@@ -9,6 +9,12 @@
 
 ## 当前行为
 
+2026-10-24用户已明确授权Linux生产部署并取消本轮安卓测试。Alpha现已部署至[正式入口](https://home.ruibin-ningh.top:18473/)，三端普通产物及配套wheel/锁/hash清单交付到`outputs/releases/production/20261024-alpha-0926681/`。原生PG17.11、本库真实迁移、专用身份API/worker/systemd、TLS/NAT、精确账务/重放、含附件一致备份/新库隔离恢复及服务受控重启均有实际回执；文档与边界见[生产模块](production-deployment.md)、[运行手册](../../deployment/linux/README.md)、[任务记录](../logs/2026-10-24_production-deployment.md)。本包基线已有`59e246f`本地提交，无Git推送。
+
+### 之前的工作区快照（按原日期保留）
+
+以下“尚未部署/等待M2/暂无Linux”等只说明当时状态，当前恢复以本节顶部及[计划进度](../plans/flowtrace/progress.md)为准。
+
 2026-10-24用户追加临时试用：同源Web/API已在`http://127.0.0.1:18200`回环运行，M1 a3d9/0016 wheel、新普通测试账号与独立新DB，仅复用原PG55432集群。实际HTTP及页面登录已验，IAB标签保留；私有口令不入库文档。运行资料在work/flowtrace-temp-web/0d1cca687157495999e1dd090fcf1800，详见[任务记录](../logs/2026-10-24_temporary-web.md)。没有常驻Install/自启或生产部署，M2/M3仍待逐包决定。
 
 2026-10-24 M1已完成：[普通候选清单](../plans/flowtrace/alpha-candidates.md)冻结Windows ZIP、Web a3d9目录、Android普通debug APK及唯一补建的后端wheel到outputs/releases/alpha/m1-20261024。Windows/Web业务源一致，APK较早；保留schema3旧客户端，不借当前schema5回归。文件完整性与wheel6项入口检查通过，未实际三端/DB联调或持久部署，下一包M2等待用户决定。
@@ -65,6 +71,12 @@ git check-ignore -v -- work/qianji-research/session-completion.json work/tools/j
 检查文件清单与本任务预期一致，资料目录和本机配置被忽略；另外核对 Markdown 链接可解析、实际文档无未替换占位符、任务记录具备有效日期和完整五节。模板内的占位符应保留。
 
 ## 当前缺口
+
+当前Alpha生产验收边界：生产域名浏览器自动化两次取页超时，停止扩大调查，用户Web实际页面登录/同步待试用；客户端首次使用须在设置保存`https://home.ruibin-ningh.top:18473`。真实HTTPS接口和后台表单通过不能替代实际Flutter页面。Windows未签名/完整原生UI仍未验；APK为旧schema3、ARM64/Android Debug签名，本轮测试取消，功能不冒称与其他端全等。独立外网、IPv6与整机重启/断电未验。两项每日timer已配置且手动执行通过；未来到期调度没有等待实测。备份与私有配置归档仍同机，未接FlowTrace异机备份和Guard告警。
+
+完整高级回款/typed重构、周期分期/储蓄、OCR/AI等长期功能保持延期；新group路径PG40001尚未修复，所选旧客户端不消费新group的判断来自构建来源，但没有把新group完整业务联调标为通过。生产普通v1 account/bill写入、原请求重放与pull已实测。所有已知失败场景、旧QA/恢复资料和现场保留，不以本包发布清理。
+
+### 历史接收缺口（逐日期记录，已部署事项由上文覆盖）
 
 M1当前接收边界：Windows未签名且完整原生UI因此前锁屏未验；APK为Android Debug签名/ARM64，虽有普通入口及历史安装证据，功能不冒称与Windows/Web一致。Web41文件冻结，尚未制作ZIP。新后端wheel已含head0016/本地部署入口，220源码与222 RECORD/6项ASGI入口通过，但独立依赖安装、真实数据库、三端登录/精确记账同步/重开保持未验，须M2/M3补必要验证。当前没有新固定在线服务地址；M1不触ADB或原生安全界面。原group40001仍保留，选定旧客户端不消费新group的判断来自来源/字面量证据，不能代替运行联调。
 

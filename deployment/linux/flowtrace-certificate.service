@@ -1,0 +1,11 @@
+[Unit]
+Description=Renew only FlowTrace home TLS certificate when due
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+UMask=0077
+NoNewPrivileges=yes
+TimeoutStartSec=420
+ExecStart=/usr/bin/python3 /opt/flowtrace/operations/renew_home_certificate.py

@@ -8,6 +8,8 @@
 
 ## 当前入口
 
+2026-10-24 Linux生产已独立安装本节M1 wheel：Python3.13.5/35项hash锁定依赖，36包依赖检查通过；原生PG17.11新本库真实迁移0001–0016/check通过，专用非root API/worker由systemd持续运行。HTTPS身份、图片、精确账务与重放、备份/隔离恢复、受控重启均已验，范围与页面限制见[生产部署](production-deployment.md)。以下M1“未部署”及其他运行包描述保留为各日期历史证据。
+
 2026-10-24 M1仅补建现有源码的独立wheel（旧7包最高0006、均无本地部署入口）。新425738B/SHA47bad6e7…d3ba8，来源0926681，含0016与local_test_service；220源码成员逐字节一致、222 RECORD及Python编译通过。实际从wheel展开目录import，以开发venv依赖做6项ASGI live/static/admin-login/404检查通过；无真实DB/独立依赖安装/持久启动，不能称服务部署。冻结位置及客户端旧版边界见[候选清单](../plans/flowtrace/alpha-candidates.md)，M2/M3逐包验。
 
 当前唯一head为`0016_backup_quarantine`：全新b75d库两次升降后原子登记，升级仍52表/metadata=[]、原9trigger/6function及identity/config保持。DDL只扩kind CHECK，遇隔离任务降级拒绝且不删任务；runtime现接隔离执行，facade21/后台-Worker11分次通过。完整jobs新005e库68通过/1图片默认skip、另新2a1图片1/1；旧恢复替身漏before_read的6失败修fixture后绿，未改宽生产。0015清单、0014源释放和0013保护保持，requirements168及非空恢复1为此前证据。旧QA不迁。

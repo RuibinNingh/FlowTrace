@@ -6,6 +6,8 @@
 > - 必跑测试：隔离PostgreSQL下 `python -m pytest tests/jobs`；改管理页面须补真实浏览器验证。
 > - 相关：[服务端](server.md)、[后台](admin.md)、[数据工具](data-tools.md)、[作业契约](../../contracts/jobs.md)、[权限](../../contracts/permissions.md)。
 
+2026-10-24生产已有专用`flowtrace-worker.service`，非root、自动重启且已启用，受控重启后再次active；API不内嵌worker。每日备份由独立systemd oneshot/timer调用现有一致备份CLI，不冒称后台新周期业务任务或完整handler均已验证；见[生产部署](production-deployment.md)。
+
 2026-10-23新增`0009_background_jobs`，建立任务、尝试、worker心跳三表。仅在本轮独立测试库升级，不自动修改旧开发/验收库。`(kind, occurrence_key)`全局唯一，幂等重送要求owner、scope、rule_revision、epoch与冻结payload摘要全部一致；规则修订不构成新的业务期次。
 
 领取使用真实`FOR UPDATE SKIP LOCKED`，普通任务60秒租约；固定import_preview/backup_create为300秒、import_apply/restore_rehearsal/backup_quarantine为900秒，调用方不可任意选择。长DB回调持有job行锁时不能从另一连接续租，最终仍按真实DB时钟核租约；超限效果回滚，不由此承诺20万行性能或已有对应handler。当前backup_verify每20秒续租。旧代不能完成/失败/续租新代；退避5/30/120/600秒、默认5次，人工重试保留ID/occurrence/payload，取消不撤销已成功效果。

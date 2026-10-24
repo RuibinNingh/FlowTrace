@@ -1,0 +1,30 @@
+[Unit]
+After=network-online.target postgresql@17-main.service
+Wants=network-online.target
+Requires=postgresql@17-main.service
+
+[Service]
+Type=simple
+User=flowtrace
+Group=flowtrace
+WorkingDirectory=/opt/flowtrace/current
+EnvironmentFile=/etc/flowtrace/server.env
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/flowtrace
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=120
+MemoryHigh=384M
+MemoryMax=768M
+CPUQuota=100%
+LogRateLimitIntervalSec=30s
+LogRateLimitBurst=500
+ExecStart=/opt/flowtrace/current/.venv/bin/python -m flowtrace_server.worker
+
+[Install]
+WantedBy=multi-user.target

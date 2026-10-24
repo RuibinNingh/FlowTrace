@@ -1,5 +1,7 @@
 # FlowTrace 仓库协作准则
 
+> **当前生产包授权（2026-10-24，Asia/Shanghai）**：用户已明确授权连接 `root@192.168.0.145` 读取服务器 wiki，并将 Alpha 部署至 `home.ruibin-ningh.top`。这覆盖此前本包“不部署生产”的限制；本轮安卓测试已取消，复用已冻结 APK 交付。当前按 Alpha 最终部署收尾，不代表完整钱迹功能或长期 P0–P8 已全部完成。恢复时先读 [当前进度](AI/plans/flowtrace/progress.md)，再读 [生产部署模块](AI/modules/production-deployment.md) 与 [Linux 运行手册](deployment/linux/README.md)。已授权本地恢复提交，未授权 Git 推送。
+
 ## 开始任务前
 
 - 从 [AI/README.md](AI/README.md) 按任务定位文档，先读相关模块的速查头。
@@ -16,14 +18,14 @@
 
 ### 当前 Alpha 里程碑约束（2026-10-24）
 
-用户已将当前优先目标调整为可测试的Windows、Web、Android APK及独立本地测试服务。完整功能计划保留为后续目标，暂停交付非必需的新功能；优先复用已验证的普通构建产物。当前工作包和接收条件见[Alpha里程碑](AI/plans/flowtrace/alpha-milestones.md)。
+当前目标为复用已冻结 Windows、Web、Android APK 完成 Linux 生产部署与 Alpha 最终交付；原独立本地测试服务方案保留为历史。完整功能计划保留为后续目标，暂停交付非必需的新功能。当前工作包和接收条件见[Alpha里程碑](AI/plans/flowtrace/alpha-milestones.md)。
 
-- 已授权建立可恢复的本地提交；不推送、不部署生产。
+- 已授权建立可恢复的本地提交及上述 Linux 生产包；不推送。此前“不部署生产”是已被最新授权覆盖的历史限制。
 - 每批同时最多2个子代理，每位只负责一个明确工作包；不得自行扩大范围。
 - 修改后先做针对性验证，完整回归只在阶段集成执行，已有证据不无故重跑。
 - 必须处理严重账务一致性、安全及启动问题；非阻断项集中记入工作区待办，不阻碍Alpha交付。
 - 仅在工作包完成或关键阻断时更新日志和计划，不反复改写历史记录。
-- 每包完成后返回实际产物、验证、遗留问题和当前额度，再由用户决定是否进入下一包；不得连续开启其他工作包。
+- 当前已授权生产包内连续完成必要验证与收尾；完成后返回实际产物、验证、遗留问题和当前额度，再由用户决定是否进入下一包；不得连续开启其他工作包。
 - 复杂故障最多两轮有证据的定位与修复；仍失败则停止扩大调查，交付阻断和复现步骤。
 - 额度不足时停止扩展，先保存成果与交接；额度接口不可用时明确未知，不估算为充足。
 
@@ -52,6 +54,7 @@
 | `server/src/flowtrace_server/jobs/`、`server/src/flowtrace_server/worker/`、`server/tests/jobs/` | `AI/modules/jobs.md` | 租约/状态核对作业契约；真实业务handler复核当前授权、幂等和同事务效果；管理页面另核对后台模块 |
 | `server/src/flowtrace_server/configuration/`、`server/tests/configuration/`、`server/src/flowtrace_server/admin/configuration_forms.py` | `AI/modules/configuration.md` | 配置只有闭集字段/版本CAS；实际消费者核对身份/附件/jobs；密钥不回显，后台页面需真实浏览器验证 |
 | `deployment/local-test/`、`server/src/flowtrace_server/tools/local_test_service.py`、`tests/e2e/local-test/` | `AI/modules/local-test-deployment.md` | 准备与真实安装/启动/自启分开；独立cluster/端口/资料，核对产物hash、进程身份与受控备份，实际持久性须最终验收 |
+| `deployment/linux/` | `AI/modules/production-deployment.md` | 生产操作按具体授权；核对独立数据库/身份、版本与hash、systemd、HTTPS及网络入口，配置持久化与实际重启/恢复验收分开 |
 | `server/src/flowtrace_server/imports/`、`server/src/flowtrace_server/exports/`、`server/src/flowtrace_server/backups/`、`server/src/flowtrace_server/persistence/maintenance.py`、`server/tests/data_tools/`、`server/tests/backup_retention/`、`tests/e2e/import_restore/`、`apps/flowtrace/lib/data/data_tools/`、`apps/flowtrace/lib/features/data_tools/`、`apps/flowtrace/test/data_tools/` | `AI/modules/data-tools.md` | 金融/附件移转核对同步与附件规则；备份恢复须全新隔离目标与维护窗口证据；客户端回执/本机刷新分开，文件选择与下载需真实平台验证 |
 | `server/src/flowtrace_server/admin/`、`tests/e2e/admin/` | `AI/modules/admin.md` | 访问权限变化核对服务端/权限契约；页面用真实浏览器验证 |
 | `server/src/flowtrace_server/sync/`、`server/tests/sync/`、`tests/e2e/sync/` | `AI/modules/sync.md` | 对照客户端同步模块、共享协议及实际OpenAPI |

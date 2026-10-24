@@ -8,6 +8,8 @@
 
 ## 当前行为
 
+2026-10-24生产在独立Linux发行中实际使用正式owner完成HTTPS后台HTML表单的CSRF登录、概况读取及退出，初始凭据仅root-only交接；未测试/更改其他用户私人账本。新域名浏览器控制连续超时，表单HTTP通过不等于本次布局/完整后台浏览器验收；见[生产部署](production-deployment.md)。
+
 2026-10-23隔离Chrome已分次完成：新2890 fixture在与失败641c相同深度的Windows目录中，真实表单入队5项、独立CLI Worker后完成3项均通过，两个目标全hash/效果回执/controls v3及唯一完成审计一致，其他三个包未变，会话0且精确宿主/Chrome关闭。641c先前在274字符目标路径遇普通Path读取失败，原件已移动但无receipt；字节完整的partial和reserved v2全部保留。隔离文件层补Windows扩展路径后，实际先红后17项文件验证、另27项PG/HTTP及24项路径别名验证分次通过。合成PGDMP仅证明移动/hash，不是真实恢复。
 
 专用“取消尚未领取的隔离”GET/POST现已接线到本人任务的独立确认页，closed表单/CSRF/当前恢复角色与密码；先精确metadata replay，再短预检commit、纯EX全包校验、fresh事务取消及解除本intent预留。只接受pending/attempt0/generation0/manual0且无任何JobAttempt或隔离目录的任务，通用retry/cancel仍拒绝；实际新HTTP/页面验证进行中。部分失败、已领取任务、reconcile、purge与网页恢复不因此开放。

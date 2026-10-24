@@ -1,0 +1,11 @@
+[Unit]
+Description=FlowTrace daily consistent backup
+
+[Timer]
+OnCalendar=*-*-* 03:35:00 Asia/Shanghai
+Persistent=true
+RandomizedDelaySec=300
+Unit=flowtrace-backup.service
+
+[Install]
+WantedBy=timers.target

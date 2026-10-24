@@ -8,6 +8,8 @@
 
 ## 当前行为
 
+2026-10-24在Linux原生PG17首次实际生成生产维护备份并校验，随后以全新测试库/资料目标执行真实隔离恢复：表内容摘要、余额重算、78B原图及缩略图hash、epoch更换/旧会话撤销均通过，生产源身份/数据保持。首包与定时器、私有配置独立归档、同机备份边界见[生产部署](production-deployment.md)。本次测试账号已禁用，验收目标/失败启动日志保留；未操作旧恢复资料。
+
 内部大批发布primitive已通过13专项及新四库完整89/89：202行分3个<=200 event commit，在同一PG事务写入，末项/末chunk失败全回滚，去重和undo保持同一业务结果。0010五张stage/publication表已在新库完成升降升及metadata diff[]；内部持久上传/会话/版本/固定stage ID恢复为27项PG+7DTO同次34通过。parse/preview事务callback与私有分页的65同次目标通过；金融apply/undo、metadata、hold及已发布reauth的14项真实PG通过。四阶段真实Worker现由主库完整jobs62通过/图片独立库1通过分开留证；早期测试专用stage HTTP17通过，此后主代理已将完整17个操作挂入普通main并声明import-stages-v1；大批普通UI/TCP旅程仍继续。旧sync-v1增量遇当前授权可见多chunk publication会resync_required→旧完整snapshot原子安装；普通main已协商group-sync-v1和一次SQLite安装，当前主代理真实TCP丢成功页/离线重开/同token恢复已验，见[共享group实施](../plans/flowtrace/group-sync-implementation.md)与[大批实施分册](../plans/flowtrace/large-import-implementation.md)。
 
 最近完整`server/tests/data_tools/`为**169/169、0skip、107.63秒**：四个全新UUID库在稳定0012上升级，真实dump/verify/隔离恢复与JSON/XLSX跨库目标均执行；全部79 stage目标已包含。首轮共享0012施工中Text错误与四空库DDL回滚证明保留，未drop/reset，详见分册回执。normal实际57 stages/18 publications/16 chunks；本次备份source/restore的stage表为空，不声称非空stage源字节/Publication专属恢复已验。随后Worker和17 HTTP为独立分项，不累加为新完整总数，不从此直接推出外部stage能力已开放。

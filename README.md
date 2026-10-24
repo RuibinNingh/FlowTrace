@@ -4,6 +4,8 @@
 
 项目已进入开发：P0 证据基线与契约落盘，Flutter 客户端和独立 Python 工程正在实现。每阶段的实际验证与未完成事项见当前进度；现有钱迹调研资料保存在本地 `work/` 目录。
 
+2026-10-24 Alpha 已按用户授权原生部署至 Linux：[访问流迹](https://home.ruibin-ningh.top:18473/)、[后台](https://home.ruibin-ningh.top:18473/admin/login)。首次使用需在客户端设置中保存同一HTTPS服务器地址；账号交接、启停、备份与恢复见 [Linux运行手册](deployment/linux/README.md)。三端产物在本地 `outputs/releases/production/20261024-alpha-0926681/`，本轮安卓测试已取消；页面、独立外网及完整功能验收边界见 [生产部署模块](AI/modules/production-deployment.md)。
+
 - [完整开发计划](AI/plans/flowtrace/plan.md)：需求、范围、阶段、验收与委派要求。
 - [当前进度](AI/plans/flowtrace/progress.md)：实施状态与下一项任务。
 - [协作规则](AGENTS.md)：任务开始、文档同步和交付要求。

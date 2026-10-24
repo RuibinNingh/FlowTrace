@@ -2,14 +2,17 @@
 
 先读根目录 [AGENTS.md](../AGENTS.md)，再按当前任务选择材料。
 
+> **当前恢复入口（2026-10-24）**：用户已授权 `root@192.168.0.145` 的 Linux 生产部署，域名 `home.ruibin-ningh.top`，本轮安卓测试取消。先读 [当前进度](plans/flowtrace/progress.md) 顶部，再读 [生产部署模块](modules/production-deployment.md)、[Linux 运行手册](../deployment/linux/README.md) 和 [当前任务记录](logs/2026-10-24_production-deployment.md)。旧本机测试限制与等待 M2 状态是历史，不再阻碍当前已授权包收尾。
+
 | 当前任务 | 阅读入口 |
 |---|---|
+| 当前 Linux 生产部署、验证与 Alpha 收尾 | [当前进度](plans/flowtrace/progress.md)、[生产部署模块](modules/production-deployment.md)、[Linux 运行手册](../deployment/linux/README.md) |
 | 了解流迹目标、后台面板与完整实施顺序 | [完整开发计划](plans/flowtrace/plan.md) |
 | 接续流迹开发计划 | 先读 [当前进度](plans/flowtrace/progress.md)，再按任务进入计划分册 |
-| 当前Alpha范围、额度控制与逐包交付 | [Alpha里程碑](plans/flowtrace/alpha-milestones.md)；每包完成后等待用户决定下一包 |
+| 当前Alpha范围、额度控制与逐包交付 | [Alpha里程碑](plans/flowtrace/alpha-milestones.md)；生产Alpha已部署交付，未验项保留，下一包由用户决定 |
 | 已冻结的Windows/Web/APK及配套后端 | [M1候选清单](plans/flowtrace/alpha-candidates.md)，包含实际产物、hash与验证边界 |
-| 最终Windows/Web/APK交付与本机持久测试部署 | [最终交付分册](plans/flowtrace/delivery-local-test.md) |
-| Windows本机服务的准备、启停、私有配置与精确静态入口 | [本机部署模块](modules/local-test-deployment.md)、[部署工具](../deployment/local-test/windows/README.md) |
+| 最终Windows/Web/APK交付与当前生产部署条件 | [最终交付分册](plans/flowtrace/delivery-local-test.md)，文件名保留原本机测试任务来源 |
+| 旧 Windows 本机测试方案的准备、启停、私有配置与精确静态入口 | [本机部署模块](modules/local-test-deployment.md)、[部署工具](../deployment/local-test/windows/README.md)；不是当前生产恢复入口 |
 | 了解工作区、现有材料与运行能力 | [工作区说明](modules/workspace.md) |
 | 账务/权限/API 契约与固定样本 | [共享契约](modules/contracts.md)、[证据矩阵](plans/flowtrace/evidence-matrix.md) |
 | 平台工具链与页面映射 | [平台验证](plans/flowtrace/platform-validation.md) |

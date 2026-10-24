@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily expiry check for FlowTrace home TLS certificate
+
+[Timer]
+OnCalendar=*-*-* 03:10:00 Asia/Shanghai
+Persistent=true
+RandomizedDelaySec=300
+Unit=flowtrace-certificate.service
+
+[Install]
+WantedBy=timers.target
