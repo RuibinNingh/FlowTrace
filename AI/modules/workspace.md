@@ -9,6 +9,10 @@
 
 ## 当前行为
 
+2026-10-24钱迹兼容修复已交付并更新生产：后端`1447709`、Web`fcdcda0`（release `5ba6ba58…f6770`），新包在`outputs/releases/production/20261024-qianji-1447709/`。用户原始105条/3退款在Linux隔离库完成精确金额/报表、重放和撤销；同版Web以合成105条完成独立IAB文件选择/整批导入/同步/重开。正式HTTPS错误解析与后台脱敏导出通过，诊断OS/运行双开，Python3.13私有采集兼容修复已验；生产没有自动导入原文件。实际命令、失败和范围见[本包记录](../logs/2026-10-24_qianji-export-import-fix.md)。临时QA API/worker与本包SSH转发验证后精确关闭，QA库/原件/证据保留；没有推送。
+
+以下是初始生产部署快照，当前程序/Web版本以上文为准。
+
 2026-10-24用户已明确授权Linux生产部署并取消本轮安卓测试。Alpha现已部署至[正式入口](https://home.ruibin-ningh.top:18473/)，三端普通产物及配套wheel/锁/hash清单交付到`outputs/releases/production/20261024-alpha-0926681/`。原生PG17.11、本库真实迁移、专用身份API/worker/systemd、TLS/NAT、精确账务/重放、含附件一致备份/新库隔离恢复及服务受控重启均有实际回执；文档与边界见[生产模块](production-deployment.md)、[运行手册](../../deployment/linux/README.md)、[任务记录](../logs/2026-10-24_production-deployment.md)。本包基线已有`59e246f`本地提交，无Git推送。
 
 ### 之前的工作区快照（按原日期保留）
@@ -72,9 +76,11 @@ git check-ignore -v -- work/qianji-research/session-completion.json work/tools/j
 
 ## 当前缺口
 
-当前Alpha生产验收边界：生产域名浏览器自动化两次取页超时，停止扩大调查，用户Web实际页面登录/同步待试用；客户端首次使用须在设置保存`https://home.ruibin-ningh.top:18473`。真实HTTPS接口和后台表单通过不能替代实际Flutter页面。Windows未签名/完整原生UI仍未验；APK为旧schema3、ARM64/Android Debug签名，本轮测试取消，功能不冒称与其他端全等。独立外网、IPv6与整机重启/断电未验。两项每日timer已配置且手动执行通过；未来到期调度没有等待实测。备份与私有配置归档仍同机，未接FlowTrace异机备份和Guard告警。
+当前Alpha生产验收边界：初始版本生产浏览器取页超时证据保留；新候选已在隔离同版服务通过独立IAB的105条合成文件导入/同步/重开，正式域名另验TLS/API/脱敏导出，未替用户操作真实生产账本导入。客户端首次使用须保存`https://home.ruibin-ningh.top:18473`，旧Web更新先保存草稿并使用应用内提示，不清空站点资料。Windows未签名/完整原生UI仍未验；APK为旧schema3、ARM64/Android Debug签名，本轮未重建且测试取消。独立外网、IPv6与整机重启/断电未验。两项每日timer已配置且手动执行通过；未来到期调度没有等待实测。备份与私有配置归档仍同机，未接FlowTrace异机备份和Guard告警。
 
-完整高级回款/typed重构、周期分期/储蓄、OCR/AI等长期功能保持延期；新group路径PG40001尚未修复，所选旧客户端不消费新group的判断来自构建来源，但没有把新group完整业务联调标为通过。生产普通v1 account/bill写入、原请求重放与pull已实测。所有已知失败场景、旧QA/恢复资料和现场保留，不以本包发布清理。
+完整高级回款/typed重构、周期分期/储蓄、OCR/AI等长期功能保持延期。并发更新sync_clients时新group曾发生PG40001/503，原场景有界重试修复未落地；新Web实际105条stage发布/刷新已通过，不能据此声称所有并发group场景修复。生产普通v1 account/bill写入、原请求重放与pull有原有实测证据。所有已知失败场景、旧QA/恢复资料和现场保留，不以本包发布清理。
+
+未接收回款历史测试`apps/flowtrace/test/receipts/receipt_history_repository_test.dart:274`调用不存在的`_PauseCommit.intercept`，导致整体analyze/默认全目录测试不能直接全绿；生产实现未改动这个后续功能。阶段集成显式排除这一文件后1015通过/8专用live默认跳过，当前变更范围9项分析无问题；`lib/data/receipts/receipt_history_repository.dart:229`原有风格info另保留。因此不能将这次定向分析表述为整个仓库静态分析通过。
 
 ### 历史接收缺口（逐日期记录，已部署事项由上文覆盖）
 

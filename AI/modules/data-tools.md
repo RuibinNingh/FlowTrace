@@ -8,6 +8,8 @@
 
 ## 当前行为
 
+2026-10-24已上线[钱迹原始导出兼容](../../contracts/qianji-export-v1.md)：识别19列及不可信A1范围，按原文本ID稳定去重，并保留退款与原支出关联；收支同名分类使用分型映射键。普通50行限制保持，页面提供“钱迹原始导出 / 超过50条完整导入”，将当前文件先持久保存再进入已有stage全批预览/确认/发布。用户原文件105条/3退款在全新Linux隔离库导入、逐条金额/报表、重放和撤销通过；同版Web以合成105条完成真实文件选择/导入/同步/重开。具体原因、行/字段、错误码和请求ID已显示，脱敏诊断已在生产开启；真实账本没有自动导入生产。版本、失败现场与验证边界见[本包记录](../logs/2026-10-24_qianji-export-import-fix.md)。以下为此前分项快照。
+
 2026-10-24在Linux原生PG17首次实际生成生产维护备份并校验，随后以全新测试库/资料目标执行真实隔离恢复：表内容摘要、余额重算、78B原图及缩略图hash、epoch更换/旧会话撤销均通过，生产源身份/数据保持。首包与定时器、私有配置独立归档、同机备份边界见[生产部署](production-deployment.md)。本次测试账号已禁用，验收目标/失败启动日志保留；未操作旧恢复资料。
 
 内部大批发布primitive已通过13专项及新四库完整89/89：202行分3个<=200 event commit，在同一PG事务写入，末项/末chunk失败全回滚，去重和undo保持同一业务结果。0010五张stage/publication表已在新库完成升降升及metadata diff[]；内部持久上传/会话/版本/固定stage ID恢复为27项PG+7DTO同次34通过。parse/preview事务callback与私有分页的65同次目标通过；金融apply/undo、metadata、hold及已发布reauth的14项真实PG通过。四阶段真实Worker现由主库完整jobs62通过/图片独立库1通过分开留证；早期测试专用stage HTTP17通过，此后主代理已将完整17个操作挂入普通main并声明import-stages-v1；大批普通UI/TCP旅程仍继续。旧sync-v1增量遇当前授权可见多chunk publication会resync_required→旧完整snapshot原子安装；普通main已协商group-sync-v1和一次SQLite安装，当前主代理真实TCP丢成功页/离线重开/同token恢复已验，见[共享group实施](../plans/flowtrace/group-sync-implementation.md)与[大批实施分册](../plans/flowtrace/large-import-implementation.md)。

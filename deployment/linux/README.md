@@ -1,6 +1,6 @@
 # FlowTrace Linux 生产运行手册
 
-2026-10-24 生产 Alpha：`root@192.168.0.145`，入口 **https://home.ruibin-ningh.top:18473/**，后台 **https://home.ruibin-ningh.top:18473/admin/login**。本目录保存实际部署的配置与续期脚本；没有容器依赖。当前事实、验证和限制见[生产模块](../../AI/modules/production-deployment.md)及[任务记录](../../AI/logs/2026-10-24_production-deployment.md)。
+2026-10-24 生产 Alpha（钱迹兼容修复已更新）：`root@192.168.0.145`，入口 **https://home.ruibin-ningh.top:18473/**，后台 **https://home.ruibin-ningh.top:18473/admin/login**。本目录保存实际部署的配置与续期脚本；没有容器依赖。当前事实、验证和限制见[生产模块](../../AI/modules/production-deployment.md)、[本次更新](../../AI/logs/2026-10-24_qianji-export-import-fix.md)及[首次部署记录](../../AI/logs/2026-10-24_production-deployment.md)。
 
 ## 开始试用
 
@@ -14,14 +14,25 @@
 
 Windows 解压ZIP后运行 `flowtrace.exe`，同样设置该HTTPS地址；它是未签名 Alpha。APK为已冻结ARM64 Android Debug包；本轮按用户要求取消安卓测试，未新构建/安装。已有Web站点数据属于各自origin，改地址不把临时库直接迁入生产。
 
+## 导入钱迹实际导出
+
+当前Web已更新，旧页面若出现更新提示，先保存编辑内容，再按应用内提示完成更新；关掉其他流迹标签后重新打开。不要删除站点存储或清空本地数据库来“更新”，其中可能有离线账单。新页面文件格式为“钱迹 Excel（原始导出 / 公开模板）”。
+
+1. 在“数据迁移与导出”选择原始XLSX和目标账本，进入“钱迹原始导出 / 超过50条完整导入”；普通入口的50条限制保持。
+2. 保留原ID和关联账单列，不拆文件。按需映射账户、分类、标签或原图；收入/支出同名分类分别匹配对应类型。
+3. 等待上传/解析，完成资源映射后生成整批预览；核对105条及错误数，再主动确认正式导入，最后确认已同步。
+4. 出错时提供页面的行/字段、错误码、请求ID或任务ID即可；不必发送完整账单或口令。
+
+本次原文件105条及3条退款在Linux隔离库验证了逐条金额、关联、报表、幂等和撤销；独立浏览器以合成105条验证完整操作和重开。生产没有自动导入用户原文件，仍由用户选择目标资源并确认。
+
 ## 目录与身份
 
 | 内容 | 目标机路径 |
 |---|---|
 | 运维文档与安全回执 | `/root/workspace/apps/flowtrace/` |
-| 后端版本与current软链 | `/opt/flowtrace/releases/20261024-alpha-0926681`、`/opt/flowtrace/current` |
+| 后端版本与current软链 | `/opt/flowtrace/releases/20261024-qianji-1447709`、`/opt/flowtrace/current` |
 | 运维脚本 | `/opt/flowtrace/operations/`，root所有；目录0755、脚本0644，无内嵌密钥 |
-| 公共静态Web | `/www/wwwroot/flowtrace/releases/20261024-alpha-0926681`、`/www/wwwroot/flowtrace/current` |
+| 公共静态Web | `/www/wwwroot/flowtrace/releases/20261024-qianji-fcdcda0`、`/www/wwwroot/flowtrace/current` |
 | 数据与附件 | `/var/lib/flowtrace`，专用用户 `flowtrace` 所有、0700 |
 | 数据库 | 原生PG17 `flowtrace_prod`，本机5432；角色`flowtrace_app`无superuser/createdb/createrole |
 | systemd | `/etc/systemd/system/flowtrace-api.service`、`flowtrace-worker.service`、`flowtrace-backup.*`、`flowtrace-certificate.*` |
@@ -43,6 +54,10 @@ systemctl restart flowtrace-api.service flowtrace-worker.service
 ```
 
 API的绑定是`127.0.0.1:18210`。Nginx只代理精确的`/api/`、`/admin/`、`/health/`，其他请求是固定静态文件，未知404。静态文件不含环境文件、密码和数据库。没有新增API访问日志；journal输出有服务限速，Nginx只写`/www/wwwlogs/flowtrace.error.log` warn级错误。
+
+脱敏诊断现已开启：`FLOWTRACE_DIAGNOSTICS_ENABLED=true`且数据库运行开关为true；两者均允许才收集。私有目录`/var/lib/flowtrace/diagnostics`为0700、JSONL为0600。每条仅固定事件/路由模板/错误码、状态/耗时、行字段/数量及合法UUID；不记录原文件名、备注、正文、图片、密码或token。1MiB×3轮换、含当天7个UTC日期/合计8MiB的既有上限保持，容量可能更早淘汰记录。
+
+后台审计页“导出脱敏诊断”走`/admin/diagnostics/export`，须当前管理员会话；导出再次白名单投影、最多1MiB且不缓存。可用页面请求ID定位`import_parse_checked`；解析成功与HTTP200均不是正式入账证明。Python3.13兼容修复已验证真实HTTP落盘/导出，诊断故障仍不改判业务提交。关闭诊断不会删除旧文件；正式DB审计不受该开关控制。
 
 API/worker enabled；PG的`start.conf=auto`且`postgresql.service` enabled，实例由Debian generator拉起。定时器enabled、Persistent=true。进程重启与脱离终端已验证，整机重启未执行；不可把enabled当作已完成断电验收。
 
@@ -79,8 +94,10 @@ openssl x509 -in /www/server/panel/vhost/letsencrypt/home.ruibin-ningh.top/fullc
 
 ## 升级与退出本次部署
 
+本次修复未加DDL，仍`0016_backup_quarantine`。最终更新前一致备份`ff301d6b-6b9c-4d9e-8d54-c2f8d0fa3b69`已校验，5文件/186993B；旧指针/env/manifest在`/root/workspace/backups/flowtrace-qianji-20261024T130322Z`，最初Alpha材料另在`flowtrace-qianji-20261024T125008Z`。仅切换本项目程序/Web软链、开启诊断并重启API/worker，未改其他站点、路由和证书；旧版本保留，没有实际执行回退。若需程序回退，先停这两项服务、核对备份记录的原指针及schema，再原子恢复匹配指针/env并启动检查，不恢复旧数据库覆盖新增账目。
+
 升级在开发仓库完成明确改动及针对性验证，构建新的独立wheel/客户端，记录源码、锁及hash；上传新版本目录，不覆盖现有版本。先建立一致备份与私有配置备份，在隔离目标验证需要的迁移/恢复，再受控停止FlowTrace服务、显式迁移、原子切换current、启动并验证ready与原身份/账务。没有自动降级数据库；新schema不兼容时不能只换回旧wheel。
 
 回退本次全新服务可停止FlowTrace API/worker及两个timer，保留本库/资料/备份/版本，撤回本次独立Nginx文件并`nginx -t`后reload，再通过宝塔及OpenWrt仅撤回本次18473规则。不要回滚整个主机防火墙快照、停止其他PG/容器或恢复其他项目。以上是预案，本次没有执行删除或回退。
 
-完整限制以[工作区待办](../../AI/modules/workspace.md#当前缺口)为准。生产浏览器自动化取页两次超时，未证明页面登录/同步通过；独立外网、完整Windows原生旅程与整机重启仍待验，本轮Android测试取消。当前交付Alpha，不代表钱迹全部功能完成。
+完整限制以[工作区待办](../../AI/modules/workspace.md#当前缺口)为准。同版隔离服务真实IAB旅程与正式域名TLS/API/日志已分开验证，未执行真实私人账本生产导入；独立外网、完整Windows原生旅程与整机重启仍待验，本轮Android测试取消。当前交付Alpha，不代表钱迹全部功能完成。

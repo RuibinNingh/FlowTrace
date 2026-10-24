@@ -4,7 +4,7 @@
 > - 入口：`deployment/linux/README.md`、该目录的 systemd/Nginx 配置；目标机 `/root/workspace/apps/flowtrace/README.md`。
 > - 不变量：业务进程使用专用非 root 身份；数据库/附件不在静态目录；密钥不入库；恢复只进入全新隔离目标；不改动其他服务。
 > - 必跑测试：独立锁定安装、真实迁移/check、TLS/身份/精确账务与重放、含附件备份/隔离恢复、仅本服务重启保持；浏览器与外网证据分别报告。
-> - 相关：[服务端](server.md)、[后台](admin.md)、[数据工具](data-tools.md)、[Web](web.md)、[任务记录](../logs/2026-10-24_production-deployment.md)、[当前缺口](workspace.md#当前缺口)。
+> - 相关：[服务端](server.md)、[后台](admin.md)、[数据工具](data-tools.md)、[Web](web.md)、[最新更新记录](../logs/2026-10-24_qianji-export-import-fix.md)、[首次部署记录](../logs/2026-10-24_production-deployment.md)、[当前缺口](workspace.md#当前缺口)。
 
 ## 当前部署
 
@@ -17,10 +17,11 @@
 | 系统与数据库 | Debian 13.5、原生 PostgreSQL 17.11；`flowtrace_prod`，专用非超级角色 `flowtrace_app`，仅本机连接 |
 | Python | 3.13.5，发行目录独立 venv，35项锁定依赖按 hash 安装；36个包依赖检查通过 |
 | 服务 | `flowtrace-api.service` / `flowtrace-worker.service`，用户 `flowtrace`，均已启用；API 仅 `127.0.0.1:18210` |
-| 程序 | `/opt/flowtrace/releases/20261024-alpha-0926681`，`/opt/flowtrace/current` 指向本次发行 |
-| 静态 Web | `/www/wwwroot/flowtrace/releases/20261024-alpha-0926681`，`/www/wwwroot/flowtrace/current` 指向本次发行 |
+| 程序 | `/opt/flowtrace/releases/20261024-qianji-1447709`，`/opt/flowtrace/current` 指向本次发行 |
+| 静态 Web | `/www/wwwroot/flowtrace/releases/20261024-qianji-fcdcda0`，`/www/wwwroot/flowtrace/current` 指向本次发行 |
 | 资料 | `/var/lib/flowtrace`，`flowtrace` 所有、0700；独立于 Web、宝塔递归权限目录和旧测试资料 |
 | 私有配置 | `/etc/flowtrace/server.env`、`/root/workspace/apps/flowtrace/bootstrap-credentials.json`，均 root 所有、0600 |
+| 私有诊断 | OS与数据库运行开关均开启；`/var/lib/flowtrace/diagnostics` 0700、JSONL 0600，后台受权脱敏导出 |
 | 反向代理 | `/www/server/panel/vhost/nginx/flowtrace-home-18473.conf`，公共域名 TLS → 回环 API；未知静态路径404 |
 | 备份调度 | `flowtrace-backup.timer`，每天上海时间03:35起、随机延迟不超过5分钟，持久 timer；不自动删除备份 |
 | 证书调度 | `flowtrace-certificate.timer`，每天03:10起检查；只续已有 home DNS 订单，成功后验证并 reload Nginx |
@@ -28,6 +29,12 @@
 原生 PG 集群 `start.conf=auto`，`postgresql.service` enabled；实例通过 Debian generator 启动，`postgresql@17-main` 显示 enabled-runtime。本次没有重启整台主机。
 
 ## 已取得的证据
+
+最新钱迹修复：原文件105条/3退款在独立Linux库完成逐条金额/报表/重放/撤销核对，同版Web以合成105条在独立IAB完成选择文件、完整预览/确认、同步与重开；生产仅执行合成错误解析、正常/后台登录退出和脱敏导出，没有替用户导入真实账本。最终HTTPS ready200，错误请求ID与私有导出一致，敏感哨兵/文件名/凭据不在日志；API/worker active。Python3.13私有日志分派故障已窄修并在真实TCP通过后切换最终版本。
+
+两次受控更新均先一致备份，未加DDL，仅check既有0016。最终切换前备份`ff301d6b-6b9c-4d9e-8d54-c2f8d0fa3b69`，已校验5文件/186993B；程序/Web指针、私有env和旧manifest保存在`/root/workspace/backups/flowtrace-qianji-20261024T130322Z`。最初Alpha回退材料另在`flowtrace-qianji-20261024T125008Z`，旧发行/DB/原件保留；本次没有执行恢复或回退，也没有修改Nginx/防火墙/证书。当前安全回执在项目`updates/20261024-qianji-fcdcda0/`，本地`outputs/validation/qianji-import-fix-20261024/`。
+
+### 首次 Alpha 部署证据（保留范围）
 
 - 全新本库真实迁移0001–0016/check成功，未迁移旧QA库；发行 wheel、35项锁定依赖独立安装成功。
 - 通过真实 HTTPS 检查拒绝未登录/错误 Origin、正常登录、Secure Cookie、78B PNG上传下载、精确 account/bill push及原正文重放；只一条-125分录、余额9875。pull脚本修正多余字段后通过，恢复检查未重复金融写入；合成账号最后禁用，正式owner私人账本未写测试账。
@@ -40,8 +47,8 @@
 
 ## 发行与验收范围
 
-后端 wheel 源自本地提交 `0926681058789da10ae75074bb236c43743dc853`，含 head0016；SHA256 `47bad6e745f87c2fb90e5f6428484436ab94e89de5eb6b0166f1eadcbfdd3ba8`。Web复用 a3d9 release，Windows/APK复用[M1候选](../plans/flowtrace/alpha-candidates.md)，客户端不是当前schema5完整功能切面。
+当前后端来源`144770926da48b8049fd05cee7c81c7e11c3356a`，wheel431617B，SHA256 `f8e69b8ac3300b1ca9f973d2b985cfd54ec0824c1b7651bddc306405ad5b8e77`；Web来源`fcdcda06d3009945f6b9955ccb09ce6a25eccf52`，release `5ba6ba58d80d6c79419d1439101752bbcd0d801ad6a63bdb9cc0fd7eb61f6770`。Web使用schema5，Windows/APK仍复用[M1候选](../plans/flowtrace/alpha-candidates.md)的较早切面，未重建；opt-in诊断字段保持旧客户端响应兼容。
 
-Web静态ZIP为 `outputs/releases/production/20261024-alpha-0926681/FlowTrace-0.1.0+1-web.zip`，25760050B，SHA256 `3246b8c72107161ae1c35f58a9b41c629b89450c1ccdb39f613649a65f331502`。客户端首次使用须在设置保存生产服务器地址，具体见运行手册；没有修改既有冻结包。
+新包位于`outputs/releases/production/20261024-qianji-1447709/`，含wheel、锁、Web ZIP、manifest及hash；Web ZIP25835422B，SHA256 `66225934f6cb756928b274693d40fe94f31265a758e9103c700ce3b12d8908f6`。初始Alpha三端包和旧Web仍在`20261024-alpha-0926681/`，没有覆盖。首次服务器地址设置及安全更新见运行手册。
 
-生产浏览器自动化连续两次取页超时，按额度约束停止扩大调查；页面登录/同步仍待用户试用，未冒称通过。本轮Android测试按用户要求取消；Windows完整原生UI、独立外网与整机重启未验。完整钱迹功能和其他已知待办统一见[工作区](workspace.md#当前缺口)，不将本包标为全量P8验收。
+初始生产浏览器取页超时的旧证据保留；本次相同新候选已在隔离同版服务完成真实IAB业务旅程，正式域名另验TLS/API/日志，不把它当作真实生产账本导入证据。用户可在正式Web选择原文件、映射资源并确认105条导入。本轮Android测试取消；Windows完整原生UI、独立外网与整机重启未验。其他已知待办集中见[工作区](workspace.md#当前缺口)，不将本包标为全量P8验收。

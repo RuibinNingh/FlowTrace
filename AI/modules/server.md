@@ -8,6 +8,8 @@
 
 ## 当前入口
 
+2026-10-24钱迹修复包已在Linux生产更新，后端来源`1447709`、wheel431617B，Python3.13私有诊断分派已实际TCP验证。新适配器保留105条/3退款、收支分型分类及旧V10/50行语义；未加迁移，head仍0016。阶段集成175项通过，分类窄修84项、最终诊断30项分次通过；真实原文件Linux隔离导入/精确金额/重放/撤销与生产HTTPS/后台脱敏导出通过。版本、备份与测试边界见[生产模块](production-deployment.md)和[本包记录](../logs/2026-10-24_qianji-export-import-fix.md)。下文M1安装是首次部署快照。
+
 2026-10-24 Linux生产已独立安装本节M1 wheel：Python3.13.5/35项hash锁定依赖，36包依赖检查通过；原生PG17.11新本库真实迁移0001–0016/check通过，专用非root API/worker由systemd持续运行。HTTPS身份、图片、精确账务与重放、备份/隔离恢复、受控重启均已验，范围与页面限制见[生产部署](production-deployment.md)。以下M1“未部署”及其他运行包描述保留为各日期历史证据。
 
 2026-10-24 M1仅补建现有源码的独立wheel（旧7包最高0006、均无本地部署入口）。新425738B/SHA47bad6e7…d3ba8，来源0926681，含0016与local_test_service；220源码成员逐字节一致、222 RECORD及Python编译通过。实际从wheel展开目录import，以开发venv依赖做6项ASGI live/static/admin-login/404检查通过；无真实DB/独立依赖安装/持久启动，不能称服务部署。冻结位置及客户端旧版边界见[候选清单](../plans/flowtrace/alpha-candidates.md)，M2/M3逐包验。

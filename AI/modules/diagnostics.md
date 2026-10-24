@@ -8,6 +8,10 @@
 
 ## 当前记录与容量
 
+2026-10-24生产已将OS硬开关与数据库运行开关同时开启，私有目录/文件0700/0600；实际HTTPS错误解析的请求ID与后台导出一致，敏感哨兵、文件名、密码和令牌均未进入导出。新增`import_parse_checked`记录固定格式、错误码、物理行/字段、数量、stage/request UUID；HTTP 200中的解析失败也记录，异步解析可能早于外层事务commit，不能当作金融提交回执。客户端数据工具纳入原有有界诊断环，界面显示具体安全原因和关联ID。
+
+锁定FastAPI的惰性`_IncludedRouter`现在按注册路由递归展开，仅记录合法路由模板。Python3.13将标准Handler改为`with self.lock`，原先刻意无全局I/O锁的路由handler因此无法落私有文件；现显式实现`handle`的过滤/emit分派，保持每policy/store各自锁，避免慢探针阻塞其他应用。Windows定向30项及Linux3.13真实Uvicorn请求/私有导出通过，原轮换/容量规则不变；修复、第一次失败及生产回执见[本包记录](../logs/2026-10-24_qianji-export-import-fix.md)。下文保留原有分次测试范围。
+
 2026-10-23新增`diagnostics/policy.py`：`build_diagnostic_policy(settings)`持每应用独立策略与惰性私有store，`bind_diagnostics(policy)`以ContextVar限定HTTP/worker/CLI作用域；无上下文时不收集私有文件。全局日志只持stderr与一个无目录的路由handler，不因第二个create_app替换第一个应用的文件目录。每个policy独立日志阈值和close，关闭一个不影响另一个；普通新thread默认无policy，AnyIO线程池复制上下文，其他线程须受信调用方显式copy_context。root已接应用/请求/worker/cleanup CLI作用域及async事件线程池；真实PG/HTTP后诊断字段已标effective，配置页面为七项已接、三项待接。
 
 OS `diagnostics_enabled=False`为硬关闭，既不查DB也不建诊断目录。OS允许时，每次文件锁取得后的guard通过独立NullPool/autocommit固定head SELECT读取最新已提交开关；完整十键快照无效、DB不可达、读取超时、探针忙或缺配置均仅抑制私有记录。每policy最多一个非阻塞探针，忙就丢辅助记录，不排队占业务pool；探针不借业务Session、不装maintenance事务围栏、不取User/head行锁，默认只读，statement100ms/lock50ms/connect1s。连接/DNS的OS行为不宣称绝对墙钟硬截止。业务事务未提交的新值不作为已生效值。

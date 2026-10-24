@@ -1,6 +1,6 @@
 # 最终产物与部署交付
 
-> **当前授权与状态（2026-10-24，Asia/Shanghai）**：用户已授权的Linux生产Alpha现已部署交付；本轮安卓测试取消。HTTPS API、含附件备份/全新隔离恢复、API/worker受控重启保持通过，产物/hash/手册及本地提交已保存。生产浏览器两次取页超时未验，独立外网与整机重启等边界保留，不称全量验收完成。此前“不部署生产”与等待M2为历史，Git推送仍未授权。
+> **当前授权与状态（2026-10-24，Asia/Shanghai）**：Linux生产Alpha及钱迹兼容修复包已交付，新Web/后端支持原文件105条/3退款、具体错误及已开启的脱敏日志；原文件Linux隔离、同版合成105条真实IAB与生产HTTPS/私有导出分开通过。Windows/APK复用，本轮安卓测试取消；独立外网与整机重启等边界保留，不称全量功能验收。最新回执见[本包记录](../../logs/2026-10-24_qianji-export-import-fix.md)，无Git推送。
 > 恢复入口：[progress.md](progress.md) 顶部、[当前任务记录](../../logs/2026-10-24_production-deployment.md)、[生产部署模块](../../modules/production-deployment.md)与[Linux 运行手册](../../../deployment/linux/README.md)。文件名保留本机测试任务来源；旧方案见下文历史节。当前范围按[Alpha里程碑](alpha-milestones.md)，完整钱迹功能仍是后续目标。
 
 ## 用户要求
@@ -15,13 +15,15 @@
 | 产物 | 交付与检查 |
 |---|---|
 | Windows x64 | 复用 M1 普通0.1.0+1/local-test/qa=false ZIP，提供实际路径/hash/来源与解压使用说明；保留签名和既有原生验收边界，不补称本轮已重做桌面旅程 |
-| Web | 复用普通 a3d9 完整静态产物，提供静态包/hash与当前域名入口；实际生产浏览器验证与旧离线壳专项分开记录 |
+| Web | 当前使用钱迹修复fcdcda0完整静态产物，实际41文件/ZIP/hash；同版隔离IAB完整105条旅程与正式域名TLS/API分开记录，旧a3d9保留 |
 | Android APK | 复用 M1 较早普通debug APK，提供包名/版本/ABI/hash及测试签名身份；本轮取消设备测试，明确旧功能切面与延期安卓专属能力 |
 | 配套资料 | 实际版本/来源、SHA256清单、安装/访问/升级与限制；独立后端wheel和35项生产依赖锁、Linux原生部署/启停/备份恢复资料 |
 
 产物使用新的版本目录，保留旧QA候选/失败证据；最后校验前不覆盖同名已封装版本。来源以实际提交或既有源码快照/资源摘要记录，不为早期产物补造commit。签名证书按实际可用身份记录，测试签名不称为正式发布签名。最终包不得混入本地数据库、备份、凭据、原始诊断或私有配置。所有Flutter命令继续全团队串行。
 
 ## 当前 Linux 生产部署
+
+当前钱迹修复后端1447709/Web fcdcda0及私有脱敏日志已生效，head0016无新DDL；产物/manifest/hash在`outputs/releases/production/20261024-qianji-1447709/`。原文件105条/3退款逐条金额/关联/报表、重放和撤销在Linux隔离库完成，生产未自动导入原账本。最新切换前一致备份及程序/env指针已保留，详情见生产模块和本包记录。下文首次部署的三端初始目录及浏览器超时为旧接收快照。
 
 目标为 `192.168.0.145` 的 Debian 13.5，使用原生 PostgreSQL 17.11、新 `flowtrace_prod`/`flowtrace_app`，以及独立 Python 3.13.5 venv 与35项锁定依赖。真实迁移0001–0016/check已通过；`flowtrace-api`、`flowtrace-worker` systemd已启用并active，后端仅监听回环18210。
 

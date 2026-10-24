@@ -9,6 +9,8 @@
 
 ## 当前行为
 
+2026-10-24新增[钱迹原始导出v1](../../contracts/qianji-export-v1.md)：19列识别、稳定来源ID、收支分类分型和明确退款关联，复用stage而不扩大普通导入上限。parse/rows以`include_diagnostics=true`显式返回可选请求ID；未选择时旧响应键集合保持。当前唯一OpenAPI仍72路径/176schema/79操作，SHA256为`35c882b686e73a70228755d4aea8c590343d719bc5ffc04f12e2f01963964bc7`；契约21项及113个subtest通过。以下导出hash为对应旧快照。
+
 2026-10-23普通主应用先接[group-sync-v1](../../contracts/group-sync-v1.md)六操作，现再接[大文件暂存](../../contracts/import-stages-v1.md)17操作及`import-stages-v1`能力，含完整清单、原图双映射与显式续接/放弃源。当前唯一导出72路径/176schema/79操作，SHA256为`7e9287a91ffae00d05a81262c5ecd995c4d580d5fea3d9aa2d92d05f9799dd0b`，合同21/21通过（0.465秒）。此前55/151/62与50/139/56是历史快照；P0候选及原raw/hash黄金保持。main HTTP首包86通过/1新夹具错误预期后单项1通过，真实TCP/浏览器及最终产物另验。
 
 P5新增`/api/v1/data-tools`八条实际路由和导入/导出DTO，mapping_requirements及attachment_sources接线后唯一OpenAPI50路径/139schema/56操作，合同21通过；旧42/114/48和50/138/56分别为lookup/前一parse快照。权限契约新增本人不可变导入操作元数据历史，当前资源写权仍独立复核；正式schema/跨端验证见[数据工具](data-tools.md)。大文件任务、完整后台与P4高级前置仍未全部实现，原P0样本/raw哈希不改。

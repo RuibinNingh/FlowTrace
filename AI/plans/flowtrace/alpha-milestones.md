@@ -1,6 +1,6 @@
 # FlowTrace Alpha：额度受控里程碑
 
-> 状态：M0/M1完成；Linux生产Alpha已部署交付，浏览器/独立外网等未验明确保留，不代表全量功能完成。日期：2026-10-24，Asia/Shanghai。
+> 状态：M0/M1及Linux生产Alpha已交付；钱迹原始导出105条/3退款、具体错误及脱敏日志修复已验证并更新生产。独立外网等未验保留，不代表全量功能完成。日期：2026-10-24，Asia/Shanghai。
 > 最新授权：连接 `root@192.168.0.145` 读取服务器 wiki，并以 `home.ruibin-ningh.top` 生产部署；取消本轮安卓测试，复用已冻结 Windows/Web/APK 直接完成 Alpha 最终部署交付。此前“不部署生产”是历史限制；Git 推送仍未授权。
 > 恢复入口：先读 [progress.md](progress.md) 顶部，再读[生产任务记录](../../logs/2026-10-24_production-deployment.md)、[生产部署模块](../../modules/production-deployment.md)与[Linux 运行手册](../../../deployment/linux/README.md)。完整长期范围保留在[plan.md](plan.md)，Alpha 不等于全部钱迹功能完成。
 
@@ -19,10 +19,13 @@
 | M2 交付阻断与封包 | 三产物、SHA256清单和安装说明 | 只修严重账务一致性/安全/启动阻断；针对性验证，非阻断转待办 | 原独立接收顺序为历史；必要封包与验证并入当前生产包 |
 | M3 本地持久测试服务 | 独立wheel/cluster/数据、固定Web/API/后台地址、启停维护说明 | 原计划仅本机测试，不碰旧集群资料 | 原 Windows 本机方案保留为历史；本轮服务目标由 Linux 生产授权替代 |
 | 当前生产包 | M1 Windows/APK、a3d9 Web、Linux原生生产服务及维护资料 | 核对产物/身份、HTTPS、API、备份隔离恢复与受控重启；页面/外网独立记录 | 已部署交付；API/恢复/重启通过，浏览器连续取页超时未验；无安卓操作/新功能/推送 |
+| 钱迹兼容修复包 | 实际导出105条/3退款、收支分型分类、具体错误/脱敏日志及新Web/后端 | 原文件Linux隔离金额/报表/重放/撤销，同版合成105条真实IAB，正式HTTPS及私有导出；保留普通50条上限 | 已测试并更新生产，后端1447709/Web fcdcda0；[本包记录](../../logs/2026-10-24_qianji-export-import-fix.md)，未自动导入生产原账本/未重建Windows或APK |
 
 原 M1–M3 顺序已按最新授权调整，当前生产包内连续完成必要验证与收尾，无需重新等待 M2 决定；完成后不自动开启其他包。最终交付细则见[交付分册](delivery-local-test.md)，不再要求先完成全部产品功能或所有平台边缘旅程。
 
 ## 当前生产接收位置
+
+最新接收为上述钱迹修复包：105条/3退款原文件隔离验证与同版Web真实操作通过，生产诊断双开，Python3.13私有采集修复已实际TCP/后台导出验证。新产物在`outputs/releases/production/20261024-qianji-1447709/`；本包完成后停止扩展，用户确认实际预览再导入私人账本。以下是首次部署接收事实，不把旧a3d9/浏览器超时当作当前新Web版本。
 
 Debian 13.5 原生 PostgreSQL 17.11、新 `flowtrace_prod`/`flowtrace_app`、Python 3.13.5 venv/35锁定依赖、迁移0001–0016/check已验证；API/worker systemd已启用并active，回环18210，Nginx的域名HTTPS入口使用18473。证书精确续期到2027-01-22；BT/UFW与OpenWrt专用TCP18473规则已保存，尚不等同整机重启验收。正式owner凭据仅在root-only私有文件，未入仓库。
 
