@@ -134,6 +134,17 @@ class StoreHandler(logging.Handler):
         # slow policy probe block unrelated applications' collection.
         self.lock = None
 
+    def handle(self, record: logging.LogRecord):
+        # Python 3.13's base Handler.handle uses ``with self.lock``. This
+        # router intentionally has no process-wide I/O lock: policies and
+        # stores own their locks, so one slow application cannot block another.
+        accepted = self.filter(record)
+        if isinstance(accepted, logging.LogRecord):
+            record = accepted
+        if accepted:
+            self.emit(record)
+        return accepted
+
     def emit(self, record: logging.LogRecord) -> None:
         collect(safe_payload(getattr(record, "safe_fields", {})), level=record.levelno)
 

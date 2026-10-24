@@ -6,7 +6,7 @@ import pytest
 from pydantic import ValidationError
 
 from flowtrace_server.config import Settings
-from flowtrace_server.diagnostics import SAFE_ROUTES, safe_payload
+from flowtrace_server.diagnostics import SAFE_ROUTES, StoreHandler, safe_payload
 from flowtrace_server.imports.http_schemas import ParseOptions
 from flowtrace_server.main import create_app
 
@@ -79,3 +79,18 @@ def test_diagnostic_request_opt_in_is_strict_and_disabled_for_legacy_clients():
     assert ParseOptions(include_diagnostics=True).include_diagnostics is True
     with pytest.raises(ValidationError):
         ParseOptions(include_diagnostics="true")
+
+
+def test_store_router_handles_records_without_python_version_dependent_global_lock(monkeypatch):
+    import logging
+
+    handler = StoreHandler()
+    emitted = []
+    monkeypatch.setattr(handler, "emit", emitted.append)
+    record = logging.makeLogRecord({"msg": "safe"})
+    assert handler.lock is None
+    assert handler.handle(record)
+    assert emitted == [record]
+    handler.addFilter(lambda current: False)
+    assert not handler.handle(record)
+    assert emitted == [record]
