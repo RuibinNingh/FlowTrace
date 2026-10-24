@@ -32,7 +32,10 @@ void main() {
     await tester.tap(find.byKey(const Key('save-server')));
     await tester.pumpAndSettle();
     expect(find.textContaining('不包含账号'), findsOneWidget);
-    expect(controller.space!.server.toString(), 'http://127.0.0.1:18080');
+    expect(
+      controller.space!.server.toString(),
+      'https://home.ruibin-ningh.top:18473',
+    );
     await tester.pumpWidget(const SizedBox.shrink());
     controller.dispose();
     await database.close();

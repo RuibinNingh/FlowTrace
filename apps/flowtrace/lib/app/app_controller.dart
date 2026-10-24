@@ -332,7 +332,7 @@ final class AppController extends ChangeNotifier {
     try {
       final address =
           await repository.readSetting('active_server') ??
-          'http://127.0.0.1:18080';
+          'https://home.ruibin-ningh.top:18473';
       space = DataSpace.provisional(ServerAddress.parse(address));
       await repository.registerSpace(space!);
       await preferences.initialize();

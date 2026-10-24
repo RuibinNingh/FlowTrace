@@ -1,7 +1,7 @@
 name: flowtrace
 description: 流迹：独立部署、离线优先的跨平台记账客户端。
 publish_to: none
-version: 0.1.0+1
+version: 0.1.1+2
 
 environment:
   sdk: '>=3.10.1 <4.0.0'
