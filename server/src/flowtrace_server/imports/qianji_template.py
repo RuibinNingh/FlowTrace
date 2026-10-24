@@ -98,9 +98,11 @@ def _mapped(name: str, mapping: dict, field: str):
     return mapping[name]
 
 
-def _time(text, zone):
+def _time(text, zone, *, allow_seconds=False):
     text = text.replace("/", "-")
     formats = ("%Y-%m-%d %H:%M", "%Y-%m-%d")
+    if allow_seconds:
+        formats = (*formats, "%Y-%m-%d %H:%M:%S")
     for fmt in formats:
         try:
             stamp = datetime.strptime(text, fmt)
@@ -117,24 +119,22 @@ def _time(text, zone):
 
 
 def parse_qianji_csv(content: bytes, mapping: TemplateMapping) -> ParsedTable:
+    from .qianji_export import export_profile
+
     if len(content) > MAX_FILE_BYTES:
         raise ImportFormatError("file_too_large")
     try:
         reader = csv.DictReader(io.StringIO(content.decode("utf-8-sig"), newline=""), strict=True)
-        if (
-            reader.fieldnames is None
-            or not {"时间", "类型", "金额"}.issubset(reader.fieldnames)
-            or len(reader.fieldnames) != len(set(reader.fieldnames))
-            or not set(reader.fieldnames).issubset(PUBLIC_COLUMNS)
-        ):
-            raise ImportFormatError("unsupported_qianji_columns", row=1)
-        return _convert(reader, hashlib.sha256(content).hexdigest(), mapping)
+        exported = export_profile(reader.fieldnames or ())
+        return _convert_profile(reader, hashlib.sha256(content).hexdigest(), mapping, exported)
     except (UnicodeError, csv.Error):
         raise ImportFormatError("invalid_csv") from None
 
 
 def inspect_mapping_requirements(content: bytes, format_name: str) -> list[dict]:
     """Return only explicit resource names from this caller's bounded upload."""
+    from .qianji_export import export_profile, xlsx_text
+
     if len(content) > MAX_FILE_BYTES:
         raise ImportFormatError("file_too_large")
     book = None
@@ -151,31 +151,24 @@ def inspect_mapping_requirements(content: bytes, format_name: str) -> list[dict]
             if len(book.sheetnames) != 1:
                 raise ImportFormatError("one_template_sheet_required")
             sheet = book.active
-            if sheet.max_column > len(PUBLIC_COLUMNS) or sheet.max_row > 51:
-                raise ImportFormatError("workbook_dimensions_invalid")
+            sheet.reset_dimensions()
             cells = sheet.iter_rows()
             headers = tuple(cell.value for cell in next(cells, ()))
+            exported = export_profile(headers)
 
             def rows():
                 for row in cells:
-                    if any(cell.data_type == "f" for cell in row):
+                    if len(row) > len(headers) or any(cell.data_type == "f" for cell in row):
                         raise ImportFormatError("workbook_formula_not_allowed")
-                    yield dict(
-                        zip(
-                            headers,
-                            ("" if cell.value is None else str(cell.value) for cell in row),
-                            strict=True,
-                        )
-                    )
+                    yield {
+                        header: xlsx_text(header, row[index], export=exported)
+                        if index < len(row)
+                        else ""
+                        for index, header in enumerate(headers)
+                    }
 
             records = rows()
-        if (
-            not headers
-            or not {"时间", "类型", "金额"}.issubset(headers)
-            or len(headers) != len(set(headers))
-            or not set(headers).issubset(PUBLIC_COLUMNS)
-        ):
-            raise ImportFormatError("unsupported_qianji_columns", row=1)
+        export_profile(headers or ())
         required = {}
 
         def add(kind, value, row):
@@ -220,49 +213,38 @@ def inspect_mapping_requirements(content: bytes, format_name: str) -> list[dict]
 
 def parse_qianji_xlsx(content: bytes, mapping: TemplateMapping) -> ParsedTable:
     from .parsers import secure_workbook
+    from .qianji_export import export_profile, xlsx_text
 
     book = secure_workbook(content)
     try:
         if len(book.sheetnames) != 1:
             raise ImportFormatError("one_template_sheet_required")
         sheet = book.active
-        if sheet.max_column > len(PUBLIC_COLUMNS) or sheet.max_row > 51:
-            raise ImportFormatError("workbook_dimensions_invalid")
+        sheet.reset_dimensions()
         records = sheet.iter_rows()
         headers = tuple(cell.value for cell in next(records, ()))
-        if (
-            not {"时间", "类型", "金额"}.issubset(headers)
-            or len(headers) != len(set(headers))
-            or not set(headers).issubset(PUBLIC_COLUMNS)
-        ):
-            raise ImportFormatError("unsupported_qianji_columns", row=1)
+        exported = export_profile(headers)
 
         def rows():
             for cells in records:
-                if any(cell.data_type == "f" for cell in cells):
+                if len(cells) > len(headers) or any(cell.data_type == "f" for cell in cells):
                     yield {None: None}
                     continue
                 row = {}
-                for header, cell in zip(headers, cells, strict=True):
-                    value = cell.value
-                    if header == "时间" and isinstance(value, datetime):
-                        if value.second or value.microsecond or value.tzinfo:
-                            value = "unsupported_excel_timestamp"
-                        else:
-                            value = value.strftime("%Y-%m-%d %H:%M")
-                    elif value is None:
-                        value = ""
-                    elif not isinstance(value, str):
-                        value = str(value)
-                    row[header] = value
+                for index, header in enumerate(headers):
+                    row[header] = (
+                        xlsx_text(header, cells[index], export=exported)
+                        if index < len(cells)
+                        else ""
+                    )
                 yield row
 
-        return _convert(rows(), hashlib.sha256(content).hexdigest(), mapping)
+        return _convert_profile(rows(), hashlib.sha256(content).hexdigest(), mapping, exported)
     finally:
         book.close()
 
 
-def convert_public_record(row, file_digest, mapping, position):
+def convert_public_record(row, file_digest, mapping, position, *, allow_seconds=False):
     """Convert one public V10 record at its actual original source line."""
     if None in row or any(value is None for value in row.values()):
         raise ImportFormatError("invalid_columns")
@@ -290,7 +272,7 @@ def convert_public_record(row, file_digest, mapping, position):
         "currency_scale": mapping.currency_scale,
         "amount_minor": str(principal),
     }
-    day, instant = _time(row["时间"], mapping.timezone)
+    day, instant = _time(row["时间"], mapping.timezone, allow_seconds=allow_seconds)
     flags = row.get("账单标记", "")
     payload = {
         "bill_type": kind,
@@ -346,14 +328,32 @@ def convert_public_record(row, file_digest, mapping, position):
     )
 
 
-def _convert(records, file_digest, mapping):
+def _convert_profile(records, file_digest, mapping, exported):
+    if not exported:
+        return _convert(records, file_digest, mapping)
+    from .qianji_export import prepare_export
+
+    bounded = []
+    for position, row in enumerate(records, 2):
+        if position > 51:
+            raise ImportFormatError("too_many_rows", row=position)
+        bounded.append(row)
+    context = prepare_export(enumerate(bounded, 2), mapping, max_rows=50, check_budget=lambda: None)
+    return _convert(bounded, file_digest, mapping, context=context)
+
+
+def _convert(records, file_digest, mapping, *, context=None):
     rows, errors = [], []
     for position, row in enumerate(records, 2):
         if position > 51:
             errors.append({"row": position, "field": None, "code": "too_many_rows"})
             break
         try:
-            rows.append(convert_public_record(row, file_digest, mapping, position))
+            rows.append(
+                context.convert(row, mapping, position)
+                if context is not None
+                else convert_public_record(row, file_digest, mapping, position)
+            )
         except ImportFormatError as error:
             errors.append({"row": position, "field": error.field, "code": error.code})
         except (ValidationError, ValueError):
@@ -364,7 +364,11 @@ def _convert(records, file_digest, mapping):
         return ParsedTable(None, ({"row": None, "field": None, "code": "empty_import"},))
     return ParsedTable(
         ImportDocument(
-            format="flowtrace-data-v1", source_namespace="qianji-public-template-v10", rows=rows
+            format="flowtrace-data-v1",
+            source_namespace="qianji-export-v1"
+            if context is not None
+            else "qianji-public-template-v10",
+            rows=rows,
         ),
         (),
     )

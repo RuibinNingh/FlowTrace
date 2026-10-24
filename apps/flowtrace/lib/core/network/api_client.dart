@@ -152,7 +152,11 @@ final class ApiClient {
       await for (final chunk in response.stream.timeout(timeout)) {
         if (bytes.length + chunk.length > limit) {
           if (!successful) {
-            throw ApiFailure.server('request_failed', response.statusCode);
+            throw ApiFailure.server(
+              'request_failed',
+              response.statusCode,
+              requestId: requestId,
+            );
           }
           throw const ApiFailure('response_too_large', '服务器响应超出允许大小，未保存为完整文件。');
         }
@@ -173,6 +177,11 @@ final class ApiClient {
         throw ApiFailure.server(
           RegExp(r'^[a-z0-9_]{1,64}$').hasMatch(code) ? code : 'request_failed',
           response.statusCode,
+          requestId:
+              ApiFailure.sanitizedRequestId(
+                error is Map ? error['request_id'] : null,
+              ) ??
+              ApiFailure.sanitizedRequestId(requestId),
         );
       }
       return http.Response.bytes(

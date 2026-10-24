@@ -1,6 +1,15 @@
 import 'dart:async';
 
-enum ApiCategory { health, identity, books, sync, attachments, admin, other }
+enum ApiCategory {
+  health,
+  identity,
+  books,
+  sync,
+  attachments,
+  admin,
+  dataTools,
+  other,
+}
 
 /// An allowlisted projection, never a request URL, body, token or response text.
 final class ApiRequestMetadata {
@@ -47,6 +56,7 @@ final class ApiRequestMetadata {
       'sync' => ApiCategory.sync,
       'attachments' => ApiCategory.attachments,
       'admin' => ApiCategory.admin,
+      'data-tools' => ApiCategory.dataTools,
       _ => ApiCategory.other,
     };
   }

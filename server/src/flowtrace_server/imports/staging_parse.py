@@ -6,6 +6,7 @@ from uuid import UUID
 from sqlalchemy import delete, insert, select
 
 from flowtrace_server.auth.errors import ApiError
+from flowtrace_server.diagnostics.import_events import record_import_check
 
 from .parsers import ImportFormatError
 from .staging import _now, stage_work_context
@@ -74,11 +75,14 @@ def parse_stage_in_transaction(session, actual_job_id, *, check_budget):
     stage.preview_version, stage.preview_hash = None, None
     stage.required_scopes, stage.permission_versions = [], {}
     code, count, errors, pending, target_status = "import_stage_parsed", 0, 0, [], "parsed"
+    diagnostic_errors = []
     collector = RequirementCollector(check_budget=check_budget)
     try:
         with open_stage_source(content, stage.format, mapping, check_budget=check_budget) as source:
             for parsed in source.rows:
                 collector.add(parsed)
+                if parsed.errors and not diagnostic_errors:
+                    diagnostic_errors = list(parsed.errors)
                 count, errors = parsed.position, errors + len(parsed.errors)
                 pending.append(
                     {
@@ -113,10 +117,14 @@ def parse_stage_in_transaction(session, actual_job_id, *, check_budget):
         session.execute(delete(ImportStageRow).where(ImportStageRow.stage_id == stage.id))
         clear_stage_requirements(session, stage)
         target_status, code, count, errors = "failed", error.code, 0, 1
+        diagnostic_errors = [{"code": error.code, "row": error.row, "field": error.field}]
     # Auth/session/expiry remains a final condition even for malformed files.
     stage_work_context(session, actual_job_id)
     stage.status, stage.row_count, stage.error_count = target_status, count, errors
     stage.updated_at = _now(session)
     check_budget()
     session.flush()
+    record_import_check(
+        stage.format, diagnostic_errors, count=count, stage_id=str(stage.id), error_count=errors
+    )
     return {"code": code, "created_count": count}

@@ -18,6 +18,7 @@ import '../../data/data_tools/stage_import_mutation_models.dart';
 import '../../data/data_tools/stage_import_requirements.dart';
 import '../../data/data_tools/stage_import_source_books.dart';
 import '../../data/data_tools/stage_import_store.dart';
+import 'import_error_labels.dart';
 
 final class StageImportDestination {
   const StageImportDestination({
@@ -103,6 +104,7 @@ class StageImportPanelState extends State<StageImportPanel> {
   String? _message, _authorityKey;
   String? _destinationId;
   bool _busy = false, _supported = false;
+  Future<void>? _initialLoad;
   int _generation = 0;
 
   Future<bool> prepareForUpdate() async =>
@@ -144,7 +146,7 @@ class StageImportPanelState extends State<StageImportPanel> {
     _destinationId = widget.destinations.firstOrNull?.id;
     widget.authority.addListener(_authorityChanged);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _load();
+      if (mounted) _initialLoad = _load();
     });
   }
 
@@ -204,7 +206,7 @@ class StageImportPanelState extends State<StageImportPanel> {
           (lease == null || lease.data.isCurrent())) {
         setState(() {
           _message = error is ApiFailure
-              ? error.message
+              ? importFailureDescription(error)
               : error is FormatException
               ? '文件或回执未通过校验，请保留原件并重新核对。'
               : '操作未完成。已保存的原始文件与上传位置仍保留，可再次继续。';
@@ -244,6 +246,36 @@ class StageImportPanelState extends State<StageImportPanel> {
   }
 
   Future<void> _load() => _run((lease) => _showRecords(lease));
+
+  /// Reuses a file already selected in the small-import view. Only the existing
+  /// durable stage writer receives the bytes; this never uploads or applies.
+  Future<bool> stageSource({
+    required Uint8List bytes,
+    required String fileName,
+    required ImportFileKind format,
+    String? destinationId,
+  }) async {
+    await _initialLoad;
+    if (!mounted) return false;
+    var saved = false;
+    await _run((lease) async {
+      if (format.isQianji &&
+          !widget.destinations.any((item) => item.id == destinationId)) {
+        throw const ApiFailure(
+          'stage_destination_required',
+          '请先选择目标账本，再保存钱迹原件。',
+        );
+      }
+      setState(() {
+        _format = format;
+        if (destinationId != null) _destinationId = destinationId;
+      });
+      await _saveSource(lease, bytes, fileName);
+      saved = true;
+    });
+    return saved;
+  }
+
   Future<void> _choose() => _run((lease) async {
     final destination = widget.destinations
         .where((item) => item.id == _destinationId)
@@ -271,11 +303,40 @@ class StageImportPanelState extends State<StageImportPanel> {
     if (bytes.length != length) {
       throw const FormatException('选择期间文件已变化。');
     }
+    // File extensions determine the selected Qianji container, matching the
+    // ordinary picker without changing an explicitly chosen FlowTrace format.
+    if (_format.isQianji) {
+      setState(() {
+        if (file.name.toLowerCase().endsWith('.xlsx')) {
+          _format = ImportFileKind.qianjiXlsx;
+        } else if (file.name.toLowerCase().endsWith('.csv')) {
+          _format = ImportFileKind.qianjiCsv;
+        }
+      });
+    }
+    await _saveSource(lease, bytes, file.name);
+  });
+
+  Future<void> _saveSource(
+    StageImportLease lease,
+    Uint8List bytes,
+    String fileName,
+  ) async {
+    lease.check();
+    if (bytes.isEmpty || bytes.length > stageImportSourceLimit) {
+      throw const ApiFailure('stage_file_too_large', '请选择不超过50MiB的非空数据文件。');
+    }
+    final destination = widget.destinations
+        .where((item) => item.id == _destinationId)
+        .firstOrNull;
+    if (_format.isQianji && destination == null) {
+      throw const ApiFailure('stage_destination_required', '请先选择目标账本，再保存钱迹原件。');
+    }
     final saved = await widget.store.stage(
       lease,
       bytes: bytes,
       format: _format,
-      fileName: file.name,
+      fileName: fileName,
       mapping: _format.isQianji
           ? {
               'template_mapping': {
@@ -294,7 +355,8 @@ class StageImportPanelState extends State<StageImportPanel> {
         _message = '原始文件已保存在本机，可开始上传或稍后继续。';
       });
     }
-  });
+  }
+
   Future<void> _upload() => _run((lease) async {
     final id = _selected!.stageId;
     await _coordinator.uploadAndSeal(lease, id);
@@ -843,7 +905,7 @@ class StageImportPanelState extends State<StageImportPanel> {
       ),
       subtitle: Text(
         item.errors.isNotEmpty
-            ? '这行未通过校验，请核对原文件、资源选择与当前使用权限。'
+            ? item.errors.map(importErrorDescription).join('\n')
             : row == null
             ? '请核对原文件。'
             : row.entityType == 'bill'
@@ -868,6 +930,7 @@ class StageImportPanelState extends State<StageImportPanel> {
       const Text(
         '原件先保存在当前资料空间，再分片上传。关闭页面或暂时离线后，可选择同一原件继续。解析和资源核对完成后，仍需单独确认导入。',
       ),
+      const Text('钱迹原始导出、退款关联及超过50条的文件请在这里完整导入；所有账单核对后一次确认。'),
       if (!_supported)
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 12),
@@ -880,11 +943,16 @@ class StageImportPanelState extends State<StageImportPanel> {
           child: Text(_message!),
         ),
       DropdownButtonFormField<ImportFileKind>(
+        key: ValueKey('stage-format:${_format.wire}'),
         initialValue: _format,
+        isExpanded: true,
         decoration: const InputDecoration(labelText: '原始文件格式'),
         items: [
           for (final kind in ImportFileKind.values)
-            DropdownMenuItem(value: kind, child: Text(kind.label)),
+            DropdownMenuItem(
+              value: kind,
+              child: Text(kind.label, overflow: TextOverflow.ellipsis),
+            ),
         ],
         onChanged: _busy
             ? null
@@ -1028,7 +1096,7 @@ class StageImportPanelState extends State<StageImportPanel> {
               ),
               subtitle: Text(
                 job.status == 'failed'
-                    ? '处理未完成，原件与操作回执保留。不会自动重排金融操作，请核对资源、权限和服务器任务。'
+                    ? '${importErrorReason(job.errorCode ?? 'request_failed')}\n错误码：${job.errorCode ?? 'request_failed'}\n任务ID：${job.jobId}'
                     : job.status == 'retry_wait'
                     ? '服务器等待按原任务重试；请稍后手工刷新。'
                     : job.status == 'succeeded'
@@ -1215,6 +1283,7 @@ class StageImportPanelState extends State<StageImportPanel> {
         Text(
           '逐行预览（共${_selected?.remote?.rowCount ?? 0}行，当前页${page.rows.length}行）',
         ),
+        if (page.requestId != null) SelectableText('请求ID：${page.requestId}'),
         for (final item in page.rows) _previewRow(item),
         if (!page.hasMore) const Text('逐行预览已到末页。'),
       ],

@@ -380,7 +380,10 @@ final class DataToolsRepository {
     final multipart =
         http.MultipartRequest('POST', Uri.parse('https://flowtrace.invalid/'))
           ..fields['format'] = kind.wire
-          ..fields['options'] = dataToolsFrozenJson(options, maxBytes: 65536)
+          ..fields['options'] = dataToolsFrozenJson({
+            ...options,
+            'include_diagnostics': true,
+          }, maxBytes: 65536)
           ..files.add(
             http.MultipartFile.fromBytes('file', bytes, filename: 'data-file'),
           );

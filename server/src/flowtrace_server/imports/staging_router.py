@@ -17,6 +17,7 @@ from starlette.concurrency import run_in_threadpool
 from flowtrace_server.auth.dependencies import authenticated_request, get_session
 from flowtrace_server.auth.errors import ApiError
 from flowtrace_server.auth.service import assert_active_principal, now
+from flowtrace_server.diagnostics import request_id_context
 from flowtrace_server.sync.schemas import Identifier
 
 from . import staging_schemas as model
@@ -316,7 +317,10 @@ async def preview_route(
 
 
 @router.get(
-    "/{stage_id}/rows", response_model=model.StageRowsPage, operation_id="import_stage_rows"
+    "/{stage_id}/rows",
+    response_model=model.StageRowsPage,
+    response_model_exclude_unset=True,
+    operation_id="import_stage_rows",
 )
 async def rows_route(
     stage_id: Identifier,
@@ -325,12 +329,13 @@ async def rows_route(
     response: Response,
     cursor: Annotated[str | None, Query(min_length=1, max_length=256)] = None,
     limit: Annotated[int, Query(ge=1, le=100)] = 100,
+    include_diagnostics: bool = False,
     session: Session = Depends(get_session),
 ):
     principal = await run_in_threadpool(authenticated_request, session, request)
-    _queries(request, {"stage_version", "cursor", "limit"})
+    _queries(request, {"stage_version", "cursor", "limit", "include_diagnostics"})
     private(response)
-    return await run_in_threadpool(
+    result = await run_in_threadpool(
         stage_rows,
         session,
         principal,
@@ -339,6 +344,9 @@ async def rows_route(
         cursor=cursor,
         limit=limit,
     )
+    if include_diagnostics:
+        result.request_id = request_id_context.get()
+    return result
 
 
 @router.get(

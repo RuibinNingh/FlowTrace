@@ -1,6 +1,6 @@
 from typing import Annotated, Literal
 
-from pydantic import Field, StringConstraints
+from pydantic import Field, StrictBool, StringConstraints
 
 from flowtrace_server.sync.schemas import ClosedModel, Identifier, Instant, Revision
 
@@ -18,6 +18,7 @@ SafeCode = Annotated[str, StringConstraints(pattern=r"^[A-Za-z0-9_.-]{1,100}$")]
 class ParseOptions(ClosedModel):
     source_namespace: Annotated[str, StringConstraints(min_length=1, max_length=80)] = "file-import"
     template_mapping: TemplateMapping | None = None
+    include_diagnostics: StrictBool = False
 
 
 class RowError(ClosedModel):
@@ -39,6 +40,7 @@ class ParseResult(ClosedModel):
     errors: list[RowError]
     mapping_requirements: list[MappingRequirement] = Field(default_factory=list)
     attachment_sources: list[AttachmentSource] = Field(default_factory=list, max_length=1000)
+    request_id: Identifier | None = None
 
 
 class PreviewRow(ClosedModel):

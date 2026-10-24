@@ -11,7 +11,6 @@ import io
 import json
 from contextlib import contextmanager
 from dataclasses import dataclass
-from datetime import datetime
 from typing import Annotated, Iterator, Literal
 from xml.etree.ElementTree import ParseError
 from zipfile import BadZipFile
@@ -24,7 +23,8 @@ from flowtrace_server.sync.schemas import ClosedModel, Identifier
 
 from .attachment_sources import validate_attachment_manifest
 from .parsers import HEADERS, ImportFormatError, _decode_json, _secure_workbook
-from .qianji_template import PUBLIC_COLUMNS, convert_public_record
+from .qianji_export import EXPORT_NAMESPACE, export_profile, prepare_export, xlsx_text
+from .qianji_template import convert_public_record
 from .schemas import HistoricalPosting, ImportRow
 from .staging_references import (
     SourceReference,
@@ -84,7 +84,17 @@ def _hash_raw(value):
     ).hexdigest()
 
 
-def _validated_rows(records, hints, manifest, convert, check_budget, *, qianji=False, table=False):
+def _validated_rows(
+    records,
+    hints,
+    manifest,
+    convert,
+    check_budget,
+    *,
+    qianji=False,
+    table=False,
+    export_context=None,
+):
     seen, referenced, hint_rows, count, any_errors = set(), set(), set(), 0, False
     for position, (line, raw) in enumerate(records, 1):
         check_budget()
@@ -95,6 +105,13 @@ def _validated_rows(records, hints, manifest, convert, check_budget, *, qianji=F
         try:
             if qianji:
                 references = qianji_references(raw, line, check_budget=check_budget)
+                if export_context is not None:
+                    defined = export_context.definition(raw)
+                    reference = export_context.reference(raw)
+                    if reference is not None:
+                        requirements.append(
+                            SourceReference("resource", "identifier", reference, "bill", line)
+                        )
             else:
                 shape = native_shape(raw, table=table)
                 defined = native_definition(shape)
@@ -205,7 +222,7 @@ def _csv_records(reader, headers):
             yield line, dict(zip(headers, values, strict=True))
 
 
-def _xlsx_records(cells, headers, *, qianji=False):
+def _xlsx_records(cells, headers, *, qianji=False, exported=False):
     for line, row in enumerate(cells, 2):
         if len(row) > len(headers) or any(cell.data_type == "f" for cell in row):
             yield line, {None: "workbook_formula_or_extra_columns"}
@@ -214,16 +231,11 @@ def _xlsx_records(cells, headers, *, qianji=False):
         for index in range(len(headers)):
             value = row[index].value if index < len(row) else None
             if qianji:
-                if headers[index] == "时间" and isinstance(value, datetime):
-                    value = (
-                        "unsupported_excel_timestamp"
-                        if value.second or value.microsecond or value.tzinfo
-                        else value.strftime("%Y-%m-%d %H:%M")
-                    )
-                elif value is None:
-                    value = ""
-                elif not isinstance(value, str):
-                    value = str(value)
+                value = (
+                    xlsx_text(headers[index], row[index], export=exported)
+                    if index < len(row)
+                    else ""
+                )
             values.append(value)
         yield line, dict(zip(headers, values, strict=True))
 
@@ -305,6 +317,7 @@ def open_stage_source(content, format_name, mapping, *, check_budget):
     if not 1 <= len(content) <= STAGE_MAX_SOURCE_BYTES:
         raise ImportFormatError("file_too_large")
     book = None
+    export_context = None
     try:
         hints, manifest, namespace = {}, None, mapping.source_namespace
         convert = _native_record
@@ -334,6 +347,15 @@ def open_stage_source(content, format_name, mapping, *, check_budget):
             except (UnicodeError, csv.Error):
                 raise ImportFormatError("invalid_csv") from None
             records = _csv_records(reader, headers)
+            if format_name == "qianji_csv":
+
+                def records_factory():
+                    fresh = csv.reader(
+                        io.StringIO(content.decode("utf-8-sig"), newline=""), strict=True
+                    )
+                    next(fresh, ())
+                    return _csv_records(fresh, headers)
+
             if format_name == "flowtrace_csv":
                 if tuple(headers) != HEADERS:
                     raise ImportFormatError("invalid_columns", row=1)
@@ -363,32 +385,50 @@ def open_stage_source(content, format_name, mapping, *, check_budget):
                 book.active.reset_dimensions()
                 cells = _safe_cells(book.active.iter_rows())
                 headers = tuple(cell.value for cell in next(cells, ()))
-                records = _xlsx_records(cells, headers, qianji=True)
+                exported = export_profile(headers)
+                records = _xlsx_records(cells, headers, qianji=True, exported=exported)
+
+                def records_factory():
+                    fresh = _safe_cells(book.active.iter_rows())
+                    next(fresh, ())
+                    return _xlsx_records(fresh, headers, qianji=True, exported=exported)
         else:
             raise ImportFormatError("unsupported_import_format")
         if format_name.startswith("qianji_"):
-            if (
-                not {"时间", "类型", "金额"}.issubset(headers)
-                or len(headers) != len(set(headers))
-                or not set(headers).issubset(PUBLIC_COLUMNS)
-            ):
-                raise ImportFormatError("unsupported_qianji_columns", row=1)
+            exported = export_profile(headers)
             if mapping.template_mapping is None:
                 raise ImportFormatError("template_mapping_required")
-            namespace = "qianji-public-template-v10"
+            if exported:
+                export_context = prepare_export(
+                    records,
+                    mapping.template_mapping,
+                    max_rows=STAGE_MAX_ROWS,
+                    check_budget=check_budget,
+                )
+                records = records_factory()
+            namespace = EXPORT_NAMESPACE if exported else "qianji-public-template-v10"
             file_sha = hashlib.sha256(content).hexdigest()
 
             def convert(raw, line):
-                return convert_public_record(raw, file_sha, mapping.template_mapping, line)
+                return (
+                    export_context.convert(raw, mapping.template_mapping, line)
+                    if export_context is not None
+                    else convert_public_record(raw, file_sha, mapping.template_mapping, line)
+                )
 
         yield StageSource(
             namespace,
             hints,
             manifest or [],
             _validated_rows(
-                records, hints, manifest, convert, check_budget,
+                records,
+                hints,
+                manifest,
+                convert,
+                check_budget,
                 qianji=format_name.startswith("qianji_"),
                 table=format_name in {"flowtrace_csv", "flowtrace_xlsx"},
+                export_context=export_context,
             ),
         )
     finally:

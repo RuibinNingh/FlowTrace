@@ -11,6 +11,8 @@ from starlette.concurrency import run_in_threadpool
 
 from flowtrace_server.auth.dependencies import authenticated_request, get_session
 from flowtrace_server.auth.errors import ApiError
+from flowtrace_server.diagnostics import request_id_context
+from flowtrace_server.diagnostics.import_events import record_import_check
 from flowtrace_server.sync.canonical import InvalidSyncBody, decode_body
 from flowtrace_server.sync.schemas import Identifier
 
@@ -100,13 +102,21 @@ def parse_file(content, format_name, options):
         "mapping_requirements": requirements,
         "attachment_sources": attachment_sources,
     }
-    result = model.ParseResult.model_validate(result).model_dump(mode="json")
+    record_import_check(format_name, errors, count=len(document.rows) if document else 0)
+    if options.include_diagnostics and request_id_context.get() is not None:
+        result["request_id"] = request_id_context.get()
+    result = model.ParseResult.model_validate(result).model_dump(mode="json", exclude_unset=True)
     if len(canonical(result)) > 1024 * 1024:
         raise ApiError("import_response_too_large", 413)
     return result
 
 
-@router.post("/imports/parse", response_model=model.ParseResult, operation_id="data_import_parse")
+@router.post(
+    "/imports/parse",
+    response_model=model.ParseResult,
+    response_model_exclude_unset=True,
+    operation_id="data_import_parse",
+)
 async def parse_route(
     request: Request,
     response: Response,

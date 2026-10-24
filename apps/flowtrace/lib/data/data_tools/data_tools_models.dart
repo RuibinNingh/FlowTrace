@@ -109,8 +109,8 @@ enum ImportFileKind {
   flowtraceJson('flowtrace_json', '流迹 JSON'),
   flowtraceCsv('flowtrace_csv', '流迹 CSV'),
   flowtraceXlsx('flowtrace_xlsx', '流迹 Excel'),
-  qianjiCsv('qianji_csv', '钱迹公开 CSV 模板'),
-  qianjiXlsx('qianji_xlsx', '钱迹公开 Excel 模板');
+  qianjiCsv('qianji_csv', '钱迹 CSV（原始导出 / 公开模板）'),
+  qianjiXlsx('qianji_xlsx', '钱迹 Excel（原始导出 / 公开模板）');
 
   const ImportFileKind(this.wire, this.label);
   final String wire, label;
@@ -242,6 +242,9 @@ final class DataMappingRequirement {
 final class DataImportParseResult {
   DataImportParseResult.fromJson(Map<String, Object?> value)
     : kind = ImportFileKind.parse(value['format']),
+      requestId = value['request_id'] == null
+          ? null
+          : dataToolsUuid(value['request_id']),
       sourceSha256 = _text(value['source_sha256'], max: 64),
       document = value['document'] == null
           ? null
@@ -266,7 +269,7 @@ final class DataImportParseResult {
     dataToolsKeys(
       value,
       {'format', 'source_sha256', 'document', 'errors'},
-      {'mapping_requirements', 'attachment_sources'},
+      {'mapping_requirements', 'attachment_sources', 'request_id'},
     );
     if (!_digest.hasMatch(sourceSha256) ||
         (document != null && errors.isNotEmpty)) {
@@ -289,6 +292,7 @@ final class DataImportParseResult {
   }
   final ImportFileKind kind;
   final String sourceSha256;
+  final String? requestId;
   final DataImportDocument? document;
   final List<DataImportError> errors;
   final List<DataMappingRequirement> mappings;

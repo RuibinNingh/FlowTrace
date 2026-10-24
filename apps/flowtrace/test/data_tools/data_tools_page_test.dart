@@ -12,6 +12,7 @@ import 'package:uuid/uuid.dart';
 
 import '../ledger/query_fixtures.dart';
 import 'data_tools_models_test.dart' show documentJson;
+import 'stage_import_store_test.dart' show StageRig;
 
 final class _Destination implements DataToolsExportDestination {
   Uint8List? written;
@@ -41,6 +42,7 @@ void main() {
   final destination = _Destination();
   Map<String, Object?>? lastExport;
   List<Map<String, Object?>> parseErrors = [];
+  String? parseRequestId;
   List<Map<String, Object?>> attachmentSources = [];
   Map<String, Object?>? applied;
   var undoBeforeApplyReturn = false;
@@ -69,6 +71,7 @@ void main() {
           'errors': parseErrors,
           'mapping_requirements': [],
           'attachment_sources': attachmentSources,
+          'request_id': ?parseRequestId,
         };
       }
       if (path.endsWith('/undo')) {
@@ -144,6 +147,7 @@ void main() {
     WidgetTester tester, {
     Size size = const Size(1200, 900),
     bool syncFails = false,
+    StageRig? stages,
   }) async {
     await tester.binding.setSurfaceSize(size);
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -189,6 +193,9 @@ void main() {
             return qc;
           },
           chooseExportDestination: (_) async => destination,
+          stageStore: stages?.store,
+          captureStageLease: stages == null ? null : () => stages.lease,
+          refreshStageProjection: stages == null ? null : (_) async {},
         ),
       ),
     );
@@ -212,6 +219,7 @@ void main() {
     uploadCount = refreshCount = 0;
     applied = lastExport = null;
     parseErrors = attachmentSources = [];
+    parseRequestId = null;
     undoBeforeApplyReturn = false;
     undoDuringRefresh = false;
     lastMutationUndo = null;
@@ -220,6 +228,57 @@ void main() {
     authority.dispose();
     await fixture.db.close();
   });
+
+  testWidgets(
+    'parse errors show row, field, reason, code and request correlation',
+    (tester) async {
+      parseErrors = [
+        {'row': 1, 'field': '表头', 'code': 'unsupported_qianji_columns'},
+      ];
+      parseRequestId = qid(501);
+      await mount(tester);
+      await selectFile(tester);
+      expect(find.textContaining('第1行 · 字段：表头'), findsOneWidget);
+      expect(find.textContaining('未识别钱迹表头'), findsOneWidget);
+      expect(
+        find.textContaining('错误码：unsupported_qianji_columns'),
+        findsOneWidget,
+      );
+      expect(find.text('请求ID：${qid(501)}'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'complete import keeps the already selected source without upload or apply',
+    (tester) async {
+      final stages = StageRig();
+      await stages.init();
+      addTearDown(stages.close);
+      parseErrors = [
+        {'row': 52, 'field': null, 'code': 'too_many_rows'},
+      ];
+      await mount(tester, stages: stages);
+      await selectFile(tester);
+      final target = find.text('钱迹原始导出 / 超过50条完整导入');
+      await tester.ensureVisible(target);
+      await tester.tap(target);
+      await tester.pumpAndSettle();
+      final saved = await stages.store.list(stages.fixture.space);
+      expect(saved, hasLength(1));
+      expect(saved.single.stored.fileName, 'synthetic.json');
+      expect(saved.single.stored.format, 'flowtrace_json');
+      await stages.store.verifySource(saved.single);
+      expect(stages.calls, isEmpty);
+      expect(applied, isNull);
+      expect(
+        await fixture.db.select(fixture.db.pendingOperations).get(),
+        isEmpty,
+      );
+      expect(find.textContaining('所选原件已完整保存在本机'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets(
     'confirmation is durable and reports pending local sync honestly',
@@ -249,11 +308,17 @@ void main() {
       parseErrors = [
         {'row': 2, 'field': 'money', 'code': 'invalid_exact_amount'},
       ];
+      parseRequestId = qid(502);
       await mount(tester, size: const Size(320, 750));
       await selectFile(tester);
-      final error = find.text('第2行：金额精度或范围不正确');
+      final error = find.textContaining('错误码：invalid_exact_amount');
       await tester.ensureVisible(error);
       expect(error, findsOneWidget);
+      expect(find.textContaining('第2行 · 字段：money'), findsOneWidget);
+      expect(find.textContaining('金额精度或范围不正确'), findsOneWidget);
+      final correlation = find.text('请求ID：${qid(502)}');
+      await tester.ensureVisible(correlation);
+      expect(correlation, findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );

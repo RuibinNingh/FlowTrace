@@ -13,6 +13,7 @@ import '../../data/data_tools/export_saver.dart';
 import '../../data/data_tools/stage_import_lease.dart';
 import '../../data/data_tools/stage_import_store.dart';
 import 'stage_import_panel.dart';
+import 'import_error_labels.dart';
 
 final class DataToolsBookOption {
   const DataToolsBookOption({
@@ -186,7 +187,7 @@ class DataToolsPageState extends State<DataToolsPage> {
       if (mounted && (lease == null || lease.isCurrent())) {
         setState(() {
           _message = error is ApiFailure
-              ? error.message
+              ? importFailureDescription(error)
               : error is FormatException
               ? '文件或回执未通过校验，请核对后重试。'
               : '当前操作未完成，请重试；本机已固定的迁移请求仍保留。';
@@ -750,7 +751,54 @@ class DataToolsPageState extends State<DataToolsPage> {
     ];
   }
 
-  Widget _importForm() => _card('选择文件与目标', [
+  Future<void> _openFullImport(BuildContext tabContext) => _run((lease) async {
+    final bytes = _fileBytes;
+    final name = _fileName;
+    final format = _kind;
+    final destination = _bookId;
+    DefaultTabController.of(tabContext).animateTo(3, duration: Duration.zero);
+    for (
+      var frame = 0;
+      frame < 3 && _stagePanel.currentState == null;
+      frame++
+    ) {
+      await WidgetsBinding.instance.endOfFrame;
+      lease.check();
+    }
+    final panel = _stagePanel.currentState;
+    if (bytes == null || name == null || panel == null) return;
+    final saved = await panel.stageSource(
+      bytes: bytes,
+      fileName: name,
+      format: format,
+      destinationId: destination,
+    );
+    lease.check();
+    if (!mounted || !saved) return;
+    setState(() {
+      _fileBytes = null;
+      _fileName = null;
+      _parsed = null;
+      _draft = null;
+      _preview = null;
+      _imageMapping.clear();
+      _resourceMapping.clear();
+      _scopeMapping.clear();
+      _message = '所选原件已完整保存在本机，请继续上传、核对资源并生成完整预览。';
+    });
+  });
+
+  Widget _importForm(BuildContext tabContext) => _card('选择文件与目标', [
+    if (_hasStages) ...[
+      const Text('钱迹实际导出的账本及超过50条的文件使用完整导入，退款会保留原账单关联。'),
+      OutlinedButton.icon(
+        onPressed: _busy ? null : () => _openFullImport(tabContext),
+        icon: const Icon(Icons.file_copy_outlined),
+        label: const Text('钱迹原始导出 / 超过50条完整导入'),
+      ),
+      const Divider(),
+      const Text('下面的小批导入最多50条；完整导入会在全部预览后一次确认。'),
+    ],
     DropdownButtonFormField<ImportFileKind>(
       key: ValueKey(_kind),
       initialValue: _kind,
@@ -758,7 +806,10 @@ class DataToolsPageState extends State<DataToolsPage> {
       decoration: const InputDecoration(labelText: '文件格式'),
       items: [
         for (final kind in ImportFileKind.values)
-          DropdownMenuItem(value: kind, child: Text(kind.label)),
+          DropdownMenuItem(
+            value: kind,
+            child: Text(kind.label, overflow: TextOverflow.ellipsis),
+          ),
       ],
       onChanged: _busy
           ? null
@@ -852,9 +903,9 @@ class DataToolsPageState extends State<DataToolsPage> {
     return _card('导入预览', [
       if (document == null) const Text('先选择文件和资源映射。预览通过后，再由你确认正式导入。'),
       for (final error in [...?_parsed?.errors, ...?_preview?.errors])
-        Text(
-          '${error.row == null ? '文件' : '第${error.row}行'}：${_errorLabel(error.code)}',
-        ),
+        Text(importErrorDescription(error)),
+      if (_parsed?.requestId != null)
+        SelectableText('请求ID：${_parsed!.requestId}'),
       if (document != null) ...[
         Text('共${document.rows.length}条记录'),
         if (_preview != null)
@@ -907,12 +958,12 @@ class DataToolsPageState extends State<DataToolsPage> {
           ? Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(width: 390, child: _importForm()),
+                SizedBox(width: 390, child: _importForm(context)),
                 const SizedBox(width: 16),
                 Expanded(child: _previewPanel()),
               ],
             )
-          : Column(children: [_importForm(), _previewPanel()]),
+          : Column(children: [_importForm(context), _previewPanel()]),
     ),
   );
 
@@ -1180,17 +1231,6 @@ class DataToolsPageState extends State<DataToolsPage> {
     ),
   );
 }
-
-String _errorLabel(String code) => switch (code) {
-  'mapping_required' => '请选择对应的账户、分类、标签或原图',
-  'source_modified' || 'import_source_modified' => '原来源记录已有后续修改',
-  'import_attachment_transfer_conflict' => '原图状态或使用范围已变化',
-  'invalid_exact_amount' => '金额精度或范围不正确',
-  'too_many_rows' => '文件超过当前单批处理能力，请保留原件并分批核对',
-  'unsupported_qianji_type' => '公开模板未定义此账单类型',
-  'invalid_attachment_manifest' => '原图校验清单不完整或不正确',
-  _ => '该行未通过校验，请核对原文件和资源选择',
-};
 
 String _entityLabel(String type) => switch (type) {
   'book' => '账本',

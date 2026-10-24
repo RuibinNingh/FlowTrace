@@ -126,6 +126,7 @@ final class StageImportPreviewRow extends StageImportWire {
 
 final class StageImportRowsPage extends StageImportWire {
   StageImportRowsPage._(super.value);
+  String? get requestId => value['request_id'] as String?;
   String get stageId => value['stage_id'] as String;
   int get version => value['stage_version'] as int;
   bool get hasMore => value['has_more'] as bool;
@@ -134,13 +135,12 @@ final class StageImportRowsPage extends StageImportWire {
       .map(StageImportPreviewRow.parse)
       .toList(growable: false);
   factory StageImportRowsPage.parse(Map<String, Object?> raw) {
-    dataToolsKeys(raw, {
-      'stage_id',
-      'stage_version',
-      'rows',
-      'has_more',
-      'next_cursor',
-    });
+    dataToolsKeys(
+      raw,
+      {'stage_id', 'stage_version', 'rows', 'has_more', 'next_cursor'},
+      {'request_id'},
+    );
+    if (raw['request_id'] != null) dataToolsUuid(raw['request_id']);
     dataToolsUuid(raw['stage_id']);
     stageInteger(raw['stage_version'], 1, 2147483647);
     final rows = raw['rows'], cursor = raw['next_cursor'];

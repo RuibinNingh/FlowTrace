@@ -364,6 +364,7 @@ class StageRowsPage(ClosedModel):
     rows: list[StageRowPreview] = Field(max_length=100)
     has_more: bool
     next_cursor: Annotated[str, StringConstraints(min_length=1, max_length=256)] | None
+    request_id: Identifier | None = None
 
     @model_validator(mode="after")
     def page_complete(self):

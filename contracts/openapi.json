@@ -10332,6 +10332,16 @@
               "default": 100,
               "title": "Limit"
             }
+          },
+          {
+            "name": "include_diagnostics",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Diagnostics"
+            }
           }
         ],
         "responses": {
@@ -19096,6 +19106,20 @@
             "type": "array",
             "maxItems": 1000,
             "title": "Attachment Sources"
+          },
+          "request_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 36,
+                "minLength": 36,
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Request Id"
           }
         },
         "additionalProperties": false,
@@ -22375,6 +22399,20 @@
               }
             ],
             "title": "Next Cursor"
+          },
+          "request_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 36,
+                "minLength": 36,
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Request Id"
           }
         },
         "additionalProperties": false,

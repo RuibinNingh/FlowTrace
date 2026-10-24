@@ -67,6 +67,7 @@ final class ClientDiagnostics {
     'sync',
     'attachments',
     'admin',
+    'dataTools',
     'other',
   };
   static const _methods = {'GET', 'POST', 'PUT', 'PATCH', 'DELETE'};

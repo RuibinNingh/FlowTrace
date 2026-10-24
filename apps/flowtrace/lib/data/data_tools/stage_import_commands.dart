@@ -659,7 +659,7 @@ final class StageImportCommands {
       await _request(
         lease,
         'GET',
-        '/data-tools/import-stages/$stageId/rows?stage_version=$version&limit=100$suffix',
+        '/data-tools/import-stages/$stageId/rows?stage_version=$version&limit=100&include_diagnostics=true$suffix',
       ),
     );
     if (page.stageId != stageId || page.version != version) {

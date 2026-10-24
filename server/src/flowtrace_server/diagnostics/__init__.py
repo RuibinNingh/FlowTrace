@@ -9,6 +9,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from uuid import UUID
 
+from .import_codes import IMPORT_CODES, IMPORT_FIELDS, IMPORT_FORMATS
 from .policy import DiagnosticPolicy, collect
 from .store import DiagnosticStore as DiagnosticStore
 
@@ -27,6 +28,7 @@ EVENTS = {
     "attachment_completed",
     "attachment_gc",
     "diagnostic_export",
+    "import_parse_checked",
 }
 CODES = {
     "internal_error",
@@ -41,14 +43,27 @@ CODES = {
     "upload_expired",
     "attachment_storage_unavailable",
     "diagnostic_unavailable",
-}
+} | IMPORT_CODES
 
 
 def register_routes(routes) -> None:
     """Only application-defined route templates, never request URLs."""
-    SAFE_ROUTES.update(
-        route.path for route in routes if isinstance(getattr(route, "path", None), str)
-    )
+
+    # Locked FastAPI versions may include routers lazily. Their original paths
+    # plus the declared include prefix remain code-defined templates.
+    def walk(values, prefix="", ancestors=frozenset()):
+        for route in values:
+            path = getattr(route, "path", None)
+            if isinstance(path, str):
+                SAFE_ROUTES.add(prefix + path)
+            nested = getattr(route, "original_router", None)
+            if nested is not None and id(nested) not in ancestors:
+                context = getattr(route, "include_context", None)
+                extra = getattr(context, "prefix", "")
+                if isinstance(extra, str):
+                    walk(nested.routes, prefix + extra, ancestors | {id(nested)})
+
+    walk(routes)
 
 
 def safe_payload(fields: dict, timestamp: datetime | None = None) -> dict:
@@ -59,7 +74,7 @@ def safe_payload(fields: dict, timestamp: datetime | None = None) -> dict:
     if not isinstance(fields.get("event"), str) or fields["event"] not in EVENTS:
         return {**payload, "event": "record_omitted"}
     payload["event"] = fields["event"]
-    for key in ("request_id", "operation_id", "scope_id", "entity_id"):
+    for key in ("request_id", "operation_id", "scope_id", "entity_id", "stage_id"):
         try:
             payload[key] = str(UUID(str(fields.get(key))))
         except (ValueError, TypeError, AttributeError):
@@ -83,10 +98,17 @@ def safe_payload(fields: dict, timestamp: datetime | None = None) -> dict:
         ("status_code", 599),
         ("size_bytes", 10 * 1024 * 1024),
         ("count", 1_000_000),
+        ("error_count", 1_000_000),
+        ("row", 200_001),
     ):
         value = fields.get(key)
         if type(value) is int and 0 <= value <= upper:
             payload[key] = value
+    if fields.get("event") == "import_parse_checked":
+        if isinstance(fields.get("format"), str) and fields["format"] in IMPORT_FORMATS:
+            payload["format"] = fields["format"]
+        if isinstance(fields.get("field"), str) and fields["field"] in IMPORT_FIELDS:
+            payload["field"] = fields["field"]
     value = fields.get("duration_ms")
     if type(value) in {int, float} and math.isfinite(value) and 0 <= value <= 3_600_000:
         payload["duration_ms"] = round(value, 3)
