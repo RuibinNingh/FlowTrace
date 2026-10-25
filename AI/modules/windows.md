@@ -8,6 +8,8 @@
 
 ## 当前行为
 
+2026-10-25工程`runner/resources/app_icon.ico`已改为“流线 F”，包含16/24/32/48/64/128/256七帧，源图和导出器见[图标说明](../../apps/flowtrace/assets/branding/README.md)。实际Runner.rc经Windows SDK rc.exe资源编译通过，独立解码核对全部帧；没有重建Windows EXE/ZIP或替换用户安装，当前已分发版本仍按下文记录。
+
 原生runner在Flutter打开库前取得`flowtrace.instance.lock`的Windows独占文件句柄；第二进程退出73并尝试激活原窗口，异常终止由OS释放句柄。默认保留既有`%APPDATA%/com.flowtrace/flowtrace/flowtrace`资料根，公司/产品名不改；显式`--flowtrace-data-dir`只接受有效绝对隔离路径，拒绝UNC/相对/安装目录及junction绕入安装目录。
 
 正式SQLite和附件适配器在Windows通过`com.flowtrace/windows-runtime`读取已持租约根，没有channel/lease不回退打开无锁数据库。其他平台原路径保持。系统安全存储使用原锁定Windows实现，独立QA已验证合成UUID key重启/跨版读取后仅清本轮key；不把它描述成整个数据库加密。

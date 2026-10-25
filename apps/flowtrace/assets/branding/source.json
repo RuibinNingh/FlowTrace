@@ -1,0 +1,12 @@
+{
+  "design": "流线 F",
+  "selected_date": "2026-10-25",
+  "timezone": "Asia/Shanghai",
+  "selection": "用户原话：流线 F",
+  "generation_route": "built-in image_gen",
+  "board_id": "f5c5356e-2bb5-40ec-9713-41945ffd2c4d",
+  "width": 1254,
+  "height": 1254,
+  "source_sha256": "b95c998693851cd6daec39d8a5cc59a76697dc99b977a9fd98fdd7a3ffa9edff",
+  "prompt": "Use case: logo-brand. Asset type: one finished square app icon for FlowTrace / 流迹, an offline-first personal bookkeeping app. Create a proprietary, beautifully proportioned abstract F monogram formed by one confident flowing white ribbon with two short open arms. The rhythm suggests the trail of a river and a neatly recorded financial flow. A bold compact silhouette with rounded transitions, crisp professional vector-like edges, subtle expressive asymmetry, strong deliberate negative space. Full-bleed saturated cobalt/azure blue background inspired by #3593FD and #7EA3FA, very restrained smooth tonal change only. The solid white mark centered with generous optical safe space, occupies about 58% of canvas; all essential details inside central 65%. A tiny light-blue inner turn may add depth, otherwise keep flat, no thin decorative lines. Square 1:1 image, preferably 1536x1536. No surrounding page, no mockup, no outer border, no drop shadow, no perspective, no words, no numbers, no watermark, no generic Flutter mark, no currency signs, no extra decorative objects. One clean icon image, not a contact sheet."
+}

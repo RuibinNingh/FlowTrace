@@ -8,6 +8,8 @@
 
 ## 当前行为
 
+2026-10-25工作区favicon及192/512普通、maskable图标已换成“流线 F”，manifest的主题/背景色和HTML theme-color统一为`#3593FD`。maskable每侧增加8%背景边距，亮色标记实测最远半径约0.365图宽，位于0.4安全圆内；本地真实IAB已查看16–64px和圆形/圆角裁切。源码和导出说明见[图标说明](../../apps/flowtrace/assets/branding/README.md)。本包没有运行Flutter构建或seal，也没有修改任何已冻结Web包/生产资源；以下仍是现行生产版本。
+
 2026-10-24当前生产Web为0.1.1+2、来源`5f3e813`，release `271e839535a9f2c94f689cd45a3b54f8d156481e6dbb968d127569a64c29f8dd`；内置正式HTTPS地址，已有手动设置保持。普通main新构建45.6秒，seal39资源加manifest/worker共41文件，ZIP25,835,302B/SHA`a677510547fecd5ff2ddd1df4139c5a502ed97ef11ed43baf2efbe26bbfce1fe`。生产HTTPS逐项核对39资源、IAB实际渲染主页；观察到完整新版提示，点击回执超时但后续截图为正常主页且提示消失，不扩大为完整多标签/离线升级验收。旧fcdcda0和原105条合成浏览器证据保留；本包复用其业务验证与前包41定向，不重复1015整套。版本/切换/第一次权限回退/第二次修复见[生产模块](production-deployment.md)、[Linux手册](../../deployment/linux/README.md)和[部署记录](../logs/2026-10-24_client-production-deployment.md)。
 
 构建后`seal_release.py`对新产物生成SHA256清单和版本，生产worker仅发布完整包/完成标记。安装校验失败保留旧完整包，已缓存资源损坏返回503，不从新网络版本补单个资源。首装有实际进度，离线准备失败提供明确仅联网路径；未把估算配额当成实际可写容量。

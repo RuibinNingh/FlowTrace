@@ -9,6 +9,8 @@
 
 ## 当前行为
 
+2026-10-25工程图标已改为用户选定的“流线 F”。原始1254 PNG及生成来源纳入`apps/flowtrace/assets/branding/`，平台图标由`tool/app_icons/Export-AppIcons.ps1`确定性导出；Android五密度、Web普通/可裁切/favicon和Windows七帧ICO均已接入既有路径。资源编译、文件一致性和本地浏览器外观已验，应用版本仍为0.1.1+2；没有重建安装/发布包或更新生产。源文件、命令与边界见[图标说明](../../apps/flowtrace/assets/branding/README.md)和[本包记录](../logs/2026-10-25_app-icon-integration.md)。
+
 2026-10-24随后按用户“生产部署啊”完成实际上线：生产Web已新构建0.1.1+2，普通main/正式profile并seal完整41文件；前包Windows/APK原字节复用，发布为正式域名HTTPS下载，两个包实取hash相符。Web和原生现都内置正式地址，已存手动设置/资料保持；后台1447709不改。生产IAB实际渲染未登录空草稿主页，未登录或写金融数据；具体发布、首次权限故障回退及修复证据见[部署记录](../logs/2026-10-24_client-production-deployment.md)。以下原生重建包“不更新生产”仅是当时边界。
 
 2026-10-24新原生交付`0.1.1+2`来源`158ebc2`：无已存地址时内置`https://home.ruibin-ningh.top:18473`，不覆盖手动`active_server`或迁移旧资料空间。Windows production Release与Android ARM64 Debug均由普通main重建，214项输入构建前后不变；41项定向测试、两文件范围分析、Windows隔离schema5真实启动和APK版本/签名/内置地址核验通过。APK沿用`.dev`包名和原Debug证书，versionCode升至2；Windows未签名，没有Android设备/完整桌面UI验收。本包不更新生产Web/后端，以下“未重建”是前包快照，最新以[本包记录](../logs/2026-10-24_native-client-rebuild.md)为准。

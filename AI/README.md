@@ -22,6 +22,7 @@
 | Python 服务端的安装、接口、迁移与验证 | [服务端模块](modules/server.md) |
 | 管理员登录、邀请、用户与会话管理 | [后台模块](modules/admin.md)、[浏览器验收](../tests/e2e/admin/README.md) |
 | Flutter 工程、本地库、草稿与平台适配 | [客户端模块](modules/client.md) |
+| 流线 F 图标原图、平台资源与确定性导出 | [图标说明](../apps/flowtrace/assets/branding/README.md)、[本包记录](logs/2026-10-25_app-icon-integration.md) |
 | 数据迁移、授权导出、备份与隔离恢复 | [数据工具](modules/data-tools.md) |
 | 大文件迁移暂存、worker与跨页原子发布 | [大批迁移分册](plans/flowtrace/large-import-implementation.md) |
 | 固定pull跨页组、客户端原子安装与旧协议兼容 | [跨页同步分册](plans/flowtrace/group-sync-implementation.md) |

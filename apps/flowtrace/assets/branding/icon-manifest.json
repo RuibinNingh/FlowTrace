@@ -1,0 +1,110 @@
+{
+  "design": "流线 F",
+  "source": "assets/branding/flowtrace-icon.png",
+  "source_sha256": "b95c998693851cd6daec39d8a5cc59a76697dc99b977a9fd98fdd7a3ffa9edff",
+  "renderer": "Windows System.Drawing / HighQualityBicubic",
+  "exports": [
+    {
+      "path": "flowtrace-icon-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "padding_per_side": 0.0,
+      "apply_path": "",
+      "sha256": "fcdbdee5456910a3a025b1b368e23591f28381befed4bbbafb6fe5e03eeac266"
+    },
+    {
+      "path": "android/mipmap-mdpi/ic_launcher.png",
+      "width": 48,
+      "height": 48,
+      "padding_per_side": 0.0,
+      "apply_path": "android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "sha256": "d9fb1e0cf4edf61ff077515faca1147116f4c3c5971248a110cf96868f395913"
+    },
+    {
+      "path": "android/mipmap-hdpi/ic_launcher.png",
+      "width": 72,
+      "height": 72,
+      "padding_per_side": 0.0,
+      "apply_path": "android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "sha256": "c84d14982d58fe5a588269f160d52c7da97e21c88870f0c4c0ef81af6c54aa09"
+    },
+    {
+      "path": "android/mipmap-xhdpi/ic_launcher.png",
+      "width": 96,
+      "height": 96,
+      "padding_per_side": 0.0,
+      "apply_path": "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "sha256": "9465474cd581be58ecc4befc336d2a67a9fa3ad1f68382b18da4841215c10c20"
+    },
+    {
+      "path": "android/mipmap-xxhdpi/ic_launcher.png",
+      "width": 144,
+      "height": 144,
+      "padding_per_side": 0.0,
+      "apply_path": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "sha256": "9044a4479af37139b7a5ca57769b48826ed225b04dd836a68b758926d56945d2"
+    },
+    {
+      "path": "android/mipmap-xxxhdpi/ic_launcher.png",
+      "width": 192,
+      "height": 192,
+      "padding_per_side": 0.0,
+      "apply_path": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "sha256": "7d3c92696fccf357ca7b128706589e96f9b81d84e12de1029e837177676a72c9"
+    },
+    {
+      "path": "web/favicon.png",
+      "width": 32,
+      "height": 32,
+      "padding_per_side": 0.0,
+      "apply_path": "web/favicon.png",
+      "sha256": "101c45ef3380a6a1c1ad09ec5472223c853345ce4ad9dfe0ff783a6b16b8763c"
+    },
+    {
+      "path": "web/icons/Icon-192.png",
+      "width": 192,
+      "height": 192,
+      "padding_per_side": 0.0,
+      "apply_path": "web/icons/Icon-192.png",
+      "sha256": "7d3c92696fccf357ca7b128706589e96f9b81d84e12de1029e837177676a72c9"
+    },
+    {
+      "path": "web/icons/Icon-maskable-192.png",
+      "width": 192,
+      "height": 192,
+      "padding_per_side": 0.08,
+      "apply_path": "web/icons/Icon-maskable-192.png",
+      "sha256": "c1a755b23e4f29ec8cd54c14c930fd81f412375c6ce92c33f5509024f9f6e815"
+    },
+    {
+      "path": "web/icons/Icon-512.png",
+      "width": 512,
+      "height": 512,
+      "padding_per_side": 0.0,
+      "apply_path": "web/icons/Icon-512.png",
+      "sha256": "fe98a1741d270da42f36b2f4384c6dca360f9b3b0f243ace980f3fc9c37eeedf"
+    },
+    {
+      "path": "web/icons/Icon-maskable-512.png",
+      "width": 512,
+      "height": 512,
+      "padding_per_side": 0.08,
+      "apply_path": "web/icons/Icon-maskable-512.png",
+      "sha256": "5e38d01470c00068742a08954935c4364a8d5dfb24631d8dc2b3e2e954fe49e8"
+    },
+    {
+      "path": "windows/app_icon.ico",
+      "sizes": [
+        16,
+        24,
+        32,
+        48,
+        64,
+        128,
+        256
+      ],
+      "apply_path": "windows/runner/resources/app_icon.ico",
+      "sha256": "7c29da85b6c0b0cef49633fa5d39adef491dfe75e58cd2b49719e19366dc210a"
+    }
+  ]
+}
