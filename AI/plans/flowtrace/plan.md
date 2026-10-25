@@ -1,5 +1,7 @@
 # 流迹完整开发计划
 
+> **GitHub 发布授权（2026-10-25）**：用户明确要求创建公开仓库并上传构建，覆盖旧包“不推送”限制。源码仓库为[RuibinNingh/FlowTrace](https://github.com/RuibinNingh/FlowTrace)，首个[Alpha Release](https://github.com/RuibinNingh/FlowTrace/releases/tag/v0.1.1-alpha.2)复用已验构建；来源、校验和未含新图标的边界见[发布记录](../../logs/2026-10-25_github-publication.md)。本包不自动开启新构建、功能或生产部署。
+
 > **当前授权与恢复（2026-10-24，Asia/Shanghai）**：用户追加生产部署后，0.1.1+2 Web已实际上线，Windows/APK同版HTTPS下载已发布，三端内置正式地址。先读[进度](progress.md)及[部署记录](../../logs/2026-10-24_client-production-deployment.md)。复用已验后端1447709及原生字节，无金融迁移；手动地址/资料保持、真实账本须预览确认。安卓设备测试取消，无Git推送，不代表长期全量功能完成。
 
 > 执行者：主代理负责需求与集成，产品、架构和执行规划子代理分别制定分册；开发阶段按工作包委派实现与独立审查。所需能力：Flutter 与 Android、Web、Windows 工具链，Python/PostgreSQL 开发环境，以及隔离 Linux 部署环境。
@@ -66,6 +68,7 @@
 | R15 | 兼容实际钱迹导出的105条/退款、具体错误与脱敏日志，并测试后更新生产 | 原文件完整导入/关联/金额/重放/撤销隔离验证；页面错误关联ID可追踪；正式服务更新并实际安全导出 | [钱迹兼容契约](../../../contracts/qianji-export-v1.md)、[本包记录](../../logs/2026-10-24_qianji-export-import-fix.md)；已完成本包，不自动扩展下一包 |
 | R16 | 以后内置home.ruibin-ningh.top，重建Windows和APK | 默认完整HTTPS地址含已部署18473端口，普通main构建0.1.1+2、实际包/hash/升级边界可核；不覆盖手动配置或清数据 | [原生重建记录](../../logs/2026-10-24_native-client-rebuild.md)；已本地交付，安卓设备测试仍取消 |
 | R17 | 生产部署 | 0.1.1+2 Web在实际域名生效，Windows/APK提供生产下载；备份/回退、真实HTTP/hash和文档可核 | [部署记录](../../logs/2026-10-24_client-production-deployment.md)；已完成本包 |
+| R18 | 帮我建GitHub仓库，公开，然后上传构建 | 公开仓库可读，当前源码与历史已推送，Windows/APK/Web/服务端及来源与SHA-256附件可下载 | [发布记录](../../logs/2026-10-25_github-publication.md)；复用已验构建，不自动重建或部署 |
 
 ## 现状与证据
 

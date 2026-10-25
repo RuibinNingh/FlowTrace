@@ -1,5 +1,13 @@
 # 流迹开发计划进度
 
+> **当前恢复（2026-10-25，Asia/Shanghai；GitHub 公开发布包）**
+> - 最新用户原话：“帮我建GitHub仓库 / 公开 / 然后上传构建”；本包获得创建公开仓库、推送源码与发布构建授权，旧包“不推送”限制已被覆盖。
+> - 公开源码：[RuibinNingh/FlowTrace](https://github.com/RuibinNingh/FlowTrace)，本地`main`跟踪`origin/main`；图标资源及原有任务记录保存为`5a735e8`，未改写历史。
+> - 构建：[v0.1.1-alpha.2](https://github.com/RuibinNingh/FlowTrace/releases/tag/v0.1.1-alpha.2)，客户端0.1.1+2，复用10月24日已验字节；Windows/APK来源158ebc2、Web来源5f3e813、服务端wheel来源1447709。标签指向Web构建来源，7项附件含公开manifest、依赖锁和SHA-256清单；这些包未含10月25日新图标。
+> - 恢复与证据：[本次记录](../../logs/2026-10-25_github-publication.md)。本包没有新业务实现、构建、设备测试或生产更新；线上状态仍按下方生产接收快照。用户可直接从Release下载，后续包等待用户决定。
+
+## 前包生产部署接收快照
+
 > **当前执行与恢复（2026-10-24，Asia/Shanghai；0.1.1+2生产部署已交付）**
 > - 用户追加“生产部署啊”，已更新实际生产Web并将前包Windows/APK原字节发布为正式HTTPS下载；三端默认正式地址，已存手动设置/数据不改。恢复：[本次部署记录](../../logs/2026-10-24_client-production-deployment.md) → [生产模块](../../modules/production-deployment.md) → [Linux手册](../../../deployment/linux/README.md)。
 > - Web0.1.1+2来源5f3e813，release271e839535a9f2c94f689cd45a3b54f8d156481e6dbb968d127569a64c29f8dd；current指向`/www/wwwroot/flowtrace/releases/20261024-client-production-5f3e813`。原生下载在正式域名`/downloads/0.1.1-2/`，来源158ebc2/旧签名不变，未重跑已验构建或安卓设备测试。
@@ -96,7 +104,7 @@ P4-02的[实施细化](p4-02-implementation.md)包含开工差异、A–F依赖�
 
 ## 下一步
 
-0.1.1+2已实际部署生产Web，并提供原生HTTPS下载；从[本次部署记录](../../logs/2026-10-24_client-production-deployment.md)恢复。用户保存工作后使用Web更新提示，或下载Windows/APK；旧设置/数据保留，APK原签名可覆盖安装。后续功能包、安卓设备测试、独立外网/整机重启等不自动开启，边界集中见workspace。
+公开源码和首个Alpha构建从[GitHub发布记录](../../logs/2026-10-25_github-publication.md)恢复，用户可从Release下载并核对摘要。0.1.1+2生产Web和原生HTTPS下载保持[部署记录](../../logs/2026-10-24_client-production-deployment.md)所述状态；旧设置/数据保留，APK原签名可覆盖安装。包含新图标的重建、后续功能包、安卓设备测试及生产更新不自动开启，边界集中见workspace。
 
 ### 原全功能恢复顺序（历史，当前不执行）
 

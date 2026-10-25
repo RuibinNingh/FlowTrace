@@ -2,10 +2,13 @@
 
 先读根目录 [AGENTS.md](../AGENTS.md)，再按当前任务选择材料。
 
+> **GitHub 发布入口（2026-10-25）**：公开源码见[RuibinNingh/FlowTrace](https://github.com/RuibinNingh/FlowTrace)，已验构建见[首个 Alpha Release](https://github.com/RuibinNingh/FlowTrace/releases/tag/v0.1.1-alpha.2)。用户本次授权覆盖旧包“不推送”；来源、摘要、图标版本差异及远端回执见[发布记录](logs/2026-10-25_github-publication.md)。
+
 > **当前恢复入口（2026-10-24）**：Web已部署为`0.1.1+2`，Windows/APK同版本已提供生产HTTPS下载，三端内置正式地址。先读[当前进度](plans/flowtrace/progress.md)、[本次部署记录](logs/2026-10-24_client-production-deployment.md)、[生产模块](modules/production-deployment.md)和[Linux手册](../deployment/linux/README.md)。后端1447709/数据库不改，安卓设备测试仍取消；旧“仅本地交付”是前包快照。
 
 | 当前任务 | 阅读入口 |
 |---|---|
+| GitHub 公开源码、Alpha 构建与校验清单 | [发布记录](logs/2026-10-25_github-publication.md)、[工作区说明](modules/workspace.md) |
 | 0.1.1+2生产Web、Windows/APK下载与回退 | [部署记录](logs/2026-10-24_client-production-deployment.md)、[生产模块](modules/production-deployment.md)、[Linux手册](../deployment/linux/README.md) |
 | 内置生产地址、Windows/APK 0.1.1+2与升级边界 | [原生重建记录](logs/2026-10-24_native-client-rebuild.md)、[客户端](modules/client.md)、[Windows](modules/windows.md) |
 | 钱迹原始导出、105条完整导入、退款与错误定位 | [导出兼容契约](../contracts/qianji-export-v1.md)、[数据工具](modules/data-tools.md)、[本包记录](logs/2026-10-24_qianji-export-import-fix.md) |

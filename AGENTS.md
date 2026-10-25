@@ -1,5 +1,7 @@
 # FlowTrace 仓库协作准则
 
+> **当前 GitHub 授权（2026-10-25，Asia/Shanghai）**：用户明确要求“帮我建GitHub仓库 / 公开 / 然后上传构建”。已授权创建 `RuibinNingh/FlowTrace` 公开仓库、推送当前源码与历史，并将已验构建发布为 GitHub Release；覆盖下方 2026-10-24 工作包的“不推送”限制。真实凭据、运行数据、备份、调研原件和本机配置继续排除；发布来源与验证边界见[本次记录](AI/logs/2026-10-25_github-publication.md)。本授权不自动开启新功能或生产更新。
+
 > **当前生产包授权（2026-10-24，Asia/Shanghai）**：用户已明确授权连接 `root@192.168.0.145` 读取服务器 wiki，并将 Alpha 部署至 `home.ruibin-ningh.top`。这覆盖此前本包“不部署生产”的限制；本轮安卓测试已取消，复用已冻结 APK 交付。当前按 Alpha 最终部署收尾，不代表完整钱迹功能或长期 P0–P8 已全部完成。恢复时先读 [当前进度](AI/plans/flowtrace/progress.md)，再读 [生产部署模块](AI/modules/production-deployment.md) 与 [Linux 运行手册](deployment/linux/README.md)。已授权本地恢复提交，未授权 Git 推送。
 
 ## 开始任务前

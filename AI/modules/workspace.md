@@ -9,6 +9,8 @@
 
 ## 当前行为
 
+2026-10-25按用户“帮我建GitHub仓库 / 公开 / 然后上传构建”创建[公开仓库](https://github.com/RuibinNingh/FlowTrace)，本地`main`已接入`origin/main`，原提交历史和“流线 F”图标源码一并保存。首个[Alpha Release](https://github.com/RuibinNingh/FlowTrace/releases/tag/v0.1.1-alpha.2)复用10月24日已验Windows/APK/Web及服务端wheel，附依赖锁、公开manifest和SHA-256清单；各构建来源不同，未包含10月25日新图标。本地资料、真实凭据、数据库/备份、调研原件和生成目录继续忽略，不随源码推送。核验与签名/设备边界见[本次记录](../logs/2026-10-25_github-publication.md)；下文“无推送”保留各旧包当时事实。本次没有新构建或生产更新。
+
 2026-10-24按追加生产授权已上线Web0.1.1+2及Windows/APK生产HTTPS下载；前包“仅本地交付”由本包覆盖。新Web来源5f3e813/release271e8395…f8dd，原生158ebc2字节复用；一致备份、首次0700权限故障自动回退与窄修、39资源/两个下载完整HTTPS hash、Windows域名HEAD和生产IAB主页均有证据。后端1447709/PID/env/身份保持，无DDL、无登录/账务写入或安卓操作，见[部署记录](../logs/2026-10-24_client-production-deployment.md)。
 
 2026-10-24Windows/APK `0.1.1+2`已按用户新要求重建，默认正式服务器地址、既有手动设置及资料空间边界明确；产物在`outputs/releases/production/20261024-clients-0.1.1+2/`，有manifest/hash/升级说明。来源`158ebc2`，41定向/范围分析、Windows隔离schema5启动、APK签名/包名/版本/内置地址均通过；无设备操作、无生产替换、无Git推送，见[本包记录](../logs/2026-10-24_native-client-rebuild.md)。下文为上一生产包及更早快照。
